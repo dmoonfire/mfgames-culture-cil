@@ -1,4 +1,4 @@
-// <copyright file="Basis.cs" company="Moonfire Games">
+// <copyright file="JulianDayNumberBasis.cs" company="Moonfire Games">
 //     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // 
@@ -6,10 +6,10 @@
 
 namespace MfGames.Culture.Calendars
 {
-    public abstract class Basis : CalendarElement
+    public class JulianDayNumberBasis : Basis
     {
-        protected Basis(string id)
-            : base(id)
+        public JulianDayNumberBasis()
+            : base("Julian Date Number")
         {
         }
     }

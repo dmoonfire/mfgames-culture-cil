@@ -1,11 +1,8 @@
-﻿// --------------------------------------------------------------------------------
-// <copyright file="Calendar.cs" company="Moonfire Games">
-//   Copyright (c) Moonfire Games. Some Rights Reserved.
+﻿// <copyright file="CalendarSystem.cs" company="Moonfire Games">
+//     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
-// <summary>
-//   
-// </summary>
-// --------------------------------------------------------------------------------
+// 
+// MIT Licensed (http://opensource.org/licenses/MIT)
 
 namespace MfGames.Culture.Calendars
 {
@@ -15,20 +12,20 @@ namespace MfGames.Culture.Calendars
     /// A dynamic calendar that defines all of the elements via an XML file and
     /// allows for cultures and languages not defined in System.Globalization.
     /// </summary>
-    public class Calendar
+    public class CalendarSystem
     {
         /// <summary>
         /// </summary>
-        public Calendar()
+        public CalendarSystem()
         {
             this.Variables = new Dictionary<string, string>();
-            this.Cycles = new CycleCollection();
+            this.Cycles = new CalendarElementCollection<Cycle>();
         }
 
         /// <summary>
         /// Contains a list of all known cycles for the calendar.
         /// </summary>
-        public CycleCollection Cycles { get; set; }
+        public CalendarElementCollection<Cycle> Cycles { get; set; }
 
         /// <summary>
         /// Contains a list of string variables, which are expanded using "$(variableName)" and
