@@ -7,6 +7,7 @@
 namespace MfGames.Culture.Calendars
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// A dynamic calendar that defines all of the elements via an XML file and
@@ -19,13 +20,21 @@ namespace MfGames.Culture.Calendars
         public CalendarSystem()
         {
             this.Variables = new Dictionary<string, string>();
-            this.Cycles = new CalendarElementCollection<Cycle>();
+            this.Elements = new CalendarElementCollection<CalendarElement>();
         }
 
         /// <summary>
-        /// Contains a list of all known cycles for the calendar.
+        /// Contains a list of all known elements for the calendar.
         /// </summary>
-        public CalendarElementCollection<Cycle> Cycles { get; set; }
+        public CalendarElementCollection<CalendarElement> Elements { get; set; }
+
+        /// <summary>
+        /// Gets the list of open cycles within the calendar.
+        /// </summary>
+        public IEnumerable<OpenCycle> OpenCycles
+        {
+            get { return Elements.OfType<OpenCycle>(); }
+        }
 
         /// <summary>
         /// Contains a list of string variables, which are expanded using "$(variableName)" and

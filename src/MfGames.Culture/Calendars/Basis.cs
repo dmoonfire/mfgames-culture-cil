@@ -12,5 +12,7 @@ namespace MfGames.Culture.Calendars
             : base(id)
         {
         }
+
+        public abstract decimal GetLength(CalendarElementValueDictionary values);
     }
 }

@@ -17,5 +17,7 @@ namespace MfGames.Culture.Calendars
             : base(id)
         {
         }
+
+        public Basis Basis { get; set; }
     }
 }

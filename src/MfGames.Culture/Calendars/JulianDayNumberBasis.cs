@@ -9,8 +9,21 @@ namespace MfGames.Culture.Calendars
     public class JulianDayNumberBasis : Basis
     {
         public JulianDayNumberBasis()
+            : this(1.0m)
+        {
+        }
+
+        public JulianDayNumberBasis(decimal length)
             : base("Julian Date Number")
         {
+            Length = length;
+        }
+
+        public decimal Length { get; set; }
+
+        public override decimal GetLength(CalendarElementValueDictionary values)
+        {
+            return Length;
         }
     }
 }

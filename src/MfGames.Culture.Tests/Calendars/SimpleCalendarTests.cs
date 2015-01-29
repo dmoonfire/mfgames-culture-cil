@@ -16,9 +16,9 @@ namespace MfGames.Culture.Tests.Calendars
         [Test]
         public void CreateSimpleThirtyDayMonth()
         {
-            // Create the calendar.
-            var calendar = CreateThirtyDayCalendar();
-            var monthCycle = calendar.Cycles["Month"];
+            //// Create the calendar.
+            //var calendar = CreateThirtyDayCalendar();
+            //var monthCycle = calendar.Cycles["Month"];
         }
 
         [Test]
