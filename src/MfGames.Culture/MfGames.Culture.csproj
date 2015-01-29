@@ -40,6 +40,7 @@
     <Compile Include="Calendars\CalendarElementValueDictionary.cs" />
     <Compile Include="Calendars\CalendarPoint.cs" />
     <Compile Include="Calendars\ClosedCycle.cs" />
+    <Compile Include="Calendars\CountedCycleBasis.cs" />
     <Compile Include="Calendars\Cycle.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
     <Compile Include="Calendars\CalendarElementCollection.cs" />

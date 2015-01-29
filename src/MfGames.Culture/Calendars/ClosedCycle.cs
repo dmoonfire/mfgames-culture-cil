@@ -16,5 +16,10 @@ namespace MfGames.Culture.Calendars
             : base(id)
         {
         }
+
+        public ClosedCycle(string id, Basis basis)
+            : base(id, basis)
+        {
+        }
     }
 }

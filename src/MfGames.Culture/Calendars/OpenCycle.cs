@@ -20,14 +20,8 @@ namespace MfGames.Culture.Calendars
         }
 
         public OpenCycle(string id, Basis basis)
-            : this(id)
+            : base(id, basis)
         {
-            if (basis == null)
-            {
-                throw new ArgumentNullException("basis");
-            }
-
-            Basis = basis;
         }
     }
 }

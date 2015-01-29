@@ -1,4 +1,4 @@
-﻿// <copyright file="SimpleOpenCycleTests.cs" company="Moonfire Games">
+﻿// <copyright file="DayTests.cs" company="Moonfire Games">
 //     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // 
@@ -11,13 +11,13 @@ namespace MfGames.Culture.Tests.Calendars
     using NUnit.Framework;
 
     [TestFixture]
-    public class SimpleOpenCycleTests
+    public class DayTests
     {
         [Test]
         public void CreateCalendarSystem()
         {
             // Create the calendar with a single open-ended cycle.
-            var dayCycle = new OpenCycle("Test 1", new JulianDayNumberBasis());
+            var dayCycle = new OpenCycle("D", new JulianDayNumberBasis());
             var calendar = new CalendarSystem
             {
                 Elements =
@@ -31,15 +31,15 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(0.0m, date.JulianDayNumber, "JDN is unexpected.");
             Assert.AreEqual(
                 0,
-                date.Get("Test 1"),
-                "Test 1 is unexpected (Get).");
+                date.Get("D"),
+                "D is unexpected (Get).");
         }
 
         [Test]
         public void CreateCalendarSystemDaysIn()
         {
             // Create the calendar with a single open-ended cycle.
-            var dayCycle = new OpenCycle("Test 1", new JulianDayNumberBasis());
+            var dayCycle = new OpenCycle("D", new JulianDayNumberBasis());
             var calendar = new CalendarSystem
             {
                 Elements =
@@ -53,8 +53,8 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(10.0m, date.JulianDayNumber, "JDN is unexpected.");
             Assert.AreEqual(
                 10,
-                date.Get("Test 1"),
-                "Test 1 is unexpected (Get).");
+                date.Get("D"),
+                "D is unexpected (Get).");
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace MfGames.Culture.Tests.Calendars
         {
             // Create the calendar with a single open-ended cycle.
             var dayCycle = new OpenCycle(
-                "Test 1",
+                "D",
                 new JulianDayNumberBasis(1.5m));
             var calendar = new CalendarSystem
             {
@@ -77,8 +77,8 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(10.0m, date.JulianDayNumber, "JDN is unexpected.");
             Assert.AreEqual(
                 6,
-                date.Get("Test 1"),
-                "Test 1 is unexpected (Get).");
+                date.Get("D"),
+                "D is unexpected (Get).");
         }
     }
 }

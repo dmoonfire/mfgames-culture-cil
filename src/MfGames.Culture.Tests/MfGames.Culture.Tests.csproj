@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calendars\SimpleCalendarTests.cs" />
-    <Compile Include="Calendars\SimpleOpenCycleTests.cs" />
+    <Compile Include="Calendars\DaysOfMonthTests.cs" />
+    <Compile Include="Calendars\DayTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

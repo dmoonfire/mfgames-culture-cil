@@ -6,6 +6,8 @@
 
 namespace MfGames.Culture.Calendars
 {
+    using System;
+
     /// <summary>
     /// Defines an element within a calendar that is individual identified, such as a day or month.
     /// It can be an open-ended without an end point, such as a year, or it can repeatedly loop
@@ -16,6 +18,17 @@ namespace MfGames.Culture.Calendars
         protected Cycle(string id)
             : base(id)
         {
+        }
+
+        protected Cycle(string id, Basis basis)
+            : this(id)
+        {
+            if (basis == null)
+            {
+                throw new ArgumentNullException("basis");
+            }
+
+            Basis = basis;
         }
 
         public Basis Basis { get; set; }

@@ -1,4 +1,4 @@
-﻿// <copyright file="SimpleCalendarTests.cs" company="Moonfire Games">
+﻿// <copyright file="DaysOfMonthTests.cs" company="Moonfire Games">
 //     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // 
@@ -11,14 +11,40 @@ namespace MfGames.Culture.Tests.Calendars
     using NUnit.Framework;
 
     [TestFixture]
-    public class SimpleCalendarTests
+    public class DaysOfMonthTests
     {
         [Test]
         public void CreateSimpleThirtyDayMonth()
         {
-            //// Create the calendar.
-            //var calendar = CreateThirtyDayCalendar();
-            //var monthCycle = calendar.Cycles["Month"];
+            // Create the calendar with a single open-ended cycle.
+            var dayCycle = new ClosedCycle("D", new JulianDayNumberBasis());
+            var dayOfMonthBasis = new CountedCycleBasis("Day of Month", dayCycle, 30);
+            var monthCycle = new OpenCycle("M", dayOfMonthBasis);
+
+            var calendar = new CalendarSystem
+            {
+                Elements =
+                    new CalendarElementCollection<CalendarElement>
+                    {
+                        dayCycle,
+                        dayOfMonthBasis,
+                        monthCycle
+                    }
+            };
+
+            // Create a point (date) on the calendar based on Julian Day Number.
+            dynamic date = calendar.CreatePoint(0.0m);
+
+            // Verify the resulting cycle.
+            Assert.AreEqual(0.0m, date.JulianDayNumber, "JDN is unexpected.");
+            Assert.AreEqual(
+                0,
+                date.Get("M"),
+                "M is unexpected (Get).");
+            Assert.AreEqual(
+                0,
+                date.Get("D"),
+                "D is unexpected (Get).");
         }
 
         [Test]
