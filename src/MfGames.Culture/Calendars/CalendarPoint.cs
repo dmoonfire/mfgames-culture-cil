@@ -36,5 +36,16 @@ namespace MfGames.Culture.Calendars
 
         public CalendarSystem Calendar { get; private set; }
         public decimal JulianDayNumber { get; private set; }
+
+        /// <summary>
+        /// Retrieves the zero-based index for an element (basis or cycle) represented
+        /// by the current point.
+        /// </summary>
+        /// <param name="elementId"></param>
+        /// <returns></returns>
+        public int Get(string elementId)
+        {
+            return -1;
+        }
     }
 }
