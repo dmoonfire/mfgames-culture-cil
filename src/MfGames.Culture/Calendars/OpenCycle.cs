@@ -6,8 +6,6 @@
 
 namespace MfGames.Culture.Calendars
 {
-    using System;
-
     /// <summary>
     /// Defines an open-ended cycle that doesn't have a containing cycle and continually
     /// increases without resetting or cycling.
@@ -23,5 +21,7 @@ namespace MfGames.Culture.Calendars
             : base(id, basis)
         {
         }
+
+        public override bool IsValueElement { get { return true; } }
     }
 }

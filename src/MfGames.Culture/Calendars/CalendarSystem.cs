@@ -19,8 +19,8 @@ namespace MfGames.Culture.Calendars
         /// </summary>
         public CalendarSystem()
         {
-            this.Variables = new Dictionary<string, string>();
-            this.Elements = new CalendarElementCollection<CalendarElement>();
+            Variables = new Dictionary<string, string>();
+            Elements = new CalendarElementCollection<CalendarElement>();
         }
 
         /// <summary>
@@ -41,6 +41,11 @@ namespace MfGames.Culture.Calendars
         /// additional formatting.
         /// </summary>
         public Dictionary<string, string> Variables { get; private set; }
+
+        public IEnumerable<CalendarElement> ValueElements
+        {
+            get { return Elements.Where(e => e.IsValueElement); }
+        }
 
         public CalendarPoint CreatePoint(decimal julianDayNumber)
         {

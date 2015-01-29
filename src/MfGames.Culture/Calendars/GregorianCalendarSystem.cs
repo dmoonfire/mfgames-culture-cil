@@ -1,3 +1,9 @@
+// <copyright file="GregorianCalendarSystem.cs" company="Moonfire Games">
+//     Copyright (c) Moonfire Games. Some Rights Reserved.
+// </copyright>
+// 
+// MIT Licensed (http://opensource.org/licenses/MIT)
+
 namespace MfGames.Culture.Calendars
 {
     /// <summary>
@@ -5,8 +11,5 @@ namespace MfGames.Culture.Calendars
     /// </summary>
     public class GregorianCalendarSystem : CalendarSystem
     {
-        public GregorianCalendarSystem()
-        {
-        }
     }
 }

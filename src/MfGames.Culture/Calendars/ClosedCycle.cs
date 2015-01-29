@@ -21,5 +21,7 @@ namespace MfGames.Culture.Calendars
             : base(id, basis)
         {
         }
+
+        public override bool IsValueElement { get { return false; } }
     }
 }

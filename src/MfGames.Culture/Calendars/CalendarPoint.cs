@@ -52,9 +52,11 @@ namespace MfGames.Culture.Calendars
         /// <param name="cycle"></param>
         private void CalculateCycle(decimal julianDayNumber, OpenCycle cycle)
         {
-            // Because of how calculations work, we need to keep track of multiple
-            // elements and their values.
-            ElementValues[cycle.Id] = 0;
+            // Reset the elements to zero.
+            foreach (CalendarElement element in Calendar.ValueElements)
+            {
+                ElementValues[element.Id] = 0;
+            }
 
             // Iterate through various permutations of the given open cycle until
             // we find the cycle that the JDN is contained within. This is done
@@ -62,7 +64,7 @@ namespace MfGames.Culture.Calendars
             while (julianDayNumber > 0)
             {
                 // We need to get the length of the next element.
-                decimal length = GetLength(cycle);
+                decimal length = cycle.GetLength(ElementValues);
 
                 // Check to see if the length is greater than the JDN. If it is, then
                 // previous index is the correct one. Otherwise, we increment.
@@ -75,13 +77,6 @@ namespace MfGames.Culture.Calendars
                 julianDayNumber -= length;
                 ElementValues[cycle.Id]++;
             }
-        }
-
-        private decimal GetLength(Cycle cycle)
-        {
-            Basis basis = cycle.Basis;
-
-            return basis.GetLength(ElementValues);
         }
 
         /// <summary>

@@ -23,8 +23,10 @@ namespace MfGames.Culture.Calendars
                     "id");
             }
 
-            this.Id = id;
+            Id = id;
         }
+
+        public abstract bool IsValueElement { get; }
 
         /// <summary>
         /// Contains the identifier for the calendar element.

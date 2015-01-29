@@ -32,5 +32,10 @@ namespace MfGames.Culture.Calendars
         }
 
         public Basis Basis { get; set; }
+
+        public decimal GetLength(CalendarElementValueDictionary values)
+        {
+            return Basis.GetLength(values);
+        }
     }
 }

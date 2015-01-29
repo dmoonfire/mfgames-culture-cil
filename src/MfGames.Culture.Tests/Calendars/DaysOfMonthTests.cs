@@ -18,7 +18,7 @@ namespace MfGames.Culture.Tests.Calendars
         {
             // Create the calendar with a single open-ended cycle.
             var dayCycle = new ClosedCycle("D", new JulianDayNumberBasis());
-            var dayOfMonthBasis = new CountedCycleBasis("Day of Month", dayCycle, 30);
+            var dayOfMonthBasis = new CountedCycleBasis("DM", dayCycle, 30);
             var monthCycle = new OpenCycle("M", dayOfMonthBasis);
 
             var calendar = new CalendarSystem
@@ -37,21 +37,15 @@ namespace MfGames.Culture.Tests.Calendars
 
             // Verify the resulting cycle.
             Assert.AreEqual(0.0m, date.JulianDayNumber, "JDN is unexpected.");
-            Assert.AreEqual(
-                0,
-                date.Get("M"),
-                "M is unexpected (Get).");
-            Assert.AreEqual(
-                0,
-                date.Get("D"),
-                "D is unexpected (Get).");
+            Assert.AreEqual(0, date.Get("M"), "M is unexpected (Get).");
+            Assert.AreEqual(0, date.Get("DM"), "DM is unexpected (Get).");
         }
 
         [Test]
         public void CreateAnonymousDateFromThirtyDayMonth()
         {
             // Create the calendar.
-            var calendar = CreateThirtyDayCalendar();
+            CalendarSystem calendar = CreateThirtyDayCalendar();
 
             //// Create two dates from the calendar using an anonymous structure.
             //var initialDate = calendar.GetCalendarPoint(
@@ -82,7 +76,7 @@ namespace MfGames.Culture.Tests.Calendars
         public void CreateJulianDateFromThirtyDayMonthInitialDate()
         {
             // Create the calendar.
-            var calendar = CreateThirtyDayCalendar();
+            CalendarSystem calendar = CreateThirtyDayCalendar();
 
             //// Create two dates from the calendar using an anonymous structure.
             //var initialDate = calendar.GetCalendarPoint(100.0m);
@@ -102,7 +96,7 @@ namespace MfGames.Culture.Tests.Calendars
         public void CreateJulianDateFromThirtyDayMonthMonthEightDayFourDaet()
         {
             // Create the calendar.
-            var calendar = CreateThirtyDayCalendar();
+            CalendarSystem calendar = CreateThirtyDayCalendar();
 
             //// Create two dates from the calendar using an anonymous structure.
             //var monthEightDayFourDate = calendar.GetCalendarPoint(344.0m);

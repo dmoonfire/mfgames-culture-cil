@@ -29,10 +29,7 @@ namespace MfGames.Culture.Tests.Calendars
 
             // Verify the resulting cycle.
             Assert.AreEqual(0.0m, date.JulianDayNumber, "JDN is unexpected.");
-            Assert.AreEqual(
-                0,
-                date.Get("D"),
-                "D is unexpected (Get).");
+            Assert.AreEqual(0, date.Get("D"), "D is unexpected (Get).");
         }
 
         [Test]
@@ -51,19 +48,14 @@ namespace MfGames.Culture.Tests.Calendars
 
             // Verify the resulting cycle.
             Assert.AreEqual(10.0m, date.JulianDayNumber, "JDN is unexpected.");
-            Assert.AreEqual(
-                10,
-                date.Get("D"),
-                "D is unexpected (Get).");
+            Assert.AreEqual(10, date.Get("D"), "D is unexpected (Get).");
         }
 
         [Test]
         public void CreateCalendarSystemNonstandardDaysIn()
         {
             // Create the calendar with a single open-ended cycle.
-            var dayCycle = new OpenCycle(
-                "D",
-                new JulianDayNumberBasis(1.5m));
+            var dayCycle = new OpenCycle("D", new JulianDayNumberBasis(1.5m));
             var calendar = new CalendarSystem
             {
                 Elements =
@@ -75,10 +67,7 @@ namespace MfGames.Culture.Tests.Calendars
 
             // Verify the resulting cycle.
             Assert.AreEqual(10.0m, date.JulianDayNumber, "JDN is unexpected.");
-            Assert.AreEqual(
-                6,
-                date.Get("D"),
-                "D is unexpected (Get).");
+            Assert.AreEqual(6, date.Get("D"), "D is unexpected (Get).");
         }
     }
 }

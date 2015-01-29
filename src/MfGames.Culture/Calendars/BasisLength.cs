@@ -14,7 +14,7 @@ namespace MfGames.Culture.Calendars
 
         public BasisLength(int count)
         {
-            this.Count = count;
+            Count = count;
         }
 
         public int Count { get; set; }

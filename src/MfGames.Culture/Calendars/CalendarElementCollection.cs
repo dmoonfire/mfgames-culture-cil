@@ -20,7 +20,7 @@ namespace MfGames.Culture.Calendars
 
         public CalendarElementCollection()
         {
-            this.list = new List<TElement>();
+            list = new List<TElement>();
         }
 
         public TElement this[string id]
@@ -30,40 +30,40 @@ namespace MfGames.Culture.Calendars
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         public IEnumerator<TElement> GetEnumerator()
         {
-            return this.list.GetEnumerator();
+            return list.GetEnumerator();
         }
 
         public void Add(TElement item)
         {
-            this.list.Add(item);
+            list.Add(item);
         }
 
         public void Clear()
         {
-            this.list.Clear();
+            list.Clear();
         }
 
         public bool Contains(TElement item)
         {
-            return this.list.Contains(item);
+            return list.Contains(item);
         }
 
         public void CopyTo(TElement[] array, int arrayIndex)
         {
-            this.list.CopyTo(array, arrayIndex);
+            list.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(TElement item)
         {
-            return this.list.Remove(item);
+            return list.Remove(item);
         }
 
-        public int Count { get { return this.list.Count; } }
+        public int Count { get { return list.Count; } }
         public bool IsReadOnly { get; set; }
     }
 }

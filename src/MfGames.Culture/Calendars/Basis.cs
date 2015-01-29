@@ -13,6 +13,8 @@ namespace MfGames.Culture.Calendars
         {
         }
 
+        public override bool IsValueElement { get { return true; } }
+
         public abstract decimal GetLength(CalendarElementValueDictionary values);
     }
 }
