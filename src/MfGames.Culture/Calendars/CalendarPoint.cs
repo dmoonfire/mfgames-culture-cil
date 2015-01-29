@@ -7,6 +7,7 @@
 namespace MfGames.Culture.Calendars
 {
     using System;
+    using System.Collections.Generic;
     using System.Dynamic;
 
     /// <summary>
@@ -30,10 +31,18 @@ namespace MfGames.Culture.Calendars
             }
 
             // Save the member variables.
-            this.Calendar = calendar;
-            this.JulianDayNumber = julianDayNumber;
+            Calendar = calendar;
+            JulianDayNumber = julianDayNumber;
+            Elements = new Dictionary<string, int>();
+
+            // Loops through all the open cycles and calculate each one.
+            foreach (var openCycle in calendar.OpenCycles)
+            {
+                CalculateCycle(JulianDayNumber, openCycle);
+            }
         }
 
+        private Dictionary<string, int> Elements { get; set; }
         public CalendarSystem Calendar { get; private set; }
         public decimal JulianDayNumber { get; private set; }
 
