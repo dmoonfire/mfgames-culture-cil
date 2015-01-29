@@ -1,0 +1,11 @@
+*~
+*.suo
+*.user
+
+# StyleCop
+StyleCop.Cache
+
+# Output Directories
+bin/
+obj/
+packages/
