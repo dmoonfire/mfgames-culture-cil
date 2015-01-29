@@ -32,5 +32,10 @@ namespace MfGames.Culture.Calendars
         /// additional formatting.
         /// </summary>
         public Dictionary<string, string> Variables { get; private set; }
+
+        public CalendarPoint CreatePoint(decimal julianDayNumber)
+        {
+            return new CalendarPoint(this, julianDayNumber);
+        }
     }
 }

@@ -37,6 +37,8 @@
     <Compile Include="Calendars\Basis.cs" />
     <Compile Include="Calendars\BasisLength.cs" />
     <Compile Include="Calendars\CalendarElement.cs" />
+    <Compile Include="Calendars\CalendarPoint.cs" />
+    <Compile Include="Calendars\ClosedCycle.cs" />
     <Compile Include="Calendars\Cycle.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
     <Compile Include="Calendars\CalendarElementCollection.cs" />
@@ -45,6 +47,7 @@
     <Compile Include="Calendars\ICalendarElement.cs" />
     <Compile Include="Calendars\IfBasisLengthLogic.cs" />
     <Compile Include="Calendars\JulianDayNumberBasis.cs" />
+    <Compile Include="Calendars\OpenCycle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
