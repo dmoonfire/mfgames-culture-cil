@@ -26,11 +26,16 @@ namespace MfGames.Culture.Calendars
             Id = id;
         }
 
+        public CalendarSystem Calendar { get; set; }
         public abstract bool IsValueElement { get; }
 
         /// <summary>
         /// Contains the identifier for the calendar element.
         /// </summary>
         public string Id { get; private set; }
+
+        public abstract void CalculateIndex(
+            CalendarElementValueDictionary values,
+            decimal julianDayNumber);
     }
 }

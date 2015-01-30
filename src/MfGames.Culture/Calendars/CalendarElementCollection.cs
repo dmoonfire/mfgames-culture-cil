@@ -18,9 +18,25 @@ namespace MfGames.Culture.Calendars
     {
         private readonly List<TElement> list;
 
+        private CalendarSystem calendar;
+
         public CalendarElementCollection()
         {
             list = new List<TElement>();
+        }
+
+        public CalendarSystem Calendar
+        {
+            get { return calendar; }
+            set
+            {
+                calendar = value;
+
+                foreach (TElement item in this)
+                {
+                    item.Calendar = calendar;
+                }
+            }
         }
 
         public TElement this[string id]
@@ -40,6 +56,7 @@ namespace MfGames.Culture.Calendars
 
         public void Add(TElement item)
         {
+            item.Calendar = Calendar;
             list.Add(item);
         }
 

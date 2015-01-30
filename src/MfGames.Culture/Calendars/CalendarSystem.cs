@@ -15,6 +15,8 @@ namespace MfGames.Culture.Calendars
     /// </summary>
     public class CalendarSystem
     {
+        private CalendarElementCollection<CalendarElement> elements;
+
         /// <summary>
         /// </summary>
         public CalendarSystem()
@@ -26,7 +28,15 @@ namespace MfGames.Culture.Calendars
         /// <summary>
         /// Contains a list of all known elements for the calendar.
         /// </summary>
-        public CalendarElementCollection<CalendarElement> Elements { get; set; }
+        public CalendarElementCollection<CalendarElement> Elements
+        {
+            get { return elements; }
+            set
+            {
+                elements = value;
+                elements.Calendar = this;
+            }
+        }
 
         /// <summary>
         /// Gets the list of open cycles within the calendar.

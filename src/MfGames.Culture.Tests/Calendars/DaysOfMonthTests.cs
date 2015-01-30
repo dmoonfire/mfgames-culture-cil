@@ -14,7 +14,7 @@ namespace MfGames.Culture.Tests.Calendars
     public class DaysOfMonthTests
     {
         [Test]
-        public void CreateSimpleThirtyDayMonth()
+        public void ZeroPoint()
         {
             // Create the calendar with a single open-ended cycle.
             var dayCycle = new ClosedCycle("D", new JulianDayNumberBasis());
@@ -42,34 +42,34 @@ namespace MfGames.Culture.Tests.Calendars
         }
 
         [Test]
-        public void CreateAnonymousDateFromThirtyDayMonth()
+        public void LaterPoint()
         {
-            // Create the calendar.
-            CalendarSystem calendar = CreateThirtyDayCalendar();
+            // Create the calendar with a single open-ended cycle.
+            var dayCycle = new ClosedCycle("D", new JulianDayNumberBasis());
+            var dayOfMonthBasis = new CountedCycleBasis("DM", dayCycle, 30);
+            var monthCycle = new OpenCycle("M", dayOfMonthBasis);
 
-            //// Create two dates from the calendar using an anonymous structure.
-            //var initialDate = calendar.GetCalendarPoint(
-            //    new
-            //    {
-            //        Month = 0,
-            //        Day = 0
-            //    });
-            //var monthEightDayFourDate = calendar.GetCalendarPoint(
-            //    new
-            //    {
-            //        Month = 8,
-            //        Day = 4
-            //    });
+            var calendar = new CalendarSystem
+            {
+                Elements =
+                    new CalendarElementCollection<CalendarElement>
+                    {
+                        dayCycle,
+                        dayOfMonthBasis,
+                        monthCycle
+                    }
+            };
 
-            //// Verify the results.
-            //Assert.AreEqual(
-            //    100.0,
-            //    initialDate.JulianDate,
-            //    "Initial date is unexpected.");
-            //Assert.AreEqual(
-            //    344.0,
-            //    monthEightDayFourDate.JulianDate,
-            //    "8-4 date is unexpected.");
+            // Create a point (date) on the calendar based on Julian Day Number.
+            dynamic date = calendar.CreatePoint(65.123456789m);
+
+            // Verify the resulting cycle.
+            Assert.AreEqual(
+                65.123456789m,
+                date.JulianDayNumber,
+                "JDN is unexpected.");
+            Assert.AreEqual(2, date.Get("M"), "M is unexpected (Get).");
+            Assert.AreEqual(5, date.Get("DM"), "DM is unexpected (Get).");
         }
 
         [Test]

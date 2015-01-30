@@ -14,7 +14,7 @@ namespace MfGames.Culture.Tests.Calendars
     public class DayTests
     {
         [Test]
-        public void CreateCalendarSystem()
+        public void ZeroPoint()
         {
             // Create the calendar with a single open-ended cycle.
             var dayCycle = new OpenCycle("D", new JulianDayNumberBasis());
@@ -33,7 +33,7 @@ namespace MfGames.Culture.Tests.Calendars
         }
 
         [Test]
-        public void CreateCalendarSystemDaysIn()
+        public void LaterPoint()
         {
             // Create the calendar with a single open-ended cycle.
             var dayCycle = new OpenCycle("D", new JulianDayNumberBasis());
@@ -52,7 +52,7 @@ namespace MfGames.Culture.Tests.Calendars
         }
 
         [Test]
-        public void CreateCalendarSystemNonstandardDaysIn()
+        public void NonstandardLaterPoint()
         {
             // Create the calendar with a single open-ended cycle.
             var dayCycle = new OpenCycle("D", new JulianDayNumberBasis(1.5m));
