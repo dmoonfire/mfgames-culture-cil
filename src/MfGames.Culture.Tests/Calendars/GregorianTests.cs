@@ -66,8 +66,11 @@ namespace MfGames.Culture.Tests.Calendars
                 new CountedCycleBasis("Century of Millennium", century, 10);
             var millennium = new OpenCycle("Millennium", centuryOfMillennium)
             {
+                // 0001-01-01 00:00:00
                 JulianDayNumberOffset = 1721423.5m
             };
+
+            // 2457053.77147 2015-01-31 06:30:55
 
             var calendar = new CalendarSystem
             {
