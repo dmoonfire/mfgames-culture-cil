@@ -8,6 +8,11 @@ namespace MfGames.Culture.Calendars
 {
     public class CountedCycleBasis : Basis
     {
+        public CountedCycleBasis(string id, ClosedCycle cycle)
+            : this(id, cycle, 0)
+        {
+        }
+
         public CountedCycleBasis(string id, ClosedCycle cycle, int count)
             : base(id)
         {
@@ -17,6 +22,7 @@ namespace MfGames.Culture.Calendars
 
         public ClosedCycle Cycle { get; set; }
         public int Count { get; set; }
+        public BasisLengthLogicCollection BasisLengthLogics { get; set; }
 
         public override void CalculateIndex(
             CalendarElementValueDictionary values,

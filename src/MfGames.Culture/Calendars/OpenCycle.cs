@@ -23,11 +23,15 @@ namespace MfGames.Culture.Calendars
         }
 
         public override bool IsValueElement { get { return true; } }
+        public decimal JulianDayNumberOffset { get; set; }
 
         public override void CalculateIndex(
             CalendarElementValueDictionary values,
             decimal julianDayNumber)
         {
+            // Adjust by the offset for the calendar.
+            julianDayNumber -= JulianDayNumberOffset;
+
             // Reset the elements to zero.
             foreach (CalendarElement element in Calendar.ValueElements)
             {

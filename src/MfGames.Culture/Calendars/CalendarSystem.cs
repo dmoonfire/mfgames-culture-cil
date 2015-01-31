@@ -50,7 +50,7 @@ namespace MfGames.Culture.Calendars
         /// Contains a list of string variables, which are expanded using "$(variableName)" and
         /// additional formatting.
         /// </summary>
-        public Dictionary<string, string> Variables { get; private set; }
+        public Dictionary<string, string> Variables { get; set; }
 
         public IEnumerable<CalendarElement> ValueElements
         {

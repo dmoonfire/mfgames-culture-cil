@@ -10,6 +10,20 @@ namespace MfGames.Culture.Calendars
 
     public class IfBasisLengthLogic : IBasisLengthLogic
     {
+        public IfBasisLengthLogic()
+        {
+        }
+
+        public IfBasisLengthLogic(string expression, int count)
+        {
+        }
+
+        public IfBasisLengthLogic(
+            string expression,
+            params IBasisLengthLogic[] logics)
+        {
+        }
+
         public string Test { get; set; }
         public IList<IBasisLengthLogic> IfTrueLengthLogic { get; set; }
     }
