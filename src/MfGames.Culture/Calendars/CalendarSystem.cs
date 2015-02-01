@@ -21,7 +21,7 @@ namespace MfGames.Culture.Calendars
         /// </summary>
         public CalendarSystem()
         {
-            Variables = new Dictionary<string, string>();
+            Variables = new Dictionary<string, object>();
             Elements = new CalendarElementCollection<CalendarElement>();
         }
 
@@ -50,7 +50,7 @@ namespace MfGames.Culture.Calendars
         /// Contains a list of string variables, which are expanded using "$(variableName)" and
         /// additional formatting.
         /// </summary>
-        public Dictionary<string, string> Variables { get; set; }
+        public Dictionary<string, object> Variables { get; set; }
 
         public IEnumerable<CalendarElement> ValueElements
         {

@@ -6,14 +6,28 @@
 
 namespace MfGames.Culture.Calendars
 {
+    using System.Collections.Generic;
+
     public class CountBasisLengthLogic : IBasisLengthLogic
     {
+        public int Count { get; set; }
+
         public CountBasisLengthLogic()
         {
         }
 
         public CountBasisLengthLogic(int count)
         {
+            Count = count;
+        }
+
+        public bool GetCount(
+            Dictionary<string, object> variables,
+            CalendarElementValueDictionary values,
+            out int count)
+        {
+            count = Count;
+            return true;
         }
     }
 }

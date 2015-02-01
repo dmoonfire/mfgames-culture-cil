@@ -8,6 +8,7 @@ namespace MfGames.Culture.Calendars
 {
     using System;
     using System.Dynamic;
+    using System.Linq;
 
     /// <summary>
     /// Represents a single temporal point within a specific calendar system.
@@ -32,16 +33,22 @@ namespace MfGames.Culture.Calendars
             // Save the member variables.
             Calendar = calendar;
             JulianDayNumber = julianDayNumber;
-            ElementValues = new CalendarElementValueDictionary();
+            Elements = new CalendarElementValueDictionary();
 
             // Loops through all the open cycles and calculate each one.
             foreach (OpenCycle openCycle in calendar.OpenCycles)
             {
-                openCycle.CalculateIndex(ElementValues, julianDayNumber);
+                openCycle.CalculateIndex(Elements, julianDayNumber);
+            }
+
+            // Remove the element values for the closed cycles.
+            foreach (var closedCycle in Calendar.Elements.OfType<ClosedCycle>())
+            {
+                Elements.Remove(closedCycle.Id);
             }
         }
 
-        private CalendarElementValueDictionary ElementValues { get; set; }
+        private CalendarElementValueDictionary Elements { get; set; }
         public CalendarSystem Calendar { get; private set; }
         public decimal JulianDayNumber { get; private set; }
 
@@ -53,7 +60,7 @@ namespace MfGames.Culture.Calendars
         /// <returns></returns>
         public int Get(string elementId)
         {
-            return ElementValues[elementId];
+            return Elements[elementId];
         }
     }
 }

@@ -24,13 +24,70 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(null, point);
         }
 
+        private const decimal JulianDayNumberOffset = 1719899.5m;
+
         [Test]
-        public void RandomPoint()
+        public void Point20150131()
         {
             CalendarSystem calendar = CreateCalendar();
-            CalendarPoint point = calendar.CreatePoint(2457053.74037m);
+            CalendarPoint point = calendar.CreatePoint(2457053.5m);
 
-            Assert.AreEqual(null, point);
+            Assert.AreEqual(
+                2,
+                point.Get("Millennium"),
+                "Millennium was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Century of Millennium"),
+                "Century Millennium was unexpected.");
+            Assert.AreEqual(
+                1,
+                point.Get("Decade of Century"),
+                "Decade of Century was unexpected.");
+            Assert.AreEqual(
+                4,
+                point.Get("Year of Decade"),
+                "Year of Decade was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Month of Year"),
+                "Month of Year was unexpected.");
+            Assert.AreEqual(
+                30,
+                point.Get("Day of Month"),
+                "Day of Month was unexpected.");
+        }
+
+        [Test]
+        public void Point20010101()
+        {
+            CalendarSystem calendar = CreateCalendar();
+            CalendarPoint point = calendar.CreatePoint(2451910.5m);
+
+            Assert.AreEqual(
+                2,
+                point.Get("Millennium"),
+                "Millennium was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Century of Millennium"),
+                "Century Millennium was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Decade of Century"),
+                "Decade of Century was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Year of Decade"),
+                "Year of Decade was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Month of Year"),
+                "Month of Year was unexpected.");
+            Assert.AreEqual(
+                0,
+                point.Get("Day of Month"),
+                "Day of Month was unexpected.");
         }
 
         private CalendarSystem CreateCalendar()
@@ -43,13 +100,13 @@ namespace MfGames.Culture.Tests.Calendars
                     new BasisLengthLogicCollection
                     {
                         new IfBasisLengthLogic(
-                            "Month in $(Feb)",
-                            new IfBasisLengthLogic("Year mod 400", 29),
-                            new IfBasisLengthLogic("Year mod 100", 28),
-                            new IfBasisLengthLogic("Year mod 4", 29),
+                            "$(Month) in $(Feb)",
+                            new IfBasisLengthLogic("$(Year) mod 400", 29),
+                            new IfBasisLengthLogic("$(Year) mod 100", 28),
+                            new IfBasisLengthLogic("$(Year) mod 4", 29),
                             new CountBasisLengthLogic(28)),
-                        new IfBasisLengthLogic("Month in $(Month31)", 31),
-                        new IfBasisLengthLogic("Month in $(Month30)", 30)
+                        new IfBasisLengthLogic("$(Month) in $(Month31)", 31),
+                        new IfBasisLengthLogic("$(Month) in $(Month30)", 30)
                     }
             };
             var month = new ClosedCycle("Month", dayOfMonth);
@@ -67,10 +124,8 @@ namespace MfGames.Culture.Tests.Calendars
             var millennium = new OpenCycle("Millennium", centuryOfMillennium)
             {
                 // 0001-01-01 00:00:00
-                JulianDayNumberOffset = 1721423.5m
+                JulianDayNumberOffset = JulianDayNumberOffset
             };
-
-            // 2457053.77147 2015-01-31 06:30:55
 
             var calendar = new CalendarSystem
             {
@@ -90,7 +145,7 @@ namespace MfGames.Culture.Tests.Calendars
                         millennium
                     },
                 Variables =
-                    new Dictionary<string, string>
+                    new Dictionary<string, object>
                     {
                         { "Jan", "0" },
                         { "Feb", "1" },
