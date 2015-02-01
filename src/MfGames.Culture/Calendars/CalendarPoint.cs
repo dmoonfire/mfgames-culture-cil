@@ -15,7 +15,7 @@ namespace MfGames.Culture.Calendars
     /// </summary>
     public class CalendarPoint : DynamicObject
     {
-        public CalendarPoint(CalendarSystem calendar, decimal julianDayNumber)
+        public CalendarPoint(CalendarSystem calendar, decimal julianDate)
         {
             // Establish the contracts.
             if (calendar == null)
@@ -23,22 +23,22 @@ namespace MfGames.Culture.Calendars
                 throw new ArgumentNullException("calendar");
             }
 
-            if (julianDayNumber < 0)
+            if (julianDate < 0)
             {
                 throw new ArgumentException(
                     "Cannot use a negative Julian Day Number.",
-                    "julianDayNumber");
+                    "julianDate");
             }
 
             // Save the member variables.
             Calendar = calendar;
-            JulianDayNumber = julianDayNumber;
+            JulianDate = julianDate;
             Elements = new CalendarElementValueDictionary();
 
             // Loops through all the open cycles and calculate each one.
             foreach (OpenCycle openCycle in calendar.OpenCycles)
             {
-                openCycle.CalculateIndex(Elements, julianDayNumber);
+                openCycle.CalculateIndex(Elements, julianDate);
             }
 
             // Remove the element values for the closed cycles.
@@ -50,7 +50,7 @@ namespace MfGames.Culture.Calendars
 
         private CalendarElementValueDictionary Elements { get; set; }
         public CalendarSystem Calendar { get; private set; }
-        public decimal JulianDayNumber { get; private set; }
+        public decimal JulianDate { get; private set; }
 
         /// <summary>
         /// Retrieves the zero-based index for an element (basis or cycle) represented

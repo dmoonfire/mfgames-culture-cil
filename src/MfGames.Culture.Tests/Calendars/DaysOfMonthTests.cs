@@ -17,7 +17,7 @@ namespace MfGames.Culture.Tests.Calendars
         public void ZeroPoint()
         {
             // Create the calendar with a single open-ended cycle.
-            var dayCycle = new ClosedCycle("D", new JulianDayNumberBasis());
+            var dayCycle = new ClosedCycle("D", new JulianDateBasis());
             var dayOfMonthBasis = new CountedCycleBasis("DM", dayCycle, 30);
             var monthCycle = new OpenCycle("M", dayOfMonthBasis);
 
@@ -36,7 +36,7 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic date = calendar.CreatePoint(0.0m);
 
             // Verify the resulting cycle.
-            Assert.AreEqual(0.0m, date.JulianDayNumber, "JDN is unexpected.");
+            Assert.AreEqual(0.0m, date.JulianDate, "JDN is unexpected.");
             Assert.AreEqual(0, date.Get("M"), "M is unexpected (Get).");
             Assert.AreEqual(0, date.Get("DM"), "DM is unexpected (Get).");
         }
@@ -45,7 +45,7 @@ namespace MfGames.Culture.Tests.Calendars
         public void LaterPoint()
         {
             // Create the calendar with a single open-ended cycle.
-            var dayCycle = new ClosedCycle("D", new JulianDayNumberBasis());
+            var dayCycle = new ClosedCycle("D", new JulianDateBasis());
             var dayOfMonthBasis = new CountedCycleBasis("DM", dayCycle, 30);
             var monthCycle = new OpenCycle("M", dayOfMonthBasis);
 
@@ -66,7 +66,7 @@ namespace MfGames.Culture.Tests.Calendars
             // Verify the resulting cycle.
             Assert.AreEqual(
                 65.123456789m,
-                date.JulianDayNumber,
+                date.JulianDate,
                 "JDN is unexpected.");
             Assert.AreEqual(2, date.Get("M"), "M is unexpected (Get).");
             Assert.AreEqual(5, date.Get("DM"), "DM is unexpected (Get).");

@@ -36,6 +36,6 @@ namespace MfGames.Culture.Calendars
 
         public abstract void CalculateIndex(
             CalendarElementValueDictionary values,
-            decimal julianDayNumber);
+            decimal julianDate);
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="JulianDayNumberBasis.cs" company="Moonfire Games">
+// <copyright file="JulianDateBasis.cs" company="Moonfire Games">
 //     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // 
@@ -6,14 +6,14 @@
 
 namespace MfGames.Culture.Calendars
 {
-    public class JulianDayNumberBasis : Basis
+    public class JulianDateBasis : Basis
     {
-        public JulianDayNumberBasis()
+        public JulianDateBasis()
             : this(1.0m)
         {
         }
 
-        public JulianDayNumberBasis(decimal length)
+        public JulianDateBasis(decimal length)
             : base("Julian Date Number")
         {
             Length = length;
@@ -23,7 +23,7 @@ namespace MfGames.Culture.Calendars
 
         public override void CalculateIndex(
             CalendarElementValueDictionary values,
-            decimal julianDayNumber)
+            decimal julianDate)
         {
         }
 

@@ -26,8 +26,8 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(null, point);
         }
 
-        //private const decimal JulianDayNumberOffset = 1719899.5m;
-        private const decimal JulianDayNumberOffset = 1721425.5m;
+        //private const decimal JulianDateOffset = 1719899.5m;
+        private const decimal JulianDateOffset = 1721425.5m;
 
         [Test]
         public void Point20150131()
@@ -120,7 +120,7 @@ namespace MfGames.Culture.Tests.Calendars
         private CalendarSystem CreateCalendar()
         {
             // Create the calendar with a single open-ended cycle.
-            var day = new ClosedCycle("Day", new JulianDayNumberBasis());
+            var day = new ClosedCycle("Day", new JulianDateBasis());
             var dayOfMonth = new CountedCycleBasis("Day of Month", day)
             {
                 BasisLengthLogics =
@@ -157,7 +157,7 @@ namespace MfGames.Culture.Tests.Calendars
             var millennium = new OpenCycle("Millennium", centuryOfMillennium)
             {
                 // 0001-01-01 00:00:00
-                JulianDayNumberOffset = JulianDayNumberOffset
+                JulianDateOffset = JulianDateOffset
             };
 
             var calendar = new CalendarSystem

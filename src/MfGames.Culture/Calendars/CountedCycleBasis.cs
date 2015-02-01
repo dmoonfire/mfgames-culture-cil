@@ -30,32 +30,32 @@ namespace MfGames.Culture.Calendars
 
         public override void CalculateIndex(
             CalendarElementValueDictionary values,
-            decimal julianDayNumber)
+            decimal julianDate)
         {
             // Iterate through various permutations of the given open cycle until
             // we find the cycle that the JDN is contained within. This is done
             // by starting with the first one and then calculating the length.
             values[Id] = 0;
 
-            while (julianDayNumber > 0)
+            while (julianDate > 0)
             {
                 // We need to get the length of the next element.
                 decimal length = Cycle.GetLength(values);
 
                 // Check to see if the length is greater than the JDN. If it is, then
                 // previous index is the correct one. Otherwise, we increment.
-                if (julianDayNumber < length)
+                if (julianDate < length)
                 {
                     break;
                 }
 
                 // We have to advance it, so reduce the JDN by our length and repeat.
-                julianDayNumber -= length;
+                julianDate -= length;
                 values[Id]++;
             }
 
             // Now that we have the counted cycle, add in the cycle itself.
-            Cycle.CalculateIndex(values, julianDayNumber);
+            Cycle.CalculateIndex(values, julianDate);
         }
 
         public override decimal GetLength(CalendarElementValueDictionary values)

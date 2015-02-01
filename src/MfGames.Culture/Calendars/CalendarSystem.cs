@@ -57,9 +57,9 @@ namespace MfGames.Culture.Calendars
             get { return Elements.Where(e => e.IsValueElement); }
         }
 
-        public CalendarPoint CreatePoint(decimal julianDayNumber)
+        public CalendarPoint CreatePoint(decimal julianDate)
         {
-            return new CalendarPoint(this, julianDayNumber);
+            return new CalendarPoint(this, julianDate);
         }
     }
 }
