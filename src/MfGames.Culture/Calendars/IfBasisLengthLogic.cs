@@ -8,6 +8,7 @@ namespace MfGames.Culture.Calendars
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.ServiceModel;
     using System.Text.RegularExpressions;
@@ -89,21 +90,28 @@ namespace MfGames.Culture.Calendars
             int textValue = Convert.ToInt32(text);
 
             // The operation determines how we process the values.
+            bool result;
+
             switch (Operation)
             {
                 case "mod":
-                    int valueValue = Convert.ToInt32(textValue);
-                    return textValue == valueValue || textValue % valueValue == 0;
+                    int valueValue = Convert.ToInt32(value);
+                    result = textValue == valueValue || textValue % valueValue == 0;
+                    break;
 
                 case "in":
                     var valueValues =
                         value.Split(',').Select(t => Convert.ToInt32(t));
-                    return valueValues.Contains(textValue);
+                    result = valueValues.Contains(textValue);
+                    break;
 
                 default:
                     throw new Exception(
                         "Cannot identify test operation: " + Operation + ".");
             }
+
+            // Return the result.
+            return result;
         }
 
         public IfBasisLengthLogic()

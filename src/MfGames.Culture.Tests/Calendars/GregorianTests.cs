@@ -6,7 +6,9 @@
 
 namespace MfGames.Culture.Tests.Calendars
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using MfGames.Culture.Calendars;
 
@@ -24,14 +26,20 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(null, point);
         }
 
-        private const decimal JulianDayNumberOffset = 1719899.5m;
+        //private const decimal JulianDayNumberOffset = 1719899.5m;
+        private const decimal JulianDayNumberOffset = 1721425.5m;
 
         [Test]
         public void Point20150131()
         {
+            // Create the calendar and get the date.
             CalendarSystem calendar = CreateCalendar();
             CalendarPoint point = calendar.CreatePoint(2457053.5m);
 
+            // Report the state of the point.
+            WritePoint(calendar, point);
+
+            // Assert the state of the point. 
             Assert.AreEqual(
                 2,
                 point.Get("Millennium"),
@@ -58,12 +66,31 @@ namespace MfGames.Culture.Tests.Calendars
                 "Day of Month was unexpected.");
         }
 
+        private static void WritePoint(CalendarSystem calendar, CalendarPoint point)
+        {
+            var elements =
+                calendar.Elements.Where(c => c.IsValueElement)
+                    .Select(c => c.Id)
+                    .OrderBy(c => c)
+                    .ToList();
+
+            foreach (var id in elements)
+            {
+                Console.WriteLine("{0}: {1}", id.PadLeft(25), point.Get(id));
+            }
+        }
+
         [Test]
         public void Point20010101()
         {
+            // Create the calendar.
             CalendarSystem calendar = CreateCalendar();
             CalendarPoint point = calendar.CreatePoint(2451910.5m);
 
+            // Report the state of the point.
+            WritePoint(calendar, point);
+
+            // Assert the state of the point. 
             Assert.AreEqual(
                 2,
                 point.Get("Millennium"),
@@ -101,9 +128,15 @@ namespace MfGames.Culture.Tests.Calendars
                     {
                         new IfBasisLengthLogic(
                             "$(Month) in $(Feb)",
-                            new IfBasisLengthLogic("$(Year) mod 400", 29),
-                            new IfBasisLengthLogic("$(Year) mod 100", 28),
-                            new IfBasisLengthLogic("$(Year) mod 4", 29),
+                            new IfBasisLengthLogic(
+                                "$(Millennium)$(Century)$(Decade)$(Year) mod 400",
+                                29),
+                            new IfBasisLengthLogic(
+                                "$(Millennium)$(Century)$(Decade)$(Year) mod 100",
+                                28),
+                            new IfBasisLengthLogic(
+                                "$(Millennium)$(Century)$(Decade)$(Year) mod 4",
+                                29),
                             new CountBasisLengthLogic(28)),
                         new IfBasisLengthLogic("$(Month) in $(Month31)", 31),
                         new IfBasisLengthLogic("$(Month) in $(Month30)", 30)
