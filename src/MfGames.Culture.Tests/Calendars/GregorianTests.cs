@@ -262,10 +262,11 @@ namespace MfGames.Culture.Tests.Calendars
 
 
         [Test]
-        public void Point18530101()
+        public void Point15830101()
         {
-            // Create the calendar.
-            CalendarPoint point = calendar.CreatePoint(2299238.500000m);
+            // Create the point in time.
+            decimal julianDate = ToJulianDate(new DateTime(1583, 1, 1));
+            CalendarPoint point = calendar.CreatePoint(julianDate);
 
             // Report the state of the point.
             WritePoint(calendar, point);
@@ -278,7 +279,7 @@ namespace MfGames.Culture.Tests.Calendars
             Assert.AreEqual(
                 5,
                 point.Get("Century of Millennium"),
-                "Century Millennium was unexpected.");
+                "Century of Millennium was unexpected.");
             Assert.AreEqual(
                 8,
                 point.Get("Decade of Century"),
@@ -298,10 +299,11 @@ namespace MfGames.Culture.Tests.Calendars
         }
 
         [Test]
-        public void Point18530201()
+        public void Point15830201()
         {
-            // Create the calendar.
-            CalendarPoint point = calendar.CreatePoint(2299238.500000m + 31);
+            // Create the point in time.
+            decimal julianDate = ToJulianDate(new DateTime(1583, 2, 1));
+            CalendarPoint point = calendar.CreatePoint(julianDate);
 
             // Report the state of the point.
             WritePoint(calendar, point);
@@ -336,8 +338,9 @@ namespace MfGames.Culture.Tests.Calendars
         [Test]
         public void Point20000101()
         {
-            // Create the calendar.
-            CalendarPoint point = calendar.CreatePoint(2451544.500000m);
+            // Create the point in time.
+            decimal julianDate = ToJulianDate(new DateTime(2000, 1, 1));
+            CalendarPoint point = calendar.CreatePoint(julianDate);
 
             // Report the state of the point.
             WritePoint(calendar, point);
