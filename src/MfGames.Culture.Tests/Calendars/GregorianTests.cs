@@ -71,22 +71,8 @@ namespace MfGames.Culture.Tests.Calendars
                             30)
                     }
             };
-            var month = new ClosedCycle("Month", dayOfMonth)
-            {
-                CalculatedCycles =
-                    new CalendarElementCollection<CalendarElement>
-                    {
-                        dayOfMonth
-                    }
-            };
-            var monthOfYear = new CountedCycleBasis("Month of Year", month, 12)
-            {
-                CalculatedCycles =
-                    new CalendarElementCollection<CalendarElement>
-                    {
-                        month
-                    }
-            };
+            var month = new ClosedCycle("Month", dayOfMonth);
+            var monthOfYear = new CountedCycleBasis("Month of Year", month, 12);
 
             // Create the basis for the year which should be as fast as
             // a calculation as possible.
@@ -108,6 +94,7 @@ namespace MfGames.Culture.Tests.Calendars
                     new CalendarElementCollection<CalendarElement>
                     {
                         decade,
+                        yearOfDecade,
                         monthOfYear
                     }
             };
@@ -196,25 +183,9 @@ namespace MfGames.Culture.Tests.Calendars
         }
 
         [Test]
-        public void ZeroPoint()
-        {
-            CalendarPoint point = calendar.CreatePoint(0.0m);
-
-            Assert.AreEqual(null, point);
-        }
-
-        [Test]
-        public void OneDay()
-        {
-            CalendarPoint point = calendar.CreatePoint(1.0m);
-
-            Assert.AreEqual(null, point);
-        }
-
-        [Test]
         public void TestCalculations()
         {
-            var start = 2299238.500000m - 5m;
+            var start = 2299238.500000m;
             var count = 10;
             for (decimal i = start; i < start + count; i += 1m)
             {
@@ -258,7 +229,7 @@ namespace MfGames.Culture.Tests.Calendars
                 "Day of Month was unexpected.");
         }
 
-        private const decimal JulianDateOffset = 1720176.5m - 100300m;
+        private const decimal JulianDateOffset = 1721090.5m - 31m;
 
         private static void WritePoint(CalendarSystem calendar, CalendarPoint point)
         {
@@ -266,11 +237,8 @@ namespace MfGames.Culture.Tests.Calendars
 
             string dateString =
                 string.Format(
-                    "{0}-{4}-{5}",
+                    "{0}-{1}-{2}",
                     point.Get("Year").ToString().PadLeft(4, '0'),
-                    point.Get("Century of Millennium"),
-                    point.Get("Decade of Century"),
-                    point.Get("Year of Decade"),
                     (point.Get("Month of Year") + OneBasedOffset).ToString()
                         .PadLeft(2, '0'),
                     (point.Get("Day of Month") + OneBasedOffset).ToString()
@@ -278,17 +246,11 @@ namespace MfGames.Culture.Tests.Calendars
             DateTime date = DateTime.Parse(dateString);
             decimal julian = ToJulianDate(date);
 
-            Console.WriteLine("Date: {0}{1}{2}{3}-{4}-{5} (M {0}, CM {1}, DC {2}, YD {3}) {6} - {7} = {8} ({9})",
-                point.Get("Millennium"),
-                point.Get("Century of Millennium"),
-                point.Get("Decade of Century"),
-                point.Get("Year of Decade"),
-                (point.Get("Month of Year") + OneBasedOffset).ToString().PadLeft(2, '0'),
-                (point.Get("Day of Month") + OneBasedOffset).ToString().PadLeft(2, '0'),
-                point.JulianDate,
-                julian,
-                point.JulianDate - julian,
-                JulianDateOffset - (point.JulianDate - julian));
+            Console.WriteLine("{0} ({1}-{2})) {3}",
+                dateString,
+                point.Get("Year").ToString().PadLeft(4, '0'),
+                point.Get("Day of Year").ToString().PadLeft(3, '0'),
+                julian);
 
 
         }

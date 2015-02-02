@@ -42,11 +42,21 @@ namespace MfGames.Culture.Calendars
 
         public virtual void CalculateIndex(CalculateIndexArguments args)
         {
-            // Loop through all the calculated cycles.
+            // Loop through all the calculated cycles. We have to reset the Julian Date
+            // each time otherwise the destructive call with invalidate the
+            // successive cycles.
+            decimal baseJulianDate = args.JulianDate;
+            bool exceededCycle = args.ExceededCycle;
+
             foreach (CalendarElement calculatedCycle in CalculatedCycles)
             {
+                args.JulianDate = baseJulianDate;
                 calculatedCycle.CalculateIndex(args);
             }
+
+            // Restore the arguments back to the base.
+            args.JulianDate = baseJulianDate;
+            args.ExceededCycle = exceededCycle;
         }
     }
 }

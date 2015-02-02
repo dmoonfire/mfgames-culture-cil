@@ -32,30 +32,45 @@ namespace MfGames.Culture.Calendars
         {
             // Loop through the number of elements inside this basis.
             int count = GetCount(Calendar.Variables, args.Elements);
+            decimal beginningOfCycle = args.JulianDate;
+
+            args.ExceededCycle = true;
+            args.Elements[Id] = 0;
 
             for (var i = 0; i < count; i++)
             {
-                // Set the index and pass the logic into the basis to calculate
-                // the next one. We do this to also reset values.
-                args.Elements[Id] = i;
-                args.ExceededCycle = false;
+                // Keep track of the beginning of the cycle.
+                beginningOfCycle = args.JulianDate;
 
                 // If we have a zero or less JD, then we are done.
                 if (args.JulianDate <= 0m)
                 {
-                    return;
+                    args.ExceededCycle = false;
+                    break;
                 }
 
                 // Calculate the index.
+                args.Elements[Id] = i;
                 Cycle.CalculateIndex(args);
+
+                // If we have exactly 0 and we exceeded our cycle, we have to bump up the ID.
+                if (args.JulianDate <= 0m && args.ExceededCycle)
+                {
+                    args.Elements[Id] = i + 1;
+                }
             }
 
             // If we break out the loop, then reset the value for the parent cycles.
-            args.Elements[Id] = 0;
-            args.ExceededCycle = true;
+            if (args.ExceededCycle)
+            {
+                args.Elements[Id] = 0;
+            }
 
             // Calculate the additional cycles.
-            base.CalculateIndex(args);
+            var args2 = new CalculateIndexArguments(
+                args.Elements,
+                beginningOfCycle);
+            base.CalculateIndex(args2);
         }
 
         public override decimal GetLength(CalendarElementValueDictionary values)
