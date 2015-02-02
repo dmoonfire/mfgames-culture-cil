@@ -24,15 +24,13 @@ namespace MfGames.Culture.Calendars
 
         public override bool IsValueElement { get { return false; } }
 
-        public override void CalculateIndex(
-            CalendarElementValueDictionary values,
-            decimal julianDate)
+        public override void CalculateIndex(CalculateIndexArguments args)
         {
-            // Closed cycles don't really have an ID.
-            values[Id] = 0;
-
             // Pass it directly into the basis.
-            Basis.CalculateIndex(values, julianDate);
+            Basis.CalculateIndex(args);
+
+            // Calculate the additional cycles.
+            base.CalculateIndex(args);
         }
     }
 }

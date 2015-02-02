@@ -48,7 +48,7 @@ namespace MfGames.Culture.Tests.Calendars
 
             // Verify the resulting cycle.
             Assert.AreEqual(10.0m, date.JulianDate, "JDN is unexpected.");
-            Assert.AreEqual(10, date.Get("D"), "D is unexpected (Get).");
+            Assert.AreEqual(9, date.Get("D"), "D is unexpected (Get).");
         }
 
         [Test]

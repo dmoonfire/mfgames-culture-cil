@@ -21,10 +21,9 @@ namespace MfGames.Culture.Calendars
 
         public decimal Length { get; set; }
 
-        public override void CalculateIndex(
-            CalendarElementValueDictionary values,
-            decimal julianDate)
+        public override void CalculateIndex(CalculateIndexArguments args)
         {
+            args.JulianDate -= Length;
         }
 
         public override decimal GetLength(CalendarElementValueDictionary values)

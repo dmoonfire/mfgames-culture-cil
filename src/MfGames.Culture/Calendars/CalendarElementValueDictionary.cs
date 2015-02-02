@@ -8,6 +8,7 @@ namespace MfGames.Culture.Calendars
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
     public class CalendarElementValueDictionary : Dictionary<string, int>,
         IDictionary<string, object>

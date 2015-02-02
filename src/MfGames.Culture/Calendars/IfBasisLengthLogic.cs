@@ -8,9 +8,7 @@ namespace MfGames.Culture.Calendars
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
-    using System.ServiceModel;
     using System.Text.RegularExpressions;
 
     using MfGames.Text;
@@ -19,7 +17,9 @@ namespace MfGames.Culture.Calendars
     {
         static IfBasisLengthLogic()
         {
-            OperationRegex = new Regex(@"^\s*(.*?)\s+(mod|in)\s+(.*?)\s*$", RegexOptions.IgnoreCase);
+            OperationRegex = new Regex(
+                @"^\s*(.*?)\s+(mod|in)\s+(.*?)\s*$",
+                RegexOptions.IgnoreCase);
             macros = new MacroExpansion("$(", ")");
         }
 
@@ -28,7 +28,7 @@ namespace MfGames.Culture.Calendars
         public string Operation { get; set; }
         public string Value { get; set; }
 
-        public void ParseExpression(string expression)
+        private void ParseExpression(string expression)
         {
             // Make sure we have valid expressions.
             if (expression == null)
@@ -55,7 +55,10 @@ namespace MfGames.Culture.Calendars
 
         private static readonly Regex OperationRegex;
 
-        public bool GetCount(Dictionary<string, object> variables, CalendarElementValueDictionary values, out int count)
+        public bool GetCount(
+            Dictionary<string, object> variables,
+            CalendarElementValueDictionary values,
+            out int count)
         {
             // Test our expression to see if we will run any of these elements.
             if (!IsTrue(variables, values))
@@ -80,7 +83,9 @@ namespace MfGames.Culture.Calendars
             return false;
         }
 
-        private bool IsTrue(Dictionary<string, object> variables, CalendarElementValueDictionary values)
+        private bool IsTrue(
+            Dictionary<string, object> variables,
+            CalendarElementValueDictionary values)
         {
             // Pull out the variables.
             string text = macros.Expand(Test, values).Trim();
@@ -96,11 +101,12 @@ namespace MfGames.Culture.Calendars
             {
                 case "mod":
                     int valueValue = Convert.ToInt32(value);
-                    result = textValue == valueValue || textValue % valueValue == 0;
+                    result = textValue == valueValue
+                        || textValue % valueValue == 0;
                     break;
 
                 case "in":
-                    var valueValues =
+                    IEnumerable<int> valueValues =
                         value.Split(',').Select(t => Convert.ToInt32(t));
                     result = valueValues.Contains(textValue);
                     break;

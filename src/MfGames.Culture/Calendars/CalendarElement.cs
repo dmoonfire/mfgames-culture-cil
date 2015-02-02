@@ -24,6 +24,7 @@ namespace MfGames.Culture.Calendars
             }
 
             Id = id;
+            CalculatedCycles = new CalendarElementCollection<CalendarElement>();
         }
 
         public CalendarSystem Calendar { get; set; }
@@ -34,8 +35,18 @@ namespace MfGames.Culture.Calendars
         /// </summary>
         public string Id { get; private set; }
 
-        public abstract void CalculateIndex(
-            CalendarElementValueDictionary values,
-            decimal julianDate);
+        public CalendarElementCollection<CalendarElement> CalculatedCycles
+        {
+            get; set;
+        }
+
+        public virtual void CalculateIndex(CalculateIndexArguments args)
+        {
+            // Loop through all the calculated cycles.
+            foreach (CalendarElement calculatedCycle in CalculatedCycles)
+            {
+                calculatedCycle.CalculateIndex(args);
+            }
+        }
     }
 }

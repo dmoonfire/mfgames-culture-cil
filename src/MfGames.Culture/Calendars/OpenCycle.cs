@@ -25,42 +25,52 @@ namespace MfGames.Culture.Calendars
         public override bool IsValueElement { get { return true; } }
         public decimal JulianDateOffset { get; set; }
 
-        public override void CalculateIndex(
+        public void CalculateIndex(
             CalendarElementValueDictionary values,
             decimal julianDate)
         {
-            // Adjust by the offset for the calendar.
-            julianDate -= JulianDateOffset;
-
             // Reset the elements to zero.
             foreach (CalendarElement element in Calendar.ValueElements)
             {
                 values[element.Id] = 0;
             }
 
-            // Iterate through various permutations of the given open cycle until
-            // we find the cycle that the JDN is contained within. This is done
-            // by starting with the first one and then calculating the length.
-            while (julianDate > 0)
-            {
-                // We need to get the length of the next element.
-                decimal length = GetLength(values);
+            // To avoid going through the elements twice, we recurse into the various cycles
+            // until we get down to the Julian Day calculation which handles subtracting the
+            // actual days.
 
-                // Check to see if the length is greater than the JDN. If it is, then
-                // previous index is the correct one. Otherwise, we increment.
-                if (julianDate < length)
+            // Start by adjusting by the offset to ensure correct calculations.
+            julianDate -= JulianDateOffset;
+
+            // Call ourselves with a referenced version.
+            var args = new CalculateIndexArguments(values, julianDate);
+            CalculateIndex(args);
+        }
+
+        public override void CalculateIndex(CalculateIndexArguments args)
+        {
+            // Loop through the open cycle until we run out of days to process.
+            while (args.JulianDate > 0)
+            {
+                // Calculate the index of the basis.
+                Basis.CalculateIndex(args);
+
+                // Increment the index for the loop only if we are going to run
+                // again or if we exceeded our cycle.
+                if (args.JulianDate > 0m || args.ExceededCycle)
+                {
+                    args.Elements[Id]++;
+                }
+
+                // If we've run out of days, then stop processing.
+                if (args.JulianDate <= 0m)
                 {
                     break;
                 }
-
-                // We have to advance it, so reduce the JDN by our length and repeat.
-                julianDate -= length;
-                values[Id]++;
             }
 
-            // Now that we have the open cycle index, we can calculate the remaining
-            // elements with the remaining JDN.
-            Basis.CalculateIndex(values, julianDate);
+            // Calculate the additional cycles.
+            base.CalculateIndex(args);
         }
     }
 }

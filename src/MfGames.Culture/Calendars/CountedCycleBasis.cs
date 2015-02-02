@@ -28,34 +28,34 @@ namespace MfGames.Culture.Calendars
         public ClosedCycle Cycle { get; set; }
         public BasisLengthLogicCollection BasisLengthLogics { get; set; }
 
-        public override void CalculateIndex(
-            CalendarElementValueDictionary values,
-            decimal julianDate)
+        public override void CalculateIndex(CalculateIndexArguments args)
         {
-            // Iterate through various permutations of the given open cycle until
-            // we find the cycle that the JDN is contained within. This is done
-            // by starting with the first one and then calculating the length.
-            values[Id] = 0;
+            // Loop through the number of elements inside this basis.
+            int count = GetCount(Calendar.Variables, args.Elements);
 
-            while (julianDate > 0)
+            for (var i = 0; i < count; i++)
             {
-                // We need to get the length of the next element.
-                decimal length = Cycle.GetLength(values);
+                // Set the index and pass the logic into the basis to calculate
+                // the next one. We do this to also reset values.
+                args.Elements[Id] = i;
+                args.ExceededCycle = false;
 
-                // Check to see if the length is greater than the JDN. If it is, then
-                // previous index is the correct one. Otherwise, we increment.
-                if (julianDate < length)
+                // If we have a zero or less JD, then we are done.
+                if (args.JulianDate <= 0m)
                 {
-                    break;
+                    return;
                 }
 
-                // We have to advance it, so reduce the JDN by our length and repeat.
-                julianDate -= length;
-                values[Id]++;
+                // Calculate the index.
+                Cycle.CalculateIndex(args);
             }
 
-            // Now that we have the counted cycle, add in the cycle itself.
-            Cycle.CalculateIndex(values, julianDate);
+            // If we break out the loop, then reset the value for the parent cycles.
+            args.Elements[Id] = 0;
+            args.ExceededCycle = true;
+
+            // Calculate the additional cycles.
+            base.CalculateIndex(args);
         }
 
         public override decimal GetLength(CalendarElementValueDictionary values)
