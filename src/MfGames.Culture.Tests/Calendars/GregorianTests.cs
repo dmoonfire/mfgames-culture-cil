@@ -258,7 +258,7 @@ namespace MfGames.Culture.Tests.Calendars
                 "Day of Month was unexpected.");
         }
 
-        private const decimal JulianDateOffset = 0m; //1761266.5m;
+        private const decimal JulianDateOffset = 1720176.5m - 100300m;
 
         private static void WritePoint(CalendarSystem calendar, CalendarPoint point)
         {
@@ -266,8 +266,8 @@ namespace MfGames.Culture.Tests.Calendars
 
             string dateString =
                 string.Format(
-                    "{0}{1}{2}{3}-{4}-{5}",
-                    point.Get("Millennium"),
+                    "{0}-{4}-{5}",
+                    point.Get("Year").ToString().PadLeft(4, '0'),
                     point.Get("Century of Millennium"),
                     point.Get("Decade of Century"),
                     point.Get("Year of Decade"),

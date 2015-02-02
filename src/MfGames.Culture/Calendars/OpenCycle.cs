@@ -50,8 +50,13 @@ namespace MfGames.Culture.Calendars
         public override void CalculateIndex(CalculateIndexArguments args)
         {
             // Loop through the open cycle until we run out of days to process.
+            decimal openJulianDate = args.JulianDate;
+
             while (args.JulianDate > 0)
             {
+                // Update the julian date for this cycle.
+                openJulianDate = args.JulianDate;
+
                 // Calculate the index of the basis.
                 Basis.CalculateIndex(args);
 
@@ -69,8 +74,10 @@ namespace MfGames.Culture.Calendars
                 }
             }
 
-            // Calculate the additional cycles.
-            base.CalculateIndex(args);
+            // Calculate the additional cycles. We have to use a new set of arguments
+            // because the Julian Date has been modified by the inner cycles.
+            CalculateIndexArguments args2 = new CalculateIndexArguments(args.Elements, openJulianDate);
+            base.CalculateIndex(args2);
         }
     }
 }
