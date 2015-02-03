@@ -47,21 +47,10 @@ namespace MfGames.Culture.Tests.Calendars
             year.Lengths.Add(yearLength400);
             year.Lengths.Add(yearLength1);
 
-            // Create the calendar and add the root-level cycle.
+            // Create the calendar and add the open cycle which will add
+            // everything else.
             calendar = new CalendarSystem();
             calendar.Add(year);
-        }
-
-        public decimal ToJulianDate(DateTime dateTime)
-        {
-            // http://stackoverflow.com/questions/5248827/convert-datetime-to-julian-date-in-c-sharp-tooadate-safe
-            return (decimal)dateTime.ToOADate() + 2415018.5m;
-        }
-
-        public decimal ToJulianDate(int year, int month, int day)
-        {
-            var dateTime = new DateTime(year, month, day);
-            return ToJulianDate(dateTime);
         }
 
         [Test]
@@ -116,6 +105,22 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(2004, point.Year, "Year");
+        }
+
+        #endregion
+
+        #region Methods
+
+        private decimal ToJulianDate(DateTime dateTime)
+        {
+            // http://stackoverflow.com/questions/5248827/convert-datetime-to-julian-date-in-c-sharp-tooadate-safe
+            return (decimal)dateTime.ToOADate() + 2415018.5m;
+        }
+
+        private decimal ToJulianDate(int year, int month, int day)
+        {
+            var dateTime = new DateTime(year, month, day);
+            return ToJulianDate(dateTime);
         }
 
         #endregion
