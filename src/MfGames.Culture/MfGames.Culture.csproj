@@ -34,25 +34,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Calendars\Basis.cs" />
-    <Compile Include="Calendars\BasisLengthLogicCollection.cs" />
-    <Compile Include="Calendars\CalculatedCycle.cs" />
-    <Compile Include="Calendars\CalculateIndexArguments.cs" />
     <Compile Include="Calendars\CalendarElement.cs" />
-    <Compile Include="Calendars\CalendarElementValueDictionary.cs" />
-    <Compile Include="Calendars\CalendarPoint.cs" />
-    <Compile Include="Calendars\ClosedCycle.cs" />
-    <Compile Include="Calendars\CountBasisLengthLogic.cs" />
-    <Compile Include="Calendars\CountedCycleBasis.cs" />
-    <Compile Include="Calendars\Cycle.cs" />
-    <Compile Include="Calendars\CalendarSystem.cs" />
     <Compile Include="Calendars\CalendarElementCollection.cs" />
-    <Compile Include="Calendars\GregorianCalendarSystem.cs" />
-    <Compile Include="Calendars\IBasisLengthLogic.cs" />
-    <Compile Include="Calendars\ICalendarElement.cs" />
-    <Compile Include="Calendars\IfBasisLengthLogic.cs" />
-    <Compile Include="Calendars\JulianDayNumberBasis.cs" />
-    <Compile Include="Calendars\OpenCycle.cs" />
+    <Compile Include="Calendars\CalendarElementValueCollection.cs" />
+    <Compile Include="Calendars\CalendarPoint.cs" />
+    <Compile Include="Calendars\CalendarSystem.cs" />
+    <Compile Include="Calendars\Cycles\OpenCycle.cs" />
+    <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
+    <Compile Include="Calendars\Lengths\CycleLength.cs" />
+    <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
+    <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

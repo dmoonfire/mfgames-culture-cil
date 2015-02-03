@@ -6,42 +6,48 @@
 
 namespace MfGames.Culture.Calendars
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Encapsulates the common logic for managing cycles within a calendar.
+    /// A specialized collection of calendar elements that enforces ID constraint
+    /// while focusing on a small number of total elements.
     /// </summary>
+    /// <typeparam name="TElement"></typeparam>
     public class CalendarElementCollection<TElement> : ICollection<TElement>
         where TElement : CalendarElement
     {
-        private readonly List<TElement> list;
-
-        private CalendarSystem calendar;
-
         public CalendarElementCollection()
         {
-            list = new List<TElement>();
+            elements = new List<TElement>();
         }
 
-        public CalendarSystem Calendar
+        private readonly List<TElement> elements;
+
+        public TElement this[string elementRef]
+
         {
-            get { return calendar; }
+            get
+            {
+                TElement element =
+                    elements.FirstOrDefault(e => e.Id == elementRef);
+
+                if (element != null)
+                {
+                    return element;
+                }
+
+                throw new IndexOutOfRangeException(
+                    "Cannot find calendar element: " + elementRef + ".");
+            }
+
             set
             {
-                calendar = value;
-
-                foreach (TElement item in this)
-                {
-                    item.Calendar = calendar;
-                }
+                elements.RemoveAll(p => p.Id == elementRef);
+                elements.Add(value);
             }
-        }
-
-        public TElement this[string id]
-        {
-            get { return this.First(e => e.Id == id); }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -51,36 +57,36 @@ namespace MfGames.Culture.Calendars
 
         public IEnumerator<TElement> GetEnumerator()
         {
-            return list.GetEnumerator();
+            return elements.GetEnumerator();
         }
 
         public void Add(TElement item)
         {
-            item.Calendar = Calendar;
-            list.Add(item);
+            this[item.Id] = item;
         }
 
         public void Clear()
         {
-            list.Clear();
+            elements.Clear();
         }
 
         public bool Contains(TElement item)
         {
-            return list.Contains(item);
+            return elements.Contains(item);
         }
 
         public void CopyTo(TElement[] array, int arrayIndex)
         {
-            list.CopyTo(array, arrayIndex);
+            elements.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(TElement item)
         {
-            return list.Remove(item);
+            return elements.Remove(item);
         }
 
-        public int Count { get { return list.Count; } }
-        public bool IsReadOnly { get; set; }
+        public int Count { get { return elements.Count; } }
+
+        public bool IsReadOnly { get { return false; } }
     }
 }

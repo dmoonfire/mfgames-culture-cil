@@ -1,4 +1,4 @@
-// <copyright file="BasisLengthLogicCollection.cs" company="Moonfire Games">
+// <copyright file="CalendarElementValueCollection.cs" company="Moonfire Games">
 //     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // 
@@ -8,7 +8,7 @@ namespace MfGames.Culture.Calendars
 {
     using System.Collections.Generic;
 
-    public class BasisLengthLogicCollection : List<IBasisLengthLogic>
+    public class CalendarElementValueCollection : Dictionary<string, int>
     {
     }
 }

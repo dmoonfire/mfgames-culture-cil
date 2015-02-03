@@ -24,39 +24,26 @@ namespace MfGames.Culture.Calendars
             }
 
             Id = id;
-            CalculatedCycles = new CalendarElementCollection<CalendarElement>();
+        }
+
+        /// <summary>
+        /// Gets the unique identifier for this element. This cannot be reused
+        /// for any other element with in the same calendar.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Returns the Pascal-formatted name of the element.
+        /// </summary>
+        public string PascalId
+        {
+            get { return Id.Replace(" of ", " Of ").Replace(" ", ""); }
         }
 
         public CalendarSystem Calendar { get; set; }
-        public abstract bool IsValueElement { get; }
+    }
 
-        /// <summary>
-        /// Contains the identifier for the calendar element.
-        /// </summary>
-        public string Id { get; private set; }
-
-        public CalendarElementCollection<CalendarElement> CalculatedCycles
-        {
-            get; set;
-        }
-
-        public virtual void CalculateIndex(CalculateIndexArguments args)
-        {
-            // Loop through all the calculated cycles. We have to reset the Julian Date
-            // each time otherwise the destructive call with invalidate the
-            // successive cycles.
-            decimal baseJulianDate = args.JulianDate;
-            bool exceededCycle = args.ExceededCycle;
-
-            foreach (CalendarElement calculatedCycle in CalculatedCycles)
-            {
-                args.JulianDate = baseJulianDate;
-                calculatedCycle.CalculateIndex(args);
-            }
-
-            // Restore the arguments back to the base.
-            args.JulianDate = baseJulianDate;
-            args.ExceededCycle = exceededCycle;
-        }
+    public interface ICalendarElement
+    {
     }
 }

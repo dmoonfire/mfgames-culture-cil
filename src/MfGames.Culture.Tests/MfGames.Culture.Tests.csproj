@@ -42,11 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calendars\DaysOfMonthTests.cs" />
-    <Compile Include="Calendars\DayTests.cs" />
     <Compile Include="Calendars\GregorianTests.cs" />
-    <Compile Include="Calendars\IfBasisLengthLogicTests.cs" />
-    <Compile Include="Calendars\TripleCycleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
