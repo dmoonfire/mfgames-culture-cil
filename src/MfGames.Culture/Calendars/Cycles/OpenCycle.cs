@@ -4,15 +4,16 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System;
+using System.Collections.Generic;
+
+using MfGames.Culture.Calendars.Lengths;
+
 namespace MfGames.Culture.Calendars.Cycles
 {
-    using System.Collections.Generic;
-
-    using MfGames.Culture.Calendars.Lengths;
-
     public class OpenCycle : CalendarElement
     {
-        public IList<CycleLength> Lengths { get; private set; }
+        #region Constructors and Destructors
 
         public OpenCycle(string id)
             : base(id)
@@ -20,9 +21,23 @@ namespace MfGames.Culture.Calendars.Cycles
             Lengths = new List<CycleLength>();
         }
 
-        public void Calculate(decimal julianDate, CalendarElementValueCollection values)
+        #endregion
+
+        #region Public Properties
+
+        public IList<CycleLength> Lengths { get; private set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void Calculate(
+            decimal julianDate,
+            CalendarElementValueCollection values)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

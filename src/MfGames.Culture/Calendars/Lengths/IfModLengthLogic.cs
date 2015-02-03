@@ -4,15 +4,13 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
-    using System;
-
     public class IfModLengthLogic : ILengthLogic
     {
-        public string DividendRef { get; set; }
-        public int Divisor { get; set; }
-        public decimal JulianDays { get; set; }
+        #region Constructors and Destructors
 
         public IfModLengthLogic(
             string dividendRef,
@@ -30,5 +28,15 @@ namespace MfGames.Culture.Calendars.Lengths
             Divisor = divisor;
             JulianDays = julianDays;
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public string DividendRef { get; set; }
+        public int Divisor { get; set; }
+        public decimal JulianDays { get; set; }
+
+        #endregion
     }
 }

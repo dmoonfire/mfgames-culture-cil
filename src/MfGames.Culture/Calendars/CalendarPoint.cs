@@ -4,18 +4,20 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+
 namespace MfGames.Culture.Calendars
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Dynamic;
-    using System.Linq;
-
     /// <summary>
     /// Represents a single temporal point within a specific calendar system.
     /// </summary>
     public class CalendarPoint : DynamicObject
     {
+        #region Constructors and Destructors
+
         public CalendarPoint(CalendarSystem calendar, decimal julianDate)
         {
             // Establish the contracts.
@@ -39,10 +41,17 @@ namespace MfGames.Culture.Calendars
             Values = calendar.GetValues(julianDate);
         }
 
-        public CalendarElementValueCollection Values { get; private set; }
+        #endregion
+
+        #region Public Properties
 
         public CalendarSystem Calendar { get; private set; }
         public decimal JulianDate { get; private set; }
+        public CalendarElementValueCollection Values { get; private set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>
         /// Retrieves the zero-based index for an element (basis or cycle) represented
@@ -66,13 +75,17 @@ namespace MfGames.Culture.Calendars
             return Calendar.Elements.Select(e => e.PascalId);
         }
 
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        public override bool TryGetMember(
+            GetMemberBinder binder,
+            out object result)
         {
-            var element = Calendar.Elements.First(
+            CalendarElement element = Calendar.Elements.First(
                 e => e.PascalId == binder.Name);
 
             result = Values[element.Id];
             return true;
         }
+
+        #endregion
     }
 }

@@ -3,6 +3,7 @@
 // </copyright>
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
+
 namespace MfGames.Culture.Calendars.Lengths
 {
     /// <summary>

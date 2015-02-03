@@ -4,16 +4,18 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System;
+
 namespace MfGames.Culture.Calendars
 {
-    using System;
-
     /// <summary>
     /// Defines the common logic between all the calendar elements that are
     /// referenced throughout the system.
     /// </summary>
     public abstract class CalendarElement : ICalendarElement
     {
+        #region Constructors and Destructors
+
         protected CalendarElement(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -25,6 +27,12 @@ namespace MfGames.Culture.Calendars
 
             Id = id;
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public CalendarSystem Calendar { get; set; }
 
         /// <summary>
         /// Gets the unique identifier for this element. This cannot be reused
@@ -40,7 +48,7 @@ namespace MfGames.Culture.Calendars
             get { return Id.Replace(" of ", " Of ").Replace(" ", ""); }
         }
 
-        public CalendarSystem Calendar { get; set; }
+        #endregion
     }
 
     public interface ICalendarElement

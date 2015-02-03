@@ -4,10 +4,10 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System.Collections.Generic;
+
 namespace MfGames.Culture.Calendars
 {
-    using System.Collections.Generic;
-
     public class CalendarElementValueCollection : Dictionary<string, int>
     {
     }

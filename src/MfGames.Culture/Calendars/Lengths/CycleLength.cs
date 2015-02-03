@@ -8,7 +8,7 @@ namespace MfGames.Culture.Calendars.Lengths
 {
     public class CycleLength
     {
-        public ILengthLogic[] LengthLogics { get; set; }
+        #region Constructors and Destructors
 
         public CycleLength(int number, decimal julianDays)
             : this(number, new ConstantLengthLogic(julianDays))
@@ -26,6 +26,13 @@ namespace MfGames.Culture.Calendars.Lengths
             LengthLogics = lengthLogics;
         }
 
+        #endregion
+
+        #region Public Properties
+
+        public ILengthLogic[] LengthLogics { get; set; }
         public int Number { get; private set; }
+
+        #endregion
     }
 }

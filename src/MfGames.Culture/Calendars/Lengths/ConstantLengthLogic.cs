@@ -8,11 +8,19 @@ namespace MfGames.Culture.Calendars.Lengths
 {
     public class ConstantLengthLogic : ILengthLogic
     {
-        public decimal JulianDays { get; set; }
+        #region Constructors and Destructors
 
         public ConstantLengthLogic(decimal julianDays)
         {
             JulianDays = julianDays;
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public decimal JulianDays { get; set; }
+
+        #endregion
     }
 }

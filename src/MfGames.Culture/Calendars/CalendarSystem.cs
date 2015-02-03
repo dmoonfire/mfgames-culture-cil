@@ -4,19 +4,21 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System.Collections.Generic;
+using System.Linq;
+
+using MfGames.Culture.Calendars.Cycles;
+
 namespace MfGames.Culture.Calendars
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using MfGames.Culture.Calendars.Cycles;
-
     /// <summary>
     /// A dynamic calendar that defines all of the elements via an XML file and
     /// allows for cultures and languages not defined in System.Globalization.
     /// </summary>
     public class CalendarSystem
     {
+        #region Constructors and Destructors
+
         /// <summary>
         /// </summary>
         public CalendarSystem()
@@ -24,23 +26,31 @@ namespace MfGames.Culture.Calendars
             Elements = new CalendarElementCollection<CalendarElement>();
         }
 
-        public CalendarPoint Create(decimal julianDate)
-        {
-            return new CalendarPoint(this, julianDate);
-        }
+        #endregion
+
+        #region Public Properties
 
         public CalendarElementCollection<CalendarElement> Elements { get;
             private set; }
 
-        public IEnumerable<OpenCycle> OpenCycles { get
+        public IEnumerable<OpenCycle> OpenCycles
         {
-            return Elements.OfType<OpenCycle>();
-        } } 
+            get { return Elements.OfType<OpenCycle>(); }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public void Add(OpenCycle openCycle)
         {
             openCycle.Calendar = this;
             Elements.Add(openCycle);
+        }
+
+        public CalendarPoint Create(decimal julianDate)
+        {
+            return new CalendarPoint(this, julianDate);
         }
 
         public CalendarElementValueCollection GetValues(decimal julianDate)
@@ -50,10 +60,15 @@ namespace MfGames.Culture.Calendars
             // elements.
             var results = new CalendarElementValueCollection();
 
-            foreach (var cycle in OpenCycles) cycle.Calculate(julianDate, results);
+            foreach (OpenCycle cycle in OpenCycles)
+            {
+                cycle.Calculate(julianDate, results);
+            }
 
             // Return the resulting value collection.
             return results;
         }
+
+        #endregion
     }
 }

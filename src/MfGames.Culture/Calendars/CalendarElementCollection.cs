@@ -4,13 +4,13 @@
 // 
 // MIT Licensed (http://opensource.org/licenses/MIT)
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace MfGames.Culture.Calendars
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// A specialized collection of calendar elements that enforces ID constraint
     /// while focusing on a small number of total elements.
@@ -19,12 +19,29 @@ namespace MfGames.Culture.Calendars
     public class CalendarElementCollection<TElement> : ICollection<TElement>
         where TElement : CalendarElement
     {
+        #region Fields
+
+        private readonly List<TElement> elements;
+
+        #endregion
+
+        #region Constructors and Destructors
+
         public CalendarElementCollection()
         {
             elements = new List<TElement>();
         }
 
-        private readonly List<TElement> elements;
+        #endregion
+
+        #region Public Properties
+
+        public int Count { get { return elements.Count; } }
+        public bool IsReadOnly { get { return false; } }
+
+        #endregion
+
+        #region Public Indexers
 
         public TElement this[string elementRef]
 
@@ -50,15 +67,9 @@ namespace MfGames.Culture.Calendars
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        #endregion
 
-        public IEnumerator<TElement> GetEnumerator()
-        {
-            return elements.GetEnumerator();
-        }
+        #region Public Methods and Operators
 
         public void Add(TElement item)
         {
@@ -80,13 +91,25 @@ namespace MfGames.Culture.Calendars
             elements.CopyTo(array, arrayIndex);
         }
 
+        public IEnumerator<TElement> GetEnumerator()
+        {
+            return elements.GetEnumerator();
+        }
+
         public bool Remove(TElement item)
         {
             return elements.Remove(item);
         }
 
-        public int Count { get { return elements.Count; } }
+        #endregion
 
-        public bool IsReadOnly { get { return false; } }
+        #region Explicit Interface Methods
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
     }
 }
