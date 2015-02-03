@@ -7,6 +7,7 @@
 namespace MfGames.Culture.Calendars
 {
     using System;
+    using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
 
@@ -35,6 +36,12 @@ namespace MfGames.Culture.Calendars
             JulianDate = julianDate;
             Elements = new CalendarElementValueDictionary();
 
+            // Reset the elements to zero.
+            foreach (CalendarElement element in Calendar.ValueElements)
+            {
+                Elements[element.Id] = 0;
+            }
+
             // Loops through all the open cycles and calculate each one.
             foreach (OpenCycle openCycle in calendar.OpenCycles)
             {
@@ -42,7 +49,9 @@ namespace MfGames.Culture.Calendars
             }
 
             // Remove the element values for the closed cycles.
-            foreach (var closedCycle in Calendar.Elements.OfType<ClosedCycle>())
+            foreach (
+                ClosedCycle closedCycle in
+                    Calendar.Elements.OfType<ClosedCycle>())
             {
                 Elements.Remove(closedCycle.Id);
             }
@@ -60,6 +69,12 @@ namespace MfGames.Culture.Calendars
         /// <returns></returns>
         public int Get(string elementId)
         {
+            if (!Elements.ContainsKey(elementId))
+            {
+                throw new KeyNotFoundException(
+                    "Cannot find calendar element: " + elementId + ".");
+            }
+
             return Elements[elementId];
         }
     }

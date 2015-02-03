@@ -29,12 +29,6 @@ namespace MfGames.Culture.Calendars
             CalendarElementValueDictionary values,
             decimal julianDate)
         {
-            // Reset the elements to zero.
-            foreach (CalendarElement element in Calendar.ValueElements)
-            {
-                values[element.Id] = 0;
-            }
-
             // To avoid going through the elements twice, we recurse into the various cycles
             // until we get down to the Julian Day calculation which handles subtracting the
             // actual days.

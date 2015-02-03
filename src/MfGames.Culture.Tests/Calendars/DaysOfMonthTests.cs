@@ -25,7 +25,7 @@ namespace MfGames.Culture.Tests.Calendars
             var dayOfMonthBasis = new CountedCycleBasis("DM", dayCycle, 30);
             var monthCycle = new OpenCycle("M", dayOfMonthBasis);
 
-            this.calendar = new CalendarSystem
+            calendar = new CalendarSystem
             {
                 Elements =
                     new CalendarElementCollection<CalendarElement>
@@ -41,7 +41,7 @@ namespace MfGames.Culture.Tests.Calendars
         public void ZeroPoint()
         {
             // Create a point (date) on the calendar based on Julian Day Number.
-            var date = calendar.CreatePoint(0.0m);
+            CalendarPoint date = calendar.CreatePoint(0.0m);
 
             Write(date);
 
@@ -60,10 +60,7 @@ namespace MfGames.Culture.Tests.Calendars
             Write(date);
 
             // Verify the resulting cycle.
-            Assert.AreEqual(
-                65m,
-                date.JulianDate,
-                "JDN is unexpected.");
+            Assert.AreEqual(65m, date.JulianDate, "JDN is unexpected.");
             Assert.AreEqual(2, date.Get("M"), "M is unexpected (Get).");
             Assert.AreEqual(5, date.Get("DM"), "DM is unexpected (Get).");
         }
@@ -109,7 +106,10 @@ namespace MfGames.Culture.Tests.Calendars
 
         private void Write(CalendarPoint point)
         {
-            Console.WriteLine("{0}-{1}", point.Get("M"), point.Get("DM").ToString().PadLeft(2, '0'));
+            Console.WriteLine(
+                "{0}-{1}",
+                point.Get("M"),
+                point.Get("DM").ToString().PadLeft(2, '0'));
         }
     }
 }
