@@ -19,7 +19,22 @@ namespace MfGames.Culture.Calendars.Lengths
 
         #region Public Properties
 
+        public bool IsConstant { get { return true; } }
         public decimal JulianDays { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public bool CanHandle(CalendarElementValueCollection values)
+        {
+            return true;
+        }
+
+        public decimal GetLength(CalendarElementValueCollection values)
+        {
+            return JulianDays;
+        }
 
         #endregion
     }

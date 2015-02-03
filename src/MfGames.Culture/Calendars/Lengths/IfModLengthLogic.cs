@@ -35,7 +35,24 @@ namespace MfGames.Culture.Calendars.Lengths
 
         public string DividendRef { get; set; }
         public int Divisor { get; set; }
+        public bool IsConstant { get { return false; } }
         public decimal JulianDays { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public bool CanHandle(CalendarElementValueCollection values)
+        {
+            int dividend = values[DividendRef];
+            int results = dividend % Divisor;
+            return results == 0;
+        }
+
+        public decimal GetLength(CalendarElementValueCollection values)
+        {
+            return JulianDays;
+        }
 
         #endregion
     }

@@ -33,7 +33,10 @@ namespace MfGames.Culture.Tests.Calendars
             // get closer to the point. The second is to figure out the precise
             // length of the year. Since we don't use another element as a
             // reference, it defaults to 1.0m Julian Days.
-            var year = new OpenCycle("Year");
+            var year = new OpenCycle("Year")
+            {
+                JulianDateOffset = -0.5m - 1721059m
+            };
             var yearLength400 = new CycleLength(
                 400,
                 365m * 400 + 100m - 4m + 1m);
@@ -114,7 +117,12 @@ namespace MfGames.Culture.Tests.Calendars
         private decimal ToJulianDate(DateTime dateTime)
         {
             // http://stackoverflow.com/questions/5248827/convert-datetime-to-julian-date-in-c-sharp-tooadate-safe
-            return (decimal)dateTime.ToOADate() + 2415018.5m;
+            decimal results = (decimal)dateTime.ToOADate() + 2415018.5m;
+            Console.WriteLine(
+                "Julian Date: {0} = {1}",
+                dateTime.ToString("yyyy-MM-dd"),
+                results);
+            return results;
         }
 
         private decimal ToJulianDate(int year, int month, int day)

@@ -12,5 +12,32 @@ namespace MfGames.Culture.Calendars.Lengths
     /// </summary>
     public interface ILengthLogic
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Gets a flag whether the logic is a constant value.
+        /// </summary>
+        bool IsConstant { get; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// Determines if the logic is appliable to the current value. This is
+        /// used to filter in specific months or years.
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        bool CanHandle(CalendarElementValueCollection values);
+
+        /// <summary>
+        /// Calculates the length based on the values.
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        decimal GetLength(CalendarElementValueCollection values);
+
+        #endregion
     }
 }
