@@ -23,29 +23,23 @@ namespace MfGames.Culture.Calendars
         /// </summary>
         public CalendarSystem()
         {
-            Elements = new CalendarElementCollection<CalendarElement>();
+            Cycles = new CalendarElementCollection<Cycle>();
         }
 
         #endregion
 
         #region Public Properties
 
-        public CalendarElementCollection<CalendarElement> Elements { get;
-            private set; }
-
-        public IEnumerable<OpenCycle> OpenCycles
-        {
-            get { return Elements.OfType<OpenCycle>(); }
-        }
+        public CalendarElementCollection<Cycle> Cycles { get; private set; }
 
         #endregion
 
         #region Public Methods and Operators
 
-        public void Add(OpenCycle openCycle)
+        public void Add(Cycle cycle)
         {
-            openCycle.Calendar = this;
-            Elements.Add(openCycle);
+            cycle.Calendar = this;
+            Cycles.Add(cycle);
         }
 
         public CalendarPoint Create(decimal julianDate)
@@ -60,7 +54,7 @@ namespace MfGames.Culture.Calendars
             // elements.
             var results = new CalendarElementValueCollection();
 
-            foreach (OpenCycle cycle in OpenCycles)
+            foreach (Cycle cycle in Cycles)
             {
                 cycle.Calculate(julianDate, results);
             }

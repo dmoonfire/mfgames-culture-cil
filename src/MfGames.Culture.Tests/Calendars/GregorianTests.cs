@@ -28,19 +28,6 @@ namespace MfGames.Culture.Tests.Calendars
 
         #region Public Methods and Operators
 
-        [Test]
-        public void Test()
-        {
-            decimal d0 = ToJulianDate(1999, 1, 1);
-            decimal d1 = ToJulianDate(2000, 1, 1);
-            decimal d2 = ToJulianDate(2001, 1, 1);
-            decimal d3 = ToJulianDate(2002, 1, 1);
-
-            Console.WriteLine("1999 - 2000 = " + (d1 - d0));
-            Console.WriteLine("2000 - 2001 = " + (d2 - d1));
-            Console.WriteLine("2001 - 2002 = " + (d3 - d2));
-        }
-
         [TestFixtureSetUp]
         public void TestFixtureSetup()
         {
@@ -49,7 +36,7 @@ namespace MfGames.Culture.Tests.Calendars
             // get closer to the point. The second is to figure out the precise
             // length of the year. Since we don't use another element as a
             // reference, it defaults to 1.0m Julian Days.
-            var year = new OpenCycle("Year")
+            var year = new Cycle("Year")
             {
                 JulianDateOffset = -0.5m - 1721059m
             };
@@ -65,6 +52,13 @@ namespace MfGames.Culture.Tests.Calendars
             year.Lengths.Add(yearLength400);
             year.Lengths.Add(yearLength1);
 
+            // Day of year is simply a zero-based number of days in the year.
+            var yearDay = new Cycle("Year Day");
+            var yearDayLength = new CycleLength(1, 1.0m);
+
+            yearDay.Lengths.Add(yearDayLength);
+            year.Cycles.Add(yearDay);
+
             // Create the calendar and add the open cycle which will add
             // everything else.
             calendar = new CalendarSystem();
@@ -78,6 +72,7 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(1583, point.Year, "Year");
+            Assert.AreEqual(0, point.YearDay, "YearDay");
         }
 
         [Test]
@@ -87,6 +82,7 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(2000, point.Year, "Year");
+            Assert.AreEqual(0, point.YearDay, "YearDay");
         }
 
         [Test]
@@ -96,6 +92,47 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(2001, point.Year, "Year");
+            Assert.AreEqual(0, point.YearDay, "YearDay");
+        }
+
+        [Test]
+        public void Verify20000102()
+        {
+            decimal julianDate = ToJulianDate(2000, 1, 2);
+            dynamic point = calendar.Create(julianDate);
+
+            Assert.AreEqual(2000, point.Year, "Year");
+            Assert.AreEqual(1, point.YearDay, "YearDay");
+        }
+
+        [Test]
+        public void Verify20010102()
+        {
+            decimal julianDate = ToJulianDate(2001, 1, 2);
+            dynamic point = calendar.Create(julianDate);
+
+            Assert.AreEqual(2001, point.Year, "Year");
+            Assert.AreEqual(1, point.YearDay, "YearDay");
+        }
+
+        [Test]
+        public void Verify20000201()
+        {
+            decimal julianDate = ToJulianDate(2000, 2, 1);
+            dynamic point = calendar.Create(julianDate);
+
+            Assert.AreEqual(2000, point.Year, "Year");
+            Assert.AreEqual(31, point.YearDay, "YearDay");
+        }
+
+        [Test]
+        public void Verify20010201()
+        {
+            decimal julianDate = ToJulianDate(2001, 2, 1);
+            dynamic point = calendar.Create(julianDate);
+
+            Assert.AreEqual(2001, point.Year, "Year");
+            Assert.AreEqual(31, point.YearDay, "YearDay");
         }
 
         [Test]
@@ -105,6 +142,7 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(2002, point.Year, "Year");
+            Assert.AreEqual(0, point.YearDay, "YearDay");
         }
 
         [Test]
@@ -114,6 +152,7 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(2003, point.Year, "Year");
+            Assert.AreEqual(0, point.YearDay, "YearDay");
         }
 
         [Test]
@@ -123,6 +162,7 @@ namespace MfGames.Culture.Tests.Calendars
             dynamic point = calendar.Create(julianDate);
 
             Assert.AreEqual(2004, point.Year, "Year");
+            Assert.AreEqual(0, point.YearDay, "YearDay");
         }
 
         [Test]

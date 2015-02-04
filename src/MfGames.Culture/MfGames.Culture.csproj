@@ -39,7 +39,7 @@
     <Compile Include="Calendars\CalendarElementValueCollection.cs" />
     <Compile Include="Calendars\CalendarPoint.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
-    <Compile Include="Calendars\Cycles\OpenCycle.cs" />
+    <Compile Include="Calendars\Cycles\Cycle.cs" />
     <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\CycleLength.cs" />
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />

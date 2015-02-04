@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 
+using MfGames.Culture.Calendars.Cycles;
+
 namespace MfGames.Culture.Calendars
 {
     /// <summary>
@@ -72,18 +74,55 @@ namespace MfGames.Culture.Calendars
 
         public override IEnumerable<string> GetDynamicMemberNames()
         {
-            return Calendar.Elements.Select(e => e.PascalId);
+            return Calendar.Cycles.Select(e => e.PascalId);
         }
 
         public override bool TryGetMember(
             GetMemberBinder binder,
             out object result)
         {
-            CalendarElement element = Calendar.Elements.First(
-                e => e.PascalId == binder.Name);
+            // See if we can find the element.
+            CalendarElement element = GetElement(binder.Name, Calendar.Cycles);
 
+            if (element == null)
+            {
+                throw new IndexOutOfRangeException(
+                    "Cannot find calendar element: " + binder.Name + ".");
+            }
+
+            // Return the resulting ID.
             result = Values[element.Id];
             return true;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private CalendarElement GetElement(
+            string name,
+            CalendarElementCollection<Cycle> cycles)
+        {
+            // Look through all the elements in the calendar.
+            foreach (Cycle cycle in cycles)
+            {
+                // First check this value.
+                if (cycle.PascalId == name)
+                {
+                    return cycle;
+                }
+
+                // Check inner cycles.
+                CalendarElement element = GetElement(name, cycle.Cycles);
+
+                if (element != null)
+                {
+                    return element;
+                }
+            }
+
+            // If we get out of the loop, we can't find it.
+            return null;
         }
 
         #endregion

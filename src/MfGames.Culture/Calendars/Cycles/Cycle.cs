@@ -1,4 +1,4 @@
-﻿// <copyright file="OpenCycle.cs" company="Moonfire Games">
+﻿// <copyright file="Cycle.cs" company="Moonfire Games">
 //     Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // 
@@ -11,19 +11,22 @@ using MfGames.Culture.Calendars.Lengths;
 
 namespace MfGames.Culture.Calendars.Cycles
 {
-    public class OpenCycle : CalendarElement
+    public class Cycle : CalendarElement
     {
         #region Constructors and Destructors
 
-        public OpenCycle(string id)
+        public Cycle(string id)
             : base(id)
         {
+            Cycles = new CalendarElementCollection<Cycle>();
             Lengths = new List<CycleLength>();
         }
 
         #endregion
 
         #region Public Properties
+
+        public CalendarElementCollection<Cycle> Cycles { get; private set; }
 
         /// <summary>
         /// Gets or sets an offset for Julian Dates and the "zero point" of
@@ -56,6 +59,13 @@ namespace MfGames.Culture.Calendars.Cycles
             // Coming out of the loop is the final relative Julian Day from
             // the index set internally in the values object.
             Debug.WriteLine("Relative Day: {0}", relativeDay);
+
+            // Now that we have a relative day, we can calculate the inner
+            // cycles to get their values.
+            foreach (Cycle cycle in Cycles)
+            {
+                cycle.Calculate(relativeDay, values);
+            }
         }
 
         #endregion
