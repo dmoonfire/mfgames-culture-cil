@@ -10,17 +10,22 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Release (net40)|Any CPU = Release (net40)|Any CPU
+		Release (net45)|Any CPU = Release (net45)|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF68DB4A-140F-488C-BD56-149A82141D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF68DB4A-140F-488C-BD56-149A82141D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Debug|Any CPU.ActiveCfg = Release (net45)|Any CPU
+		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Debug|Any CPU.Build.0 = Release (net45)|Any CPU
+		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net40)|Any CPU.ActiveCfg = Release (net40)|Any CPU
+		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net40)|Any CPU.Build.0 = Release (net40)|Any CPU
+		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net45)|Any CPU.ActiveCfg = Release (net45)|Any CPU
+		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net45)|Any CPU.Build.0 = Release (net45)|Any CPU
+		{EF68DB4A-140F-488C-BD56-149A82141D98}.Debug|Any CPU.ActiveCfg = Release (net45)|Any CPU
+		{EF68DB4A-140F-488C-BD56-149A82141D98}.Debug|Any CPU.Build.0 = Release (net45)|Any CPU
+		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net40)|Any CPU.ActiveCfg = Release (net40)|Any CPU
+		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net40)|Any CPU.Build.0 = Release (net40)|Any CPU
+		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net45)|Any CPU.ActiveCfg = Release (net45)|Any CPU
+		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net45)|Any CPU.Build.0 = Release (net45)|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
