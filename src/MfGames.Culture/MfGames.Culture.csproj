@@ -39,7 +39,13 @@
     <Compile Include="Calendars\CalendarElementValueCollection.cs" />
     <Compile Include="Calendars\CalendarPoint.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
+    <Compile Include="Calendars\Cycles\CalculatedCycle.cs" />
     <Compile Include="Calendars\Cycles\Cycle.cs" />
+    <Compile Include="Calendars\Calculations\CycleCalculation.cs" />
+    <Compile Include="Calendars\Calculations\DivCycleCalculation.cs" />
+    <Compile Include="Calendars\Calculations\ICycleCalculation.cs" />
+    <Compile Include="Calendars\Cycles\LengthCycle.cs" />
+    <Compile Include="Calendars\Calculations\ModCycleCalcualtion.cs" />
     <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\CycleLength.cs" />
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
@@ -57,6 +63,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -90,9 +90,17 @@ namespace MfGames.Culture.Calendars
                     "Cannot find calendar element: " + binder.Name + ".");
             }
 
-            // Return the resulting ID.
-            result = Values[element.Id];
-            return true;
+            // See if we are missing an element.
+            if (Values.ContainsKey(element.Id))
+            {
+                // Return the resulting ID.
+                result = Values[element.Id];
+                return true;
+            }
+
+            // If we can't find it, blow up.
+            throw new InvalidOperationException(
+                "Cannot find " + element.Id + " inside calendar point.");
         }
 
         #endregion
