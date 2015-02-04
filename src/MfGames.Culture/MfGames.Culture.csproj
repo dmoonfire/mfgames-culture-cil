@@ -46,10 +46,12 @@
     <Compile Include="Calendars\Calculations\ICycleCalculation.cs" />
     <Compile Include="Calendars\Cycles\LengthCycle.cs" />
     <Compile Include="Calendars\Calculations\ModCycleCalcualtion.cs" />
+    <Compile Include="Calendars\Lengths\ArrayCycleLength.cs" />
     <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\CycleLength.cs" />
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
+    <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
