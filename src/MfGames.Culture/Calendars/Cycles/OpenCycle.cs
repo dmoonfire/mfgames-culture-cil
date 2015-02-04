@@ -25,13 +25,13 @@ namespace MfGames.Culture.Calendars.Cycles
 
         #region Public Properties
 
-        public IList<CycleLength> Lengths { get; private set; }
-
         /// <summary>
         /// Gets or sets an offset for Julian Dates and the "zero point" of
         /// the cycle.
         /// </summary>
         public decimal JulianDateOffset { get; set; }
+
+        public IList<CycleLength> Lengths { get; private set; }
 
         #endregion
 

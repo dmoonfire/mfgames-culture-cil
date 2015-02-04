@@ -54,6 +54,14 @@ namespace MfGames.Culture.Calendars.Lengths
             return JulianDays;
         }
 
+        public override string ToString()
+        {
+            return string.Format(
+                "IfModLengthLogic({0} % {1})",
+                DividendRef,
+                Divisor);
+        }
+
         #endregion
     }
 }

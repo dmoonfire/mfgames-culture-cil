@@ -60,13 +60,15 @@ namespace MfGames.Culture.Calendars.Lengths
                 // and subtract length from the RJD.
                 values[id] += (int)(Number * count);
                 relativeJulianDay -= length * count;
+
+                // Return the resulting days.
                 return relativeJulianDay;
             }
 
             // For non-constants, we have iterate through the logic until we
             // run out of dates. Every time we do, we increment the index
             // to calculate the next one (this allows us to handle leap years).
-            while (true)
+            while (relativeJulianDay > 0m)
             {
                 // Calculate the index for the current element. This uses the
                 // local version which handles multiple logic fields.
@@ -75,9 +77,11 @@ namespace MfGames.Culture.Calendars.Lengths
                 if (length <= relativeJulianDay)
                 {
                     // There is enough days to completely have this element.
-                    // We increment the counter and move to the next one.
                     relativeJulianDay -= length;
+
+                    // We are going to loop, so increment the count.
                     values[id]++;
+                    continue;
                 }
 
                 // The length exceeds the amount of time, which means that
@@ -97,7 +101,7 @@ namespace MfGames.Culture.Calendars.Lengths
             CalendarElementValueCollection values)
         {
             // Loop through the logics until we find one that is good.
-            foreach (ILengthLogic  lengthLogic in LengthLogics)
+            foreach (ILengthLogic lengthLogic in LengthLogics)
             {
                 if (lengthLogic.CanHandle(values))
                 {

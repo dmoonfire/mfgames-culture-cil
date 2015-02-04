@@ -36,6 +36,11 @@ namespace MfGames.Culture.Calendars.Lengths
             return JulianDays;
         }
 
+        public override string ToString()
+        {
+            return string.Format("ConstantLengthLogic({0})", JulianDays);
+        }
+
         #endregion
     }
 }
