@@ -63,7 +63,7 @@ namespace MfGames.Culture.Calendars.Lengths
 
                         // We are going to loop, so increment the count.
                         values[id]++;
-                        continue;
+                        break;
                     }
 
                     // The length exceeds the amount of time, which means that

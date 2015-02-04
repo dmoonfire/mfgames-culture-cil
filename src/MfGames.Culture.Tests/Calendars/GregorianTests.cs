@@ -416,6 +416,42 @@ namespace MfGames.Culture.Tests.Calendars
         }
 
         [Test]
+        public void Verify20010302()
+        {
+            decimal julianDate = ToJulianDate(2001, 3, 2);
+            dynamic point = calendar.Create(julianDate);
+
+            Assert.AreEqual(2001, point.Year, "Year");
+            Assert.AreEqual(60, point.YearDay, "YearDay");
+            Assert.AreEqual(2, point.Millennium, "Millennium");
+            Assert.AreEqual(20, point.Century, "Century");
+            Assert.AreEqual(200, point.Decade, "Decade");
+            Assert.AreEqual(0, point.MillenniumCentury, "MillenniumCentury");
+            Assert.AreEqual(0, point.CenturyDecade, "CenturyDecade");
+            Assert.AreEqual(1, point.DecadeYear, "DecadeYear");
+            Assert.AreEqual(2, point.YearMonth, "YearMonth");
+            Assert.AreEqual(1, point.MonthDay, "MonthDay");
+        }
+
+        [Test]
+        public void Verify20010302PlusHour()
+        {
+            decimal julianDate = ToJulianDate(2001, 3, 2, 1, 0, 0);
+            dynamic point = calendar.Create(julianDate);
+
+            Assert.AreEqual(2001, point.Year, "Year");
+            Assert.AreEqual(60, point.YearDay, "YearDay");
+            Assert.AreEqual(2, point.Millennium, "Millennium");
+            Assert.AreEqual(20, point.Century, "Century");
+            Assert.AreEqual(200, point.Decade, "Decade");
+            Assert.AreEqual(0, point.MillenniumCentury, "MillenniumCentury");
+            Assert.AreEqual(0, point.CenturyDecade, "CenturyDecade");
+            Assert.AreEqual(1, point.DecadeYear, "DecadeYear");
+            Assert.AreEqual(2, point.YearMonth, "YearMonth");
+            Assert.AreEqual(1, point.MonthDay, "MonthDay");
+        }
+
+        [Test]
         public void Verify20020101()
         {
             decimal julianDate = ToJulianDate(2002, 1, 1);
