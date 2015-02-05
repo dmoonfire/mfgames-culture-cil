@@ -89,12 +89,9 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
-		public void VerifyHour8Minute12()
+		public void VerifyHour8Minute13()
 		{
-			// We have to add "1m / 864000m" because of repeating decimals.
-			decimal julianDate = 0.5m + 8m / 24m + 12m / 1440m + 0m / 86400m
-				+ 1m / 864000m;
-			dynamic point = calendar.Create(julianDate);
+			dynamic point = calendar.Create(new DateTime(2000, 1, 1, 8, 12, 0));
 
 			Assert.AreEqual(8, point.Hour, "Hour");
 			Assert.AreEqual(12, point.Minute, "Minute");
