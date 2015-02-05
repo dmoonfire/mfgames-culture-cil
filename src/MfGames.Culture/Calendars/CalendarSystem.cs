@@ -5,6 +5,11 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
+
+using Fractions;
+
+using MfGames.Extensions.System;
 using MfGames.Culture.Calendars.Cycles;
 
 namespace MfGames.Culture.Calendars
@@ -40,12 +45,40 @@ namespace MfGames.Culture.Calendars
 			Cycles.Add(cycle);
 		}
 
-		public CalendarPoint Create(decimal julianDate)
+		public CalendarPoint Create(DateTime date)
 		{
-			return new CalendarPoint(this, julianDate);
+			// We can safely convert the year, month, and day to Julian without
+			// losing any fidelity.
+			var datePart = new DateTime(date.Year, date.Month, date.Day);
+			var dateJulian = MfGames.Extensions.System.DateTimeExtensions.ToJulianDate(datePart);
+			
+			var dateFraction = new Fraction(dateJulian);
+
+			// For the time, we go straight to fractions.
+			var timeFraction = new Fraction(date.Hour, 24)
+				+ new Fraction(date.Minute, 1440)
+				+ new Fraction(date.Second, 86400);
+
+			// Combine the two together and pass it along.
+			var dateTimeFraction = dateFraction + timeFraction;
+			var results = Create(dateTimeFraction);
+
+			return results;
 		}
 
-		public CalendarElementValueCollection GetValues(decimal julianDate)
+		public CalendarPoint Create(decimal julianDate)
+		{
+			var fractionalJulianDate = new Fraction(julianDate);
+			return Create(fractionalJulianDate);
+		}
+
+		public CalendarPoint Create(Fraction julianDate)
+		{
+			var values = GetValues(julianDate);
+			return new CalendarPoint(this, values, julianDate);
+		}
+
+		public CalendarElementValueCollection GetValues(Fraction julianDate)
 		{
 			// Create a collection and then initialized it with all of the
 			// open cycles which will cascade down into the rest of the

@@ -7,6 +7,8 @@
 
 using System.Collections.Generic;
 
+using Fractions;
+
 using MfGames.Culture.Calendars.Lengths;
 
 namespace MfGames.Culture.Calendars.Cycles
@@ -41,17 +43,18 @@ namespace MfGames.Culture.Calendars.Cycles
 		#region Public Methods and Operators
 
 		public override void Calculate(
-			decimal julianDate,
+			Fraction julianDate,
 			CalendarElementValueCollection values)
 		{
 			// Apply the offset so we can normalize the start point as "zero"
 			// for this calendar.
-			decimal relativeDay = julianDate + JulianDateOffset;
+			Fraction relativeDay = julianDate + JulianDateOffset;
 
 			// If we are stripping off whole days, we need to remove them now.
 			if (StripWholeDays)
 			{
-				relativeDay = relativeDay % 1.0m;
+				// TODO: This loses some fidelity.
+				relativeDay = new Fraction(relativeDay.ToDecimal() % 1.0m);
 			}
 
 			// We go through the length logics to figure out the points,

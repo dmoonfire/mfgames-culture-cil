@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Cycles
 {
 	public abstract class Cycle : CalendarElement
@@ -27,14 +29,14 @@ namespace MfGames.Culture.Calendars.Cycles
 		/// Gets or sets an offset for Julian Dates and the "zero point" of
 		/// the cycle.
 		/// </summary>
-		public decimal JulianDateOffset { get; set; }
+		public Fraction JulianDateOffset { get; set; }
 
 		#endregion
 
 		#region Public Methods and Operators
 
 		public virtual void Calculate(
-			decimal julianDate,
+			Fraction julianDate,
 			CalendarElementValueCollection values)
 		{
 			// Now that we have a relative day, we can calculate the inner

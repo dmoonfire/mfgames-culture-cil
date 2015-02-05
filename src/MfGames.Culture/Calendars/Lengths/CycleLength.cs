@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
 	public abstract class CycleLength
@@ -14,7 +16,7 @@ namespace MfGames.Culture.Calendars.Lengths
 		public abstract decimal CalculateIndex(
 			string id,
 			CalendarElementValueCollection values,
-			decimal relativeJulianDay);
+			Fraction relativeJulianDay);
 
 		#endregion
 	}

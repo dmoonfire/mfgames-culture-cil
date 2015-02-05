@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using Fractions;
+
 using MfGames.Culture.Calendars.Calculations;
 
 namespace MfGames.Culture.Calendars.Cycles
@@ -38,7 +40,7 @@ namespace MfGames.Culture.Calendars.Cycles
 		#region Public Methods and Operators
 
 		public override void Calculate(
-			decimal julianDate,
+			Fraction julianDate,
 			CalendarElementValueCollection values)
 		{
 			// Calculate the index.

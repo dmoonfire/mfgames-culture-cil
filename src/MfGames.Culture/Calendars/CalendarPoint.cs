@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 
+using Fractions;
+
 using MfGames.Culture.Calendars.Cycles;
 
 namespace MfGames.Culture.Calendars
@@ -21,7 +23,10 @@ namespace MfGames.Culture.Calendars
 	{
 		#region Constructors and Destructors
 
-		public CalendarPoint(CalendarSystem calendar, decimal julianDate)
+		public CalendarPoint(
+			CalendarSystem calendar,
+			CalendarElementValueCollection values,
+			Fraction julianDate)
 		{
 			// Establish the contracts.
 			if (calendar == null)
@@ -29,19 +34,10 @@ namespace MfGames.Culture.Calendars
 				throw new ArgumentNullException("calendar");
 			}
 
-			if (julianDate < 0)
-			{
-				throw new ArgumentException(
-					"Cannot use a negative Julian Day Number.",
-					"julianDate");
-			}
-
 			// Save the member variables.
 			Calendar = calendar;
 			JulianDate = julianDate;
-
-			// Retrieve the values for the given Julian Date.
-			Values = calendar.GetValues(julianDate);
+			Values = values;
 		}
 
 		#endregion
@@ -49,7 +45,7 @@ namespace MfGames.Culture.Calendars
 		#region Public Properties
 
 		public CalendarSystem Calendar { get; private set; }
-		public decimal JulianDate { get; private set; }
+		public Fraction JulianDate { get; private set; }
 		public CalendarElementValueCollection Values { get; private set; }
 
 		#endregion
