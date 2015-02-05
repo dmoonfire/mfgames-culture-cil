@@ -1,10 +1,11 @@
 ﻿// <copyright file="CultureManager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
-// <license href="http://mfgames.com/mfgames-cil/license">
+// <license href="http://mfgames.com/mfgames-culture-cil/license">
 //   MIT License (MIT)
 // </license>
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -27,12 +28,8 @@ namespace MfGames.Culture
 
 		static CultureManager()
 		{
-			// Create a default instance.
 			instance = new CultureManager();
-
-			// Insert in the known calendars.
-			instance.Calendars["Gregorian"] = new GregorianCalendarSystem();
-			instance.Calendars["Duodecimal"] = new DuodecimalCalendarSystem();
+			instance.CreateDefaults();
 		}
 
 		public CultureManager()
@@ -49,14 +46,29 @@ namespace MfGames.Culture
 			get { return instance; }
 			set
 			{
-				if (value != null)
+				if (value == null)
 				{
-					instance = value;
+					throw new ArgumentNullException(
+						"value",
+						"CultureManager.Instance cannot be assigned a null value.");
 				}
+
+				instance = value;
 			}
 		}
 
 		public IDictionary<string, CalendarSystem> Calendars { get; private set; }
+
+		#endregion
+
+		#region Public Methods and Operators
+
+		public void CreateDefaults()
+		{
+			// Insert in the known calendars.
+			Calendars["Gregorian"] = new GregorianCalendarSystem();
+			Calendars["Duodecimal"] = new DuodecimalCalendarSystem();
+		}
 
 		#endregion
 	}
