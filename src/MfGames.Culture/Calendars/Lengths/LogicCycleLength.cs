@@ -61,7 +61,7 @@ namespace MfGames.Culture.Calendars.Lengths
 				// Figure out the index from the relative. We have to convert
 				// to longs because division with decimals gives us partials
 				// and we want full indexes.
-				long count = (long)relativeJulianDay / (long)length;
+				long count = ((long) (relativeJulianDay / length));
 
 				// For every count items, we add this.Number to the index
 				// and subtract length from the RJD.

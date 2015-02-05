@@ -30,6 +30,12 @@ namespace MfGames.Culture.Calendars.Cycles
 
 		public IList<CycleLength> Lengths { get; private set; }
 
+		/// <summary>
+		/// Gets or sets a flag whether whole days (numbers left of the
+		/// decimal) are stripped off after applying the offset.
+		/// </summary>
+		public bool StripWholeDays { get; set; }
+
 		#endregion
 
 		#region Public Methods and Operators
@@ -38,12 +44,20 @@ namespace MfGames.Culture.Calendars.Cycles
 			decimal julianDate,
 			CalendarElementValueCollection values)
 		{
+			// Apply the offset so we can normalize the start point as "zero"
+			// for this calendar.
+			decimal relativeDay = julianDate + JulianDateOffset;
+
+			// If we are stripping off whole days, we need to remove them now.
+			if (StripWholeDays)
+			{
+				relativeDay = relativeDay % 1.0m;
+			}
+
 			// We go through the length logics to figure out the points,
 			// starting with a seed value of zero. The value coming out with
 			// be the relative Julian Day from the beginning of the cycle.
 			values[Id] = 0;
-
-			decimal relativeDay = julianDate + JulianDateOffset;
 
 			foreach (CycleLength length in Lengths)
 			{
