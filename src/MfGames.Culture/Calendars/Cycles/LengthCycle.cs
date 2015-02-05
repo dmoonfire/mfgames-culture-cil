@@ -53,8 +53,10 @@ namespace MfGames.Culture.Calendars.Cycles
 			// If we are stripping off whole days, we need to remove them now.
 			if (StripWholeDays)
 			{
-				// TODO: This loses some fidelity.
-				relativeDay = new Fraction(relativeDay.ToDecimal() % 1.0m);
+				// Remove the whole number part from the fraction.
+				relativeDay = new Fraction(
+					relativeDay.Numerator % relativeDay.Denominator,
+					relativeDay.Denominator);
 			}
 
 			// We go through the length logics to figure out the points,

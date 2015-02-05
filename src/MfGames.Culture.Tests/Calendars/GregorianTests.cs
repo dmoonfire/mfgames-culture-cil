@@ -8,6 +8,8 @@
 using System;
 using System.Globalization;
 
+using Fractions;
+
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Calculations;
 using MfGames.Culture.Calendars.Cycles;
@@ -40,7 +42,7 @@ namespace MfGames.Culture.Tests.Calendars
 			// reference, it defaults to 1.0m Julian Days.
 			var year = new LengthCycle("Year")
 			{
-				JulianDateOffset = -0.5m - 1721059m
+				JulianDateOffset = new Fraction(-0.5m - 1721059m)
 			};
 			var yearLength400 = new LogicCycleLength(
 				400,
@@ -567,7 +569,7 @@ namespace MfGames.Culture.Tests.Calendars
 			var values = new CalendarElementValueCollection();
 
 			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, 0m);
+			yearLength1.CalculateIndex("Year", values, new Fraction(0m));
 
 			// Verify the results.
 			Assert.AreEqual(0, values["Year"]);
@@ -580,7 +582,7 @@ namespace MfGames.Culture.Tests.Calendars
 			var values = new CalendarElementValueCollection();
 
 			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, 365m);
+			yearLength1.CalculateIndex("Year", values, new Fraction(365m));
 
 			// Verify the results.
 			Assert.AreEqual(0, values["Year"]);
@@ -593,7 +595,7 @@ namespace MfGames.Culture.Tests.Calendars
 			var values = new CalendarElementValueCollection();
 
 			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, 366m);
+			yearLength1.CalculateIndex("Year", values, new Fraction(366m));
 
 			// Verify the results.
 			Assert.AreEqual(1, values["Year"]);
@@ -606,7 +608,7 @@ namespace MfGames.Culture.Tests.Calendars
 			var values = new CalendarElementValueCollection();
 
 			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, 367m);
+			yearLength1.CalculateIndex("Year", values, new Fraction(367m));
 
 			// Verify the results.
 			Assert.AreEqual(1, values["Year"]);

@@ -13,7 +13,7 @@ namespace MfGames.Culture.Calendars.Lengths
 	{
 		#region Public Methods and Operators
 
-		public abstract decimal CalculateIndex(
+		public abstract Fraction CalculateIndex(
 			string id,
 			CalendarElementValueCollection values,
 			Fraction relativeJulianDay);

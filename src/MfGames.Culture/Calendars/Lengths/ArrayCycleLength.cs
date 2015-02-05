@@ -8,6 +8,8 @@
 using System;
 using System.Linq;
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
 	public class ArrayCycleLength : CycleLength
@@ -31,10 +33,10 @@ namespace MfGames.Culture.Calendars.Lengths
 
 		#region Public Methods and Operators
 
-		public override decimal CalculateIndex(
+		public override Fraction CalculateIndex(
 			string id,
 			CalendarElementValueCollection values,
-			decimal relativeJulianDay)
+			Fraction relativeJulianDay)
 		{
 			// Figure out the index based on the relative day.
 			for (var index = 0; index < Lengths.Count(); index++)
@@ -43,7 +45,7 @@ namespace MfGames.Culture.Calendars.Lengths
 				values[id] = index;
 
 				// If we are at zero days, stop processing.
-				if (relativeJulianDay == 0m)
+				if (relativeJulianDay.IsZero)
 				{
 					break;
 				}
@@ -51,11 +53,11 @@ namespace MfGames.Culture.Calendars.Lengths
 				// For non-constants, we have iterate through the logic until we
 				// run out of dates. Every time we do, we increment the index
 				// to calculate the next one (this allows us to handle leap years).
-				while (relativeJulianDay > 0m)
+				while (relativeJulianDay.IsPositive)
 				{
 					// Calculate the index for the current element. This uses the
 					// local version which handles multiple logic fields.
-					decimal length = GetFirstValidLength(values, Lengths[index]);
+					Fraction length = GetFirstValidLength(values, Lengths[index]);
 
 					if (length <= relativeJulianDay)
 					{
@@ -82,7 +84,7 @@ namespace MfGames.Culture.Calendars.Lengths
 
 		#region Methods
 
-		private decimal GetFirstValidLength(
+		private Fraction GetFirstValidLength(
 			CalendarElementValueCollection values,
 			ILengthLogic[] lengthLogics)
 		{
@@ -91,7 +93,7 @@ namespace MfGames.Culture.Calendars.Lengths
 			{
 				if (lengthLogic.CanHandle(values))
 				{
-					decimal results = lengthLogic.GetLength(values);
+					Fraction results = lengthLogic.GetLength(values);
 					return results;
 				}
 			}

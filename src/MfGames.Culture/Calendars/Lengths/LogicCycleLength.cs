@@ -7,6 +7,8 @@
 
 using System;
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
 	public class LogicCycleLength : CycleLength
@@ -14,6 +16,11 @@ namespace MfGames.Culture.Calendars.Lengths
 		#region Constructors and Destructors
 
 		public LogicCycleLength(int number, decimal julianDays)
+			: this(number, new Fraction(julianDays))
+		{
+		}
+
+		public LogicCycleLength(int number, Fraction julianDays)
 			: this(number, new ConstantLengthLogic(julianDays))
 		{
 		}
@@ -40,10 +47,10 @@ namespace MfGames.Culture.Calendars.Lengths
 
 		#region Public Methods and Operators
 
-		public override decimal CalculateIndex(
+		public override Fraction CalculateIndex(
 			string id,
 			CalendarElementValueCollection values,
-			decimal relativeJulianDay)
+			Fraction relativeJulianDay)
 		{
 			// Make sure we have the ID.
 			if (!values.ContainsKey(id))
@@ -56,12 +63,12 @@ namespace MfGames.Culture.Calendars.Lengths
 			if (LengthLogics.Length == 1 && LengthLogics[0].IsConstant)
 			{
 				// Get the length of the constant.
-				decimal length = LengthLogics[0].GetLength(values);
+				Fraction length = LengthLogics[0].GetLength(values);
 
 				// Figure out the index from the relative. We have to convert
 				// to longs because division with decimals gives us partials
 				// and we want full indexes.
-				long count = ((long) (relativeJulianDay / length));
+				var count = ((long)(relativeJulianDay / length));
 
 				// For every count items, we add this.Number to the index
 				// and subtract length from the RJD.
@@ -75,11 +82,11 @@ namespace MfGames.Culture.Calendars.Lengths
 			// For non-constants, we have iterate through the logic until we
 			// run out of dates. Every time we do, we increment the index
 			// to calculate the next one (this allows us to handle leap years).
-			while (relativeJulianDay > 0m)
+			while (relativeJulianDay.IsPositive)
 			{
 				// Calculate the index for the current element. This uses the
 				// local version which handles multiple logic fields.
-				decimal length = GetFirstValidLength(values);
+				Fraction length = GetFirstValidLength(values);
 
 				if (length <= relativeJulianDay)
 				{
@@ -104,7 +111,7 @@ namespace MfGames.Culture.Calendars.Lengths
 
 		#region Methods
 
-		private decimal GetFirstValidLength(
+		private Fraction GetFirstValidLength(
 			CalendarElementValueCollection values)
 		{
 			// Loop through the logics until we find one that is good.
@@ -112,7 +119,7 @@ namespace MfGames.Culture.Calendars.Lengths
 			{
 				if (lengthLogic.CanHandle(values))
 				{
-					decimal results = lengthLogic.GetLength(values);
+					Fraction results = lengthLogic.GetLength(values);
 					return results;
 				}
 			}

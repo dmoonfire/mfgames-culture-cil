@@ -9,8 +9,8 @@ using System;
 
 using Fractions;
 
-using MfGames.Extensions.System;
 using MfGames.Culture.Calendars.Cycles;
+using MfGames.Extensions.System;
 
 namespace MfGames.Culture.Calendars
 {
@@ -50,18 +50,18 @@ namespace MfGames.Culture.Calendars
 			// We can safely convert the year, month, and day to Julian without
 			// losing any fidelity.
 			var datePart = new DateTime(date.Year, date.Month, date.Day);
-			var dateJulian = MfGames.Extensions.System.DateTimeExtensions.ToJulianDate(datePart);
-			
+			double dateJulian = datePart.ToJulianDate();
+
 			var dateFraction = new Fraction(dateJulian);
 
 			// For the time, we go straight to fractions.
-			var timeFraction = new Fraction(date.Hour, 24)
+			Fraction timeFraction = new Fraction(date.Hour, 24)
 				+ new Fraction(date.Minute, 1440)
 				+ new Fraction(date.Second, 86400);
 
 			// Combine the two together and pass it along.
-			var dateTimeFraction = dateFraction + timeFraction;
-			var results = Create(dateTimeFraction);
+			Fraction dateTimeFraction = dateFraction + timeFraction;
+			CalendarPoint results = Create(dateTimeFraction);
 
 			return results;
 		}
@@ -74,7 +74,7 @@ namespace MfGames.Culture.Calendars
 
 		public CalendarPoint Create(Fraction julianDate)
 		{
-			var values = GetValues(julianDate);
+			CalendarElementValueCollection values = GetValues(julianDate);
 			return new CalendarPoint(this, values, julianDate);
 		}
 

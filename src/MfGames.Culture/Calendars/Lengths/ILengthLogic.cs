@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
 	/// <summary>
@@ -37,7 +39,7 @@ namespace MfGames.Culture.Calendars.Lengths
 		/// </summary>
 		/// <param name="values"></param>
 		/// <returns></returns>
-		decimal GetLength(CalendarElementValueCollection values);
+		Fraction GetLength(CalendarElementValueCollection values);
 
 		#endregion
 	}

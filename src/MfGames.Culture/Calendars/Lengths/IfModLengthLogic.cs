@@ -7,6 +7,8 @@
 
 using System;
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
 	public class IfModLengthLogic : ILengthLogic
@@ -16,7 +18,23 @@ namespace MfGames.Culture.Calendars.Lengths
 		public IfModLengthLogic(
 			string dividendRef,
 			int divisor,
+			int julianDays)
+			: this(dividendRef, divisor, new Fraction(julianDays))
+		{
+		}
+
+		public IfModLengthLogic(
+			string dividendRef,
+			int divisor,
 			decimal julianDays)
+			: this(dividendRef, divisor, new Fraction(julianDays))
+		{
+		}
+
+		public IfModLengthLogic(
+			string dividendRef,
+			int divisor,
+			Fraction julianDays)
 		{
 			if (divisor == 0)
 			{
@@ -37,7 +55,7 @@ namespace MfGames.Culture.Calendars.Lengths
 		public string DividendRef { get; set; }
 		public int Divisor { get; set; }
 		public bool IsConstant { get { return false; } }
-		public decimal JulianDays { get; set; }
+		public Fraction JulianDays { get; set; }
 
 		#endregion
 
@@ -50,7 +68,7 @@ namespace MfGames.Culture.Calendars.Lengths
 			return results == 0;
 		}
 
-		public decimal GetLength(CalendarElementValueCollection values)
+		public Fraction GetLength(CalendarElementValueCollection values)
 		{
 			return JulianDays;
 		}

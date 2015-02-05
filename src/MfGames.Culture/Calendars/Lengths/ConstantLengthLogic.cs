@@ -5,13 +5,25 @@
 //   MIT License (MIT)
 // </license>
 
+using Fractions;
+
 namespace MfGames.Culture.Calendars.Lengths
 {
 	public class ConstantLengthLogic : ILengthLogic
 	{
 		#region Constructors and Destructors
 
+		public ConstantLengthLogic(int julianDays)
+			: this(new Fraction(julianDays))
+		{
+		}
+
 		public ConstantLengthLogic(decimal julianDays)
+			: this(new Fraction(julianDays))
+		{
+		}
+
+		public ConstantLengthLogic(Fraction julianDays)
 		{
 			JulianDays = julianDays;
 		}
@@ -21,7 +33,7 @@ namespace MfGames.Culture.Calendars.Lengths
 		#region Public Properties
 
 		public bool IsConstant { get { return true; } }
-		public decimal JulianDays { get; set; }
+		public Fraction JulianDays { get; set; }
 
 		#endregion
 
@@ -32,7 +44,7 @@ namespace MfGames.Culture.Calendars.Lengths
 			return true;
 		}
 
-		public decimal GetLength(CalendarElementValueCollection values)
+		public Fraction GetLength(CalendarElementValueCollection values)
 		{
 			return JulianDays;
 		}
