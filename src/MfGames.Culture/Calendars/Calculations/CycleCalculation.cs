@@ -1,45 +1,46 @@
 // <copyright file="CycleCalculation.cs" company="Moonfire Games">
-//     Copyright (c) Moonfire Games. Some Rights Reserved.
+//   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
-// 
-// MIT Licensed (http://opensource.org/licenses/MIT)
+// <license href="http://mfgames.com/mfgames-cil/license">
+//   MIT License (MIT)
+// </license>
 
 namespace MfGames.Culture.Calendars.Calculations
 {
-    public abstract class CycleCalculation : ICycleCalculation
-    {
-        #region Constructors and Destructors
+	public abstract class CycleCalculation : ICycleCalculation
+	{
+		#region Constructors and Destructors
 
-        protected CycleCalculation(string elementRef, int constant)
-        {
-            ElementRef = elementRef;
-            Constant = constant;
-        }
+		protected CycleCalculation(string elementRef, int constant)
+		{
+			ElementRef = elementRef;
+			Constant = constant;
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Properties
+		#region Public Properties
 
-        public int Constant { get; set; }
-        public string ElementRef { get; set; }
+		public int Constant { get; set; }
+		public string ElementRef { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Public Methods and Operators
+		#region Public Methods and Operators
 
-        public int GetIndex(CalendarElementValueCollection values)
-        {
-            int elementValue = values[ElementRef];
+		public int GetIndex(CalendarElementValueCollection values)
+		{
+			int elementValue = values[ElementRef];
 
-            return GetIndex(elementValue);
-        }
+			return GetIndex(elementValue);
+		}
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        protected abstract int GetIndex(int elementValue);
+		protected abstract int GetIndex(int elementValue);
 
-        #endregion
-    }
+		#endregion
+	}
 }

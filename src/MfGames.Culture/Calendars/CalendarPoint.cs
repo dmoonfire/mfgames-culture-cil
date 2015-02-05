@@ -1,8 +1,9 @@
 // <copyright file="CalendarPoint.cs" company="Moonfire Games">
-//     Copyright (c) Moonfire Games. Some Rights Reserved.
+//   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
-// 
-// MIT Licensed (http://opensource.org/licenses/MIT)
+// <license href="http://mfgames.com/mfgames-cil/license">
+//   MIT License (MIT)
+// </license>
 
 using System;
 using System.Collections.Generic;
@@ -13,126 +14,126 @@ using MfGames.Culture.Calendars.Cycles;
 
 namespace MfGames.Culture.Calendars
 {
-    /// <summary>
-    /// Represents a single temporal point within a specific calendar system.
-    /// </summary>
-    public class CalendarPoint : DynamicObject
-    {
-        #region Constructors and Destructors
+	/// <summary>
+	/// Represents a single temporal point within a specific calendar system.
+	/// </summary>
+	public class CalendarPoint : DynamicObject
+	{
+		#region Constructors and Destructors
 
-        public CalendarPoint(CalendarSystem calendar, decimal julianDate)
-        {
-            // Establish the contracts.
-            if (calendar == null)
-            {
-                throw new ArgumentNullException("calendar");
-            }
+		public CalendarPoint(CalendarSystem calendar, decimal julianDate)
+		{
+			// Establish the contracts.
+			if (calendar == null)
+			{
+				throw new ArgumentNullException("calendar");
+			}
 
-            if (julianDate < 0)
-            {
-                throw new ArgumentException(
-                    "Cannot use a negative Julian Day Number.",
-                    "julianDate");
-            }
+			if (julianDate < 0)
+			{
+				throw new ArgumentException(
+					"Cannot use a negative Julian Day Number.",
+					"julianDate");
+			}
 
-            // Save the member variables.
-            Calendar = calendar;
-            JulianDate = julianDate;
+			// Save the member variables.
+			Calendar = calendar;
+			JulianDate = julianDate;
 
-            // Retrieve the values for the given Julian Date.
-            Values = calendar.GetValues(julianDate);
-        }
+			// Retrieve the values for the given Julian Date.
+			Values = calendar.GetValues(julianDate);
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Properties
+		#region Public Properties
 
-        public CalendarSystem Calendar { get; private set; }
-        public decimal JulianDate { get; private set; }
-        public CalendarElementValueCollection Values { get; private set; }
+		public CalendarSystem Calendar { get; private set; }
+		public decimal JulianDate { get; private set; }
+		public CalendarElementValueCollection Values { get; private set; }
 
-        #endregion
+		#endregion
 
-        #region Public Methods and Operators
+		#region Public Methods and Operators
 
-        /// <summary>
-        /// Retrieves the zero-based index for an element (basis or cycle) represented
-        /// by the current point.
-        /// </summary>
-        /// <param name="elementId"></param>
-        /// <returns></returns>
-        public int Get(string elementId)
-        {
-            if (!Values.ContainsKey(elementId))
-            {
-                throw new KeyNotFoundException(
-                    "Cannot find calendar element: " + elementId + ".");
-            }
+		/// <summary>
+		/// Retrieves the zero-based index for an element (basis or cycle) represented
+		/// by the current point.
+		/// </summary>
+		/// <param name="elementId"></param>
+		/// <returns></returns>
+		public int Get(string elementId)
+		{
+			if (!Values.ContainsKey(elementId))
+			{
+				throw new KeyNotFoundException(
+					"Cannot find calendar element: " + elementId + ".");
+			}
 
-            return Values[elementId];
-        }
+			return Values[elementId];
+		}
 
-        public override IEnumerable<string> GetDynamicMemberNames()
-        {
-            return Calendar.Cycles.Select(e => e.PascalId);
-        }
+		public override IEnumerable<string> GetDynamicMemberNames()
+		{
+			return Calendar.Cycles.Select(e => e.PascalId);
+		}
 
-        public override bool TryGetMember(
-            GetMemberBinder binder,
-            out object result)
-        {
-            // See if we can find the element.
-            CalendarElement element = GetElement(binder.Name, Calendar.Cycles);
+		public override bool TryGetMember(
+			GetMemberBinder binder,
+			out object result)
+		{
+			// See if we can find the element.
+			CalendarElement element = GetElement(binder.Name, Calendar.Cycles);
 
-            if (element == null)
-            {
-                throw new IndexOutOfRangeException(
-                    "Cannot find calendar element: " + binder.Name + ".");
-            }
+			if (element == null)
+			{
+				throw new IndexOutOfRangeException(
+					"Cannot find calendar element: " + binder.Name + ".");
+			}
 
-            // See if we are missing an element.
-            if (Values.ContainsKey(element.Id))
-            {
-                // Return the resulting ID.
-                result = Values[element.Id];
-                return true;
-            }
+			// See if we are missing an element.
+			if (Values.ContainsKey(element.Id))
+			{
+				// Return the resulting ID.
+				result = Values[element.Id];
+				return true;
+			}
 
-            // If we can't find it, blow up.
-            throw new InvalidOperationException(
-                "Cannot find " + element.Id + " inside calendar point.");
-        }
+			// If we can't find it, blow up.
+			throw new InvalidOperationException(
+				"Cannot find " + element.Id + " inside calendar point.");
+		}
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        private CalendarElement GetElement(
-            string name,
-            CalendarElementCollection<Cycle> cycles)
-        {
-            // Look through all the elements in the calendar.
-            foreach (Cycle cycle in cycles)
-            {
-                // First check this value.
-                if (cycle.PascalId == name)
-                {
-                    return cycle;
-                }
+		private CalendarElement GetElement(
+			string name,
+			CalendarElementCollection<Cycle> cycles)
+		{
+			// Look through all the elements in the calendar.
+			foreach (Cycle cycle in cycles)
+			{
+				// First check this value.
+				if (cycle.PascalId == name)
+				{
+					return cycle;
+				}
 
-                // Check inner cycles.
-                CalendarElement element = GetElement(name, cycle.Cycles);
+				// Check inner cycles.
+				CalendarElement element = GetElement(name, cycle.Cycles);
 
-                if (element != null)
-                {
-                    return element;
-                }
-            }
+				if (element != null)
+				{
+					return element;
+				}
+			}
 
-            // If we get out of the loop, we can't find it.
-            return null;
-        }
+			// If we get out of the loop, we can't find it.
+			return null;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

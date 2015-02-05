@@ -1,8 +1,9 @@
 // <copyright file="CalendarElementCollection.cs" company="Moonfire Games">
-//     Copyright (c) Moonfire Games. Some Rights Reserved.
+//   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
-// 
-// MIT Licensed (http://opensource.org/licenses/MIT)
+// <license href="http://mfgames.com/mfgames-cil/license">
+//   MIT License (MIT)
+// </license>
 
 using System;
 using System.Collections;
@@ -11,105 +12,105 @@ using System.Linq;
 
 namespace MfGames.Culture.Calendars
 {
-    /// <summary>
-    /// A specialized collection of calendar elements that enforces ID constraint
-    /// while focusing on a small number of total elements.
-    /// </summary>
-    /// <typeparam name="TElement"></typeparam>
-    public class CalendarElementCollection<TElement> : ICollection<TElement>
-        where TElement : CalendarElement
-    {
-        #region Fields
+	/// <summary>
+	/// A specialized collection of calendar elements that enforces ID constraint
+	/// while focusing on a small number of total elements.
+	/// </summary>
+	/// <typeparam name="TElement"></typeparam>
+	public class CalendarElementCollection<TElement> : ICollection<TElement>
+		where TElement : CalendarElement
+	{
+		#region Fields
 
-        private readonly List<TElement> elements;
+		private readonly List<TElement> elements;
 
-        #endregion
+		#endregion
 
-        #region Constructors and Destructors
+		#region Constructors and Destructors
 
-        public CalendarElementCollection()
-        {
-            elements = new List<TElement>();
-        }
+		public CalendarElementCollection()
+		{
+			elements = new List<TElement>();
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Properties
+		#region Public Properties
 
-        public int Count { get { return elements.Count; } }
-        public bool IsReadOnly { get { return false; } }
+		public int Count { get { return elements.Count; } }
+		public bool IsReadOnly { get { return false; } }
 
-        #endregion
+		#endregion
 
-        #region Public Indexers
+		#region Public Indexers
 
-        public TElement this[string elementRef]
+		public TElement this[string elementRef]
 
-        {
-            get
-            {
-                TElement element =
-                    elements.FirstOrDefault(e => e.Id == elementRef);
+		{
+			get
+			{
+				TElement element =
+					elements.FirstOrDefault(e => e.Id == elementRef);
 
-                if (element != null)
-                {
-                    return element;
-                }
+				if (element != null)
+				{
+					return element;
+				}
 
-                throw new IndexOutOfRangeException(
-                    "Cannot find calendar element: " + elementRef + ".");
-            }
+				throw new IndexOutOfRangeException(
+					"Cannot find calendar element: " + elementRef + ".");
+			}
 
-            set
-            {
-                elements.RemoveAll(p => p.Id == elementRef);
-                elements.Add(value);
-            }
-        }
+			set
+			{
+				elements.RemoveAll(p => p.Id == elementRef);
+				elements.Add(value);
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Public Methods and Operators
+		#region Public Methods and Operators
 
-        public void Add(TElement item)
-        {
-            this[item.Id] = item;
-        }
+		public void Add(TElement item)
+		{
+			this[item.Id] = item;
+		}
 
-        public void Clear()
-        {
-            elements.Clear();
-        }
+		public void Clear()
+		{
+			elements.Clear();
+		}
 
-        public bool Contains(TElement item)
-        {
-            return elements.Contains(item);
-        }
+		public bool Contains(TElement item)
+		{
+			return elements.Contains(item);
+		}
 
-        public void CopyTo(TElement[] array, int arrayIndex)
-        {
-            elements.CopyTo(array, arrayIndex);
-        }
+		public void CopyTo(TElement[] array, int arrayIndex)
+		{
+			elements.CopyTo(array, arrayIndex);
+		}
 
-        public IEnumerator<TElement> GetEnumerator()
-        {
-            return elements.GetEnumerator();
-        }
+		public IEnumerator<TElement> GetEnumerator()
+		{
+			return elements.GetEnumerator();
+		}
 
-        public bool Remove(TElement item)
-        {
-            return elements.Remove(item);
-        }
+		public bool Remove(TElement item)
+		{
+			return elements.Remove(item);
+		}
 
-        #endregion
+		#endregion
 
-        #region Explicit Interface Methods
+		#region Explicit Interface Methods
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -4,64 +4,64 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EF68DB4A-140F-488C-BD56-149A82141D98}</ProjectGuid>
+    <ProjectGuid>{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MfGames.Culture.Tests</RootNamespace>
-    <AssemblyName>MfGames.Culture.Tests</AssemblyName>
+    <RootNamespace>MfGames.Culture</RootNamespace>
+    <AssemblyName>MfGames.Culture</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\net45\</OutputPath>
+    <OutputPath>..\..\bin\net40\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release %28net45%29|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\net45\</OutputPath>
+    <OutputPath>..\..\bin\net40\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release %28net40%29|AnyCPU'">
-    <OutputPath>..\..\bin\net45\</OutputPath>
+    <OutputPath>..\..\bin\net40\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Calendars\GregorianTests.cs" />
+    <Compile Include="Calendars\CalendarElement.cs" />
+    <Compile Include="Calendars\CalendarElementCollection.cs" />
+    <Compile Include="Calendars\CalendarElementValueCollection.cs" />
+    <Compile Include="Calendars\CalendarPoint.cs" />
+    <Compile Include="Calendars\CalendarSystem.cs" />
+    <Compile Include="Calendars\Cycles\CalculatedCycle.cs" />
+    <Compile Include="Calendars\Cycles\Cycle.cs" />
+    <Compile Include="Calendars\Calculations\CycleCalculation.cs" />
+    <Compile Include="Calendars\Calculations\DivCycleCalculation.cs" />
+    <Compile Include="Calendars\Calculations\ICycleCalculation.cs" />
+    <Compile Include="Calendars\Cycles\LengthCycle.cs" />
+    <Compile Include="Calendars\Calculations\ModCycleCalcualtion.cs" />
+    <Compile Include="Calendars\Lengths\ArrayCycleLength.cs" />
+    <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
+    <Compile Include="Calendars\Lengths\CycleLength.cs" />
+    <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
+    <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
+    <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MfGames.Culture\MfGames.Culture.NET45.csproj">
-      <Project>{bb082f66-000e-4bff-bc42-5ccda5ce3f4a}</Project>
-      <Name>MfGames.Culture.NET45</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

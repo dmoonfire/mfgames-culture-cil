@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MfGames</id>
+    <version>0.0.0.0</version>
+    <title>MfGames Culture CIL</title>
+    <authors>Dylan R. E. Moonfire</authors>
+    <owners>Dylan R. E. Moonfire</owners>
+    <licenseUrl>http://mfgames.com/mfgames-culture-cil/license</licenseUrl>
+    <projectUrl>http://mfgames.com/mfgames-culture-cil</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET library for handling arbitrary cultures.</description>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+  
+  <files>
+	<file src="bin\net40\MfGames.Culture.dll" target="lib\net40\MfGames.dll" />
+	<file src="bin\net40\MfGames.Culture.pdb" target="lib\net40\MfGames.pdb" />
+
+	<file src="bin\net45\MfGames.Culture.dll" target="lib\net45\MfGames.dll" />
+	<file src="bin\net45\MfGames.Culture.pdb" target="lib\net45\MfGames.pdb" />
+  </files>
+</package>
