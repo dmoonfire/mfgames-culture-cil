@@ -5,7 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
-namespace MfGames.Culture.Codes
+namespace MfGames.Culture.Translations
 {
 	public interface ITranslation
 	{

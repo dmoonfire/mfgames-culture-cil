@@ -1,9 +1,11 @@
-﻿// <copyright file="IeftLanguageTag.cs" company="Moonfire Games">
+﻿// <copyright file="LanguageTag.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
 //   MIT License (MIT)
 // </license>
+
+using System;
 
 namespace MfGames.Culture.Codes
 {
@@ -11,8 +13,24 @@ namespace MfGames.Culture.Codes
 	/// An immutable identifier for an IEFT language tag including the ISO 639 language
 	/// code and optional components for country, dialect, and sub-tags.
 	/// </summary>
-	public class IeftLanguageTag
+	public class LanguageTag
 	{
+		#region Constructors and Destructors
+
+		public LanguageTag(LanguageCode language)
+		{
+			// Establishg our contracts.
+			if (language == null)
+			{
+				throw new ArgumentNullException("language");
+			}
+
+			// Save the member variables.
+			Language = language;
+		}
+
+		#endregion
+
 		#region Public Properties
 
 		/// <summary>

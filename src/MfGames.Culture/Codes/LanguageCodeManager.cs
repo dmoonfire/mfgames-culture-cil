@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
+using MfGames.Culture.Translations;
+
 namespace MfGames.Culture.Codes
 {
 	/// <summary>
@@ -78,12 +80,14 @@ namespace MfGames.Culture.Codes
 			var frenchTranslation = new Translation();
 			var english = new LanguageCode(englishTranslation, "en", null, "eng", false);
 			var french = new LanguageCode(frenchTranslation, "fr", "fre", "fra", false);
+			var englishTag = new LanguageTag(english);
+			var frenchTag = new LanguageTag(french);
 
-			englishTranslation.AddIntern(english, "English");
-			englishTranslation.AddIntern(french, "anglais");
+			englishTranslation.AddIntern(englishTag, "English");
+			englishTranslation.AddIntern(frenchTag, "anglais");
 
-			frenchTranslation.AddIntern(english, "French");
-			frenchTranslation.AddIntern(french, "français");
+			frenchTranslation.AddIntern(englishTag, "French");
+			frenchTranslation.AddIntern(frenchTag, "français");
 
 			codes.Add(english);
 			codes.Add(french);
@@ -137,8 +141,8 @@ namespace MfGames.Culture.Codes
 					// as soon as this goes out of scope, the immutable verison
 					// in the code will be the only way to access it.
 					var translation = new Translation();
-					translation.AddIntern(english, englishName);
-					translation.AddIntern(french, frenchName);
+					translation.AddIntern(englishTag, englishName);
+					translation.AddIntern(frenchTag, frenchName);
 
 					// Add the code to the list.
 					var code = new LanguageCode(

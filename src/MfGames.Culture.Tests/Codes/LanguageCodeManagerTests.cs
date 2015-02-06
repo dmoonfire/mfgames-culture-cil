@@ -17,7 +17,7 @@ namespace MfGames.Culture.Tests.Codes
 		#region Public Methods and Operators
 
 		[Test]
-		public void LoadDefaults()
+		public void AddDefaultsDoesNotBreak()
 		{
 			// Create the manager and populate the list.
 			var manager = new LanguageCodeManager();

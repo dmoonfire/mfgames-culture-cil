@@ -7,6 +7,8 @@
 
 using System;
 
+using MfGames.Culture.Translations;
+
 namespace MfGames.Culture.Codes
 {
 	/// <summary>

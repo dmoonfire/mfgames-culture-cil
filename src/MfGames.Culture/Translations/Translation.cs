@@ -7,7 +7,9 @@
 
 using System.Collections.Generic;
 
-namespace MfGames.Culture.Codes
+using MfGames.Culture.Codes;
+
+namespace MfGames.Culture.Translations
 {
 	public class Translation : ITranslation
 
@@ -37,16 +39,16 @@ namespace MfGames.Culture.Codes
 
 		#region Public Methods and Operators
 
-		public void Add(LanguageCode languageCode, string translation)
+		public void Add(LanguageTag languageTag, string translation)
 		{
-			var entry = new TranslationEntry(languageCode, translation);
+			var entry = new TranslationEntry(languageTag, translation);
 
 			entries.Add(entry);
 		}
 
-		public void AddIntern(LanguageCode languageCode, string translation)
+		public void AddIntern(LanguageTag languageTag, string translation)
 		{
-			Add(languageCode, string.Intern(translation));
+			Add(languageTag, string.Intern(translation));
 		}
 
 		#endregion
@@ -55,9 +57,9 @@ namespace MfGames.Culture.Codes
 		{
 			#region Constructors and Destructors
 
-			public TranslationEntry(LanguageCode languageCode, string translation)
+			public TranslationEntry(LanguageTag languageTag, string translation)
 			{
-				LanguageCode = languageCode;
+				LanguageTag = languageTag;
 				Translation = translation;
 			}
 
@@ -65,8 +67,8 @@ namespace MfGames.Culture.Codes
 
 			#region Public Properties
 
-			public LanguageCode LanguageCode { get; set; }
-			public string Translation { get; set; }
+			public LanguageTag LanguageTag { get; private set; }
+			public string Translation { get; private set; }
 
 			#endregion
 		}

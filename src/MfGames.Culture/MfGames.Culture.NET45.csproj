@@ -52,11 +52,11 @@
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
     <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
-    <Compile Include="Codes\ImmutableTranslation.cs" />
-    <Compile Include="Codes\ITranslation.cs" />
-    <Compile Include="Codes\Translation.cs" />
+    <Compile Include="Translations\ImmutableTranslation.cs" />
+    <Compile Include="Translations\ITranslation.cs" />
+    <Compile Include="Translations\Translation.cs" />
     <Compile Include="CultureManager.cs" />
-    <Compile Include="Codes\IeftLanguageTag.cs" />
+    <Compile Include="Codes\LanguageTag.cs" />
     <Compile Include="Codes\Iso3166Code.cs" />
     <Compile Include="Codes\Iso3166Manager.cs" />
     <Compile Include="Codes\LanguageCode.cs" />
