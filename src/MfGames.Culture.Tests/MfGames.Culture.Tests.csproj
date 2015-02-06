@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Calendars\DuodecimalTests.cs" />
     <Compile Include="Calendars\GregorianTests.cs" />
+    <Compile Include="Codes\CountryCodeManagerTests.cs" />
     <Compile Include="Codes\LanguageCodeManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

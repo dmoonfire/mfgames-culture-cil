@@ -61,19 +61,36 @@
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
     <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
+    <Compile Include="Codes\CountryCode.cs" />
+    <Compile Include="Codes\CountryCodeManager.cs" />
+    <Compile Include="Codes\LanguageCode.cs" />
+    <Compile Include="Codes\LanguageCodeManager.cs" />
+    <Compile Include="Codes\LanguageTag.cs" />
+    <Compile Include="CultureManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Translations\ImmutableTranslation.cs" />
+    <Compile Include="Translations\ITranslation.cs" />
+    <Compile Include="Translations\Translation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.10.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Fractions">
       <HintPath>..\packages\Fractions.1.2.0.0\lib\net40\Fractions.dll</HintPath>
     </Reference>
     <Reference Include="MfGames">
       <HintPath>..\packages\MfGames.4.1.1.0\lib\net40\MfGames.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Codes\iso_3166_2_countries.csv" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Codes\ISO-639-2_utf-8.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

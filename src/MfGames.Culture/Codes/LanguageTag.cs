@@ -42,5 +42,14 @@ namespace MfGames.Culture.Codes
 		public LanguageCode Language { get; private set; }
 
 		#endregion
+
+		#region Public Methods and Operators
+
+		public override string ToString()
+		{
+			return Language.Alpha3;
+		}
+
+		#endregion
 	}
 }

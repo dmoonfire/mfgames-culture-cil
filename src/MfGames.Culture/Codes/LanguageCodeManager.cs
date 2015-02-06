@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using MfGames.Culture.Translations;
+using MfGames.Extensions.System;
 
 namespace MfGames.Culture.Codes
 {
@@ -94,11 +96,9 @@ namespace MfGames.Culture.Codes
 
 			// Load the defaults from an embedded resource.
 			Assembly assembly = GetType().Assembly;
+			const string Name = "MfGames.Culture.Codes.ISO-639-2_utf-8.txt";
 
-			using (
-				Stream stream =
-					assembly.GetManifestResourceStream(
-						"MfGames.Culture.Codes.ISO-639-2_utf-8.txt"))
+			using (Stream stream = assembly.GetManifestResourceStream(Name))
 			using (var reader = new StreamReader(stream))
 			{
 				// Loop through all the lines in the file.
@@ -115,11 +115,11 @@ namespace MfGames.Culture.Codes
 					// Split the line on the pipe characters and assign the
 					// parts into symbolic names.
 					string[] parts = line.Split('|');
-					string alpha3B = GetNullIfBlank(parts[0]);
-					string alpha3T = GetNullIfBlank(parts[1]);
-					string alpha2 = GetNullIfBlank(parts[2]);
-					string englishName = GetNullIfBlank(parts[3]);
-					string frenchName = GetNullIfBlank(parts[4]);
+					string alpha3B = parts[0].NullIfBlank();
+					string alpha3T = parts[1].NullIfBlank();
+					string alpha2 = parts[2].NullIfBlank();
+					string englishName = parts[3].NullIfBlank();
+					string frenchName = parts[4].NullIfBlank();
 
 					// Ignore English and French since we've already added them.
 					if (alpha3B == "eng" || alpha3B == "fre")
@@ -157,13 +157,9 @@ namespace MfGames.Culture.Codes
 			}
 		}
 
-		#endregion
-
-		#region Methods
-
-		private string GetNullIfBlank(string input)
+		public LanguageCode GetAlpha3(string alpha3)
 		{
-			return string.IsNullOrWhiteSpace(input) ? null : input;
+			return codes.FirstOrDefault(c => c.Alpha3B == alpha3 || c.Alpha3T == alpha3);
 		}
 
 		#endregion

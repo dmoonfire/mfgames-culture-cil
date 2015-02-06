@@ -51,6 +51,22 @@ namespace MfGames.Culture.Translations
 			Add(languageTag, string.Intern(translation));
 		}
 
+		public override string ToString()
+		{
+			if (entries.Count == 0)
+			{
+				return "Translation(0)";
+			}
+
+			TranslationEntry entry = entries[0];
+
+			return string.Format(
+				"Translation({2:N0}, {0}, {1})",
+				entry.LanguageTag,
+				entry.Translation,
+				entries.Count);
+		}
+
 		#endregion
 
 		private class TranslationEntry
@@ -69,6 +85,18 @@ namespace MfGames.Culture.Translations
 
 			public LanguageTag LanguageTag { get; private set; }
 			public string Translation { get; private set; }
+
+			#endregion
+
+			#region Public Methods and Operators
+
+			public override string ToString()
+			{
+				return string.Format(
+					"[{0}, {1}]",
+					LanguageTag,
+					Translation);
+			}
 
 			#endregion
 		}
