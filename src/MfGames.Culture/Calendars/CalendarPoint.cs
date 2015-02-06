@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 
 using Fractions;
 
@@ -21,30 +20,43 @@ namespace MfGames.Culture.Calendars
 	/// </summary>
 	public class CalendarPoint : DynamicObject
 	{
+		#region Fields
+
+		private readonly Dictionary<string, Cycle> cycles;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		public CalendarPoint(
-			CalendarSystem calendar,
+			IEnumerable<Cycle> cycles,
 			CalendarElementValueCollection values,
 			Fraction julianDate)
 		{
 			// Establish the contracts.
-			if (calendar == null)
+			if (cycles == null)
 			{
 				throw new ArgumentNullException("calendar");
 			}
 
 			// Save the member variables.
-			Calendar = calendar;
 			JulianDate = julianDate;
 			Values = values;
+
+			// Populate the cycles.
+			this.cycles = new Dictionary<string, Cycle>();
+
+			foreach (Cycle cycle in cycles)
+			{
+				this.cycles[cycle.Id] = cycle;
+				this.cycles[cycle.PascalId] = cycle;
+			}
 		}
 
 		#endregion
 
 		#region Public Properties
 
-		public CalendarSystem Calendar { get; private set; }
 		public Fraction JulianDate { get; private set; }
 		public CalendarElementValueCollection Values { get; private set; }
 
@@ -69,25 +81,20 @@ namespace MfGames.Culture.Calendars
 			return Values[elementId];
 		}
 
-		public override IEnumerable<string> GetDynamicMemberNames()
-		{
-			return Calendar.Cycles.Select(e => e.PascalId);
-		}
-
 		public override bool TryGetMember(
 			GetMemberBinder binder,
 			out object result)
 		{
 			// See if we can find the element.
-			CalendarElement element = GetElement(binder.Name, Calendar.Cycles);
-
-			if (element == null)
+			if (!cycles.ContainsKey(binder.Name))
 			{
 				throw new IndexOutOfRangeException(
 					"Cannot find calendar element: " + binder.Name + ".");
 			}
 
 			// See if we are missing an element.
+			CalendarElement element = cycles[binder.Name];
+
 			if (Values.ContainsKey(element.Id))
 			{
 				// Return the resulting ID.

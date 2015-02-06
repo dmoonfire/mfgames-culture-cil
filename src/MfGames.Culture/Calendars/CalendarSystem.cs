@@ -6,6 +6,7 @@
 // </license>
 
 using System;
+using System.Collections.Generic;
 
 using Fractions;
 
@@ -75,7 +76,26 @@ namespace MfGames.Culture.Calendars
 		public CalendarPoint Create(Fraction julianDate)
 		{
 			CalendarElementValueCollection values = GetValues(julianDate);
-			return new CalendarPoint(this, values, julianDate);
+			ICollection<Cycle> cycles = GetCycles();
+			var results = new CalendarPoint(cycles, values, julianDate);
+
+			return results;
+		}
+
+		/// <summary>
+		/// Recursively retrieves all of the cycles.
+		/// </summary>
+		/// <returns></returns>
+		public ICollection<Cycle> GetCycles()
+		{
+			var list = new List<Cycle>();
+
+			foreach (Cycle cycle in Cycles)
+			{
+				GetCycles(list, cycle);
+			}
+
+			return list;
 		}
 
 		public CalendarElementValueCollection GetValues(Fraction julianDate)
@@ -92,6 +112,28 @@ namespace MfGames.Culture.Calendars
 
 			// Return the resulting value collection.
 			return results;
+		}
+
+		#endregion
+
+		#region Methods
+
+		private void GetCycles(List<Cycle> list, Cycle cycle)
+		{
+			// If we are blank, then skip it.
+			if (cycle == null)
+			{
+				return;
+			}
+
+			// Add this cycle to the list.
+			list.Add(cycle);
+
+			// Loop through the child cycles.
+			foreach (Cycle child in cycle.Cycles)
+			{
+				GetCycles(list, child);
+			}
 		}
 
 		#endregion

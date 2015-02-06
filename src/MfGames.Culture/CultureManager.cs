@@ -29,7 +29,7 @@ namespace MfGames.Culture
 		static CultureManager()
 		{
 			instance = new CultureManager();
-			instance.CreateDefaults();
+			instance.AddDefaults();
 		}
 
 		public CultureManager()
@@ -63,7 +63,7 @@ namespace MfGames.Culture
 
 		#region Public Methods and Operators
 
-		public void CreateDefaults()
+		public void AddDefaults()
 		{
 			// Insert in the known calendars.
 			Calendars["Gregorian"] = new GregorianCalendarSystem();

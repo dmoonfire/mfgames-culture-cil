@@ -37,6 +37,7 @@
     <Compile Include="Calendars\CalendarElementValueCollection.cs" />
     <Compile Include="Calendars\CalendarPoint.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
+    <Compile Include="Calendars\CalendarSystemCollection.cs" />
     <Compile Include="Calendars\Cycles\CalculatedCycle.cs" />
     <Compile Include="Calendars\Cycles\Cycle.cs" />
     <Compile Include="Calendars\Calculations\CycleCalculation.cs" />
@@ -52,6 +53,8 @@
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
     <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
+    <Compile Include="Culture.cs" />
+    <Compile Include="Extensions\System\DateTimeExtensions.cs" />
     <Compile Include="Translations\ImmutableTranslation.cs" />
     <Compile Include="Translations\ITranslation.cs" />
     <Compile Include="Translations\Translation.cs" />
@@ -83,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Codes\ISO-639-2_utf-8.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Calendars\Formats\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
