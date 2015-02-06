@@ -1,4 +1,4 @@
-﻿// <copyright file="Iso639Manager.cs" company="Moonfire Games">
+﻿// <copyright file="Iso3166Manager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -7,25 +7,25 @@
 
 using System;
 
-namespace MfGames.Culture
+namespace MfGames.Culture.Codes
 {
 	/// <summary>
-	/// A manager class which ensures only a single instance of a <c>Iso639Code</c>
-	/// is created for a given language.
+	/// A manager class which ensures only a single instance of a <c>Iso3166Code</c>
+	/// is created for a given country.
 	/// </summary>
-	public class Iso639Manager
+	public class Iso3166Manager
 	{
 		#region Static Fields
 
-		private static Iso639Manager instance;
+		private static Iso3166Manager instance;
 
 		#endregion
 
 		#region Constructors and Destructors
 
-		static Iso639Manager()
+		static Iso3166Manager()
 		{
-			instance = new Iso639Manager();
+			instance = new Iso3166Manager();
 			instance.CreateDefaults();
 		}
 
@@ -33,7 +33,7 @@ namespace MfGames.Culture
 
 		#region Public Properties
 
-		public static Iso639Manager Instance
+		public static Iso3166Manager Instance
 		{
 			get { return instance; }
 			set
@@ -42,7 +42,7 @@ namespace MfGames.Culture
 				{
 					throw new ArgumentNullException(
 						"value",
-						"Iso639Manager.Instance cannot be assigned a null value.");
+						"Iso3166Manager.Instance cannot be assigned a null value.");
 				}
 
 				instance = value;

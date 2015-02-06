@@ -5,7 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
-namespace MfGames.Culture
+namespace MfGames.Culture.Codes
 {
 	/// <summary>
 	/// An immutable identifier for an IEFT language tag including the ISO 639 language
@@ -21,7 +21,7 @@ namespace MfGames.Culture
 		/// <value>
 		/// The language object.
 		/// </value>
-		public Iso639Code Language { get; private set; }
+		public LanguageCode Language { get; private set; }
 
 		#endregion
 	}

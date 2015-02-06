@@ -52,12 +52,15 @@
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
     <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
+    <Compile Include="Codes\ImmutableTranslation.cs" />
+    <Compile Include="Codes\ITranslation.cs" />
+    <Compile Include="Codes\Translation.cs" />
     <Compile Include="CultureManager.cs" />
-    <Compile Include="IeftLanguageTag.cs" />
-    <Compile Include="Iso3166Code.cs" />
-    <Compile Include="Iso3166Manager.cs" />
-    <Compile Include="Iso639Code.cs" />
-    <Compile Include="Iso639Manager.cs" />
+    <Compile Include="Codes\IeftLanguageTag.cs" />
+    <Compile Include="Codes\Iso3166Code.cs" />
+    <Compile Include="Codes\Iso3166Manager.cs" />
+    <Compile Include="Codes\LanguageCode.cs" />
+    <Compile Include="Codes\LanguageCodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,10 +71,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MfGames.4.1.1.0\lib\net45\MfGames.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Codes\ISO-639-2_utf-8.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

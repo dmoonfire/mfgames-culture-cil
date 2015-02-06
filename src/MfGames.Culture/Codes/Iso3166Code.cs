@@ -5,7 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
-namespace MfGames.Culture
+namespace MfGames.Culture.Codes
 {
 	/// <summary>
 	/// An immutable identifier for an ISO 3166 country code including support for 
