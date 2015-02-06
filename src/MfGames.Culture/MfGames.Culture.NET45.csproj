@@ -57,8 +57,8 @@
     <Compile Include="Translations\Translation.cs" />
     <Compile Include="CultureManager.cs" />
     <Compile Include="Codes\LanguageTag.cs" />
-    <Compile Include="Codes\Iso3166Code.cs" />
-    <Compile Include="Codes\Iso3166Manager.cs" />
+    <Compile Include="Codes\CountryCode.cs" />
+    <Compile Include="Codes\CountryCodeManager.cs" />
     <Compile Include="Codes\LanguageCode.cs" />
     <Compile Include="Codes\LanguageCodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +75,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Codes\iso_3166_2_countries.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

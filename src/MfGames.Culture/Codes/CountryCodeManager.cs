@@ -1,4 +1,4 @@
-﻿// <copyright file="Iso3166Manager.cs" company="Moonfire Games">
+﻿// <copyright file="CountryCodeManager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -10,30 +10,30 @@ using System;
 namespace MfGames.Culture.Codes
 {
 	/// <summary>
-	/// A manager class which ensures only a single instance of a <c>Iso3166Code</c>
+	/// A manager class which ensures only a single instance of a <c>CountryCode</c>
 	/// is created for a given country.
 	/// </summary>
-	public class Iso3166Manager
+	public class CountryCodeManager
 	{
 		#region Static Fields
 
-		private static Iso3166Manager instance;
+		private static CountryCodeManager instance;
 
 		#endregion
 
 		#region Constructors and Destructors
 
-		static Iso3166Manager()
+		static CountryCodeManager()
 		{
-			instance = new Iso3166Manager();
-			instance.CreateDefaults();
+			instance = new CountryCodeManager();
+			instance.AddDefaults();
 		}
 
 		#endregion
 
 		#region Public Properties
 
-		public static Iso3166Manager Instance
+		public static CountryCodeManager Instance
 		{
 			get { return instance; }
 			set
@@ -42,7 +42,7 @@ namespace MfGames.Culture.Codes
 				{
 					throw new ArgumentNullException(
 						"value",
-						"Iso3166Manager.Instance cannot be assigned a null value.");
+						"CountryCodeManager.Instance cannot be assigned a null value.");
 				}
 
 				instance = value;
@@ -53,7 +53,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Methods and Operators
 
-		public void CreateDefaults()
+		public void AddDefaults()
 		{
 		}
 
