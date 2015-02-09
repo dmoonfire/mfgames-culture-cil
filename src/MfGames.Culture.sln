@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Culture.Tests", "MfGames.Culture.Tests\MfGames.Culture.Tests.csproj", "{EF68DB4A-140F-488C-BD56-149A82141D98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Culture.NET40", "MfGames.Culture\MfGames.Culture.NET40.csproj", "{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfGames.Culture.NET45", "MfGames.Culture\MfGames.Culture.NET45.csproj", "{BB082F66-000E-4BFF-BC42-5CCDA5CE3F4A}"
 EndProject
 Global
@@ -22,12 +20,6 @@ Global
 		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net40)|Any CPU.Build.0 = Release|Any CPU
 		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net45)|Any CPU.ActiveCfg = Release|Any CPU
 		{EF68DB4A-140F-488C-BD56-149A82141D98}.Release (net45)|Any CPU.Build.0 = Release|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net40)|Any CPU.ActiveCfg = Release (net40)|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net40)|Any CPU.Build.0 = Release (net40)|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net45)|Any CPU.ActiveCfg = Release (net45)|Any CPU
-		{FF910290-149C-4A3C-B64C-6CCF1C7ACDE1}.Release (net45)|Any CPU.Build.0 = Release (net45)|Any CPU
 		{BB082F66-000E-4BFF-BC42-5CCDA5CE3F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB082F66-000E-4BFF-BC42-5CCDA5CE3F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB082F66-000E-4BFF-BC42-5CCDA5CE3F4A}.Release (net40)|Any CPU.ActiveCfg = Release|Any CPU

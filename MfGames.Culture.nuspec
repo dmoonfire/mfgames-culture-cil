@@ -14,8 +14,10 @@
   </metadata>
   
   <files>
+	<!-- Removing as proof of concept
 	<file src="bin\net40\MfGames.Culture.dll" target="lib\net40\MfGames.dll" />
 	<file src="bin\net40\MfGames.Culture.pdb" target="lib\net40\MfGames.pdb" />
+	-->
 
 	<file src="bin\net45\MfGames.Culture.dll" target="lib\net45\MfGames.dll" />
 	<file src="bin\net45\MfGames.Culture.pdb" target="lib\net45\MfGames.pdb" />
