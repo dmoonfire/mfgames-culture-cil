@@ -21,6 +21,13 @@ namespace MfGames.Culture.Codes
 	{
 		#region Constructors and Destructors
 
+		static LanguageCode()
+		{
+			var allTranslation = new Translation();
+
+			All = new LanguageCode(allTranslation, "*", "*", "*", false);
+		}
+
 		public LanguageCode(Translation names, string alpha3T)
 			: this(names, null, alpha3T)
 		{
@@ -75,6 +82,8 @@ namespace MfGames.Culture.Codes
 		#endregion
 
 		#region Public Properties
+
+		public static LanguageCode All { get; private set; }
 
 		/// <summary>
 		/// Gets the two character ISO 639-1 code for the language. If there

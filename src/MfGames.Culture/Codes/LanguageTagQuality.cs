@@ -1,0 +1,108 @@
+﻿// <copyright file="LanguageTagQuality.cs" company="Moonfire Games">
+//   Copyright (c) Moonfire Games. Some Rights Reserved.
+// </copyright>
+// <license href="http://mfgames.com/mfgames-culture-cil/license">
+//   MIT License (MIT)
+// </license>
+
+using System;
+using System.Text.RegularExpressions;
+
+namespace MfGames.Culture.Codes
+{
+	/// <summary>
+	/// An immutable pairing of a specific language tag along with a quality
+	/// level to indicate preference.
+	/// </summary>
+	/// <remarks>
+	/// This is based on the HTTP Accept-Language header.
+	/// </remarks>
+	public class LanguageTagQuality
+	{
+		#region Static Fields
+
+		private static readonly Regex pattern;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		static LanguageTagQuality()
+		{
+			pattern = new Regex(@"\s*(\*|[\w-]+)(?:;q=(\d*\.\d*))?$");
+		}
+
+		public LanguageTagQuality(LanguageTag languageTag)
+			: this(languageTag, 1.0f)
+		{
+		}
+
+		public LanguageTagQuality(LanguageTag languageTag, float quality)
+		{
+			// Assert our contracts.
+			if (languageTag == null)
+			{
+				throw new ArgumentNullException(
+					"languageTag",
+					"LanguageTag cannot be null.");
+			}
+
+			if (quality < 0)
+			{
+				throw new ArgumentOutOfRangeException(
+					"quality",
+					"Quality cannot be less than zero.");
+			}
+
+			// Save the member variables.
+			LanguageTag = languageTag;
+			Quality = quality;
+		}
+
+		public LanguageTagQuality(string selector)
+			: this(LanguageCodeManager.Instance, selector)
+		{
+		}
+
+		public LanguageTagQuality(LanguageCodeManager languages, string selector)
+		{
+			// Establish our contracts.
+			if (selector == null)
+			{
+				throw new ArgumentNullException("selector");
+			}
+
+			// See if it matches our pattern.
+			Match match = pattern.Match(selector);
+
+			if (!match.Success)
+			{
+				throw new ArgumentException(
+					"Cannot parse language selector: " + selector + ".",
+					"selector");
+			}
+
+			// Figure out the language.
+			LanguageTag = new LanguageTag(match.Groups[1].Value);
+
+			// Parse the quality, defaulting to one if we don't have it.
+			float quality;
+
+			if (!Single.TryParse(match.Groups[2].Value, out quality))
+			{
+				quality = 1.0f;
+			}
+
+			Quality = quality;
+		}
+
+		#endregion
+
+		#region Public Properties
+
+		public LanguageTag LanguageTag { get; private set; }
+		public float Quality { get; private set; }
+
+		#endregion
+	}
+}

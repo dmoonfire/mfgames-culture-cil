@@ -157,8 +157,23 @@ namespace MfGames.Culture.Codes
 			}
 		}
 
+		public LanguageCode Get(string language)
+		{
+			if (language == "*")
+			{
+				return LanguageCode.All;
+			}
+
+			return GetAlpha3(language);
+		}
+
 		public LanguageCode GetAlpha3(string alpha3)
 		{
+			if (alpha3 == "*")
+			{
+				return LanguageCode.All;
+			}
+
 			return codes.FirstOrDefault(c => c.Alpha3B == alpha3 || c.Alpha3T == alpha3);
 		}
 

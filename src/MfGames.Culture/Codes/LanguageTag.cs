@@ -13,9 +13,14 @@ namespace MfGames.Culture.Codes
 	/// An immutable identifier for an IEFT language tag including the ISO 639 language
 	/// code and optional components for country, dialect, and sub-tags.
 	/// </summary>
-	public class LanguageTag
+	public class LanguageTag : IEquatable<LanguageTag>
 	{
 		#region Constructors and Destructors
+
+		static LanguageTag()
+		{
+			All = new LanguageTag { Language = LanguageCode.All };
+		}
 
 		public LanguageTag(LanguageCode language)
 		{
@@ -29,9 +34,25 @@ namespace MfGames.Culture.Codes
 			Language = language;
 		}
 
+		public LanguageTag(string language)
+			: this(LanguageCodeManager.Instance, language)
+		{
+		}
+
+		public LanguageTag(LanguageCodeManager languages, string language)
+			: this(languages.Get(language))
+		{
+		}
+
+		private LanguageTag()
+		{
+		}
+
 		#endregion
 
 		#region Public Properties
+
+		public static LanguageTag All { get; private set; }
 
 		/// <summary>
 		/// Gets the ISO 639 description of the language.
@@ -44,6 +65,56 @@ namespace MfGames.Culture.Codes
 		#endregion
 
 		#region Public Methods and Operators
+
+		public static bool operator ==(LanguageTag left, LanguageTag right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(LanguageTag left, LanguageTag right)
+		{
+			return !Equals(left, right);
+		}
+
+		public bool Equals(LanguageTag other)
+		{
+			if (ReferenceEquals(null, other))
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			return Language.Equals(other.Language);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(this, obj))
+			{
+				return true;
+			}
+
+			if (obj.GetType() != GetType())
+			{
+				return false;
+			}
+
+			return Equals((LanguageTag)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return Language.GetHashCode();
+		}
 
 		public override string ToString()
 		{
