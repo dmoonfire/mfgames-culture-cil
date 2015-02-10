@@ -13,7 +13,7 @@ namespace MfGames.Culture.Codes
 	/// An immutable identifier for an IEFT language tag including the ISO 639 language
 	/// code and optional components for country, dialect, and sub-tags.
 	/// </summary>
-	public class LanguageTag : IEquatable<LanguageTag>
+	public class LanguageTag : IEquatable<LanguageTag>, IComparable<LanguageTag>
 	{
 		#region Constructors and Destructors
 
@@ -74,6 +74,11 @@ namespace MfGames.Culture.Codes
 		public static bool operator !=(LanguageTag left, LanguageTag right)
 		{
 			return !Equals(left, right);
+		}
+
+		public int CompareTo(LanguageTag other)
+		{
+			return ToString().CompareTo(other.ToString());
 		}
 
 		public bool Equals(LanguageTag other)

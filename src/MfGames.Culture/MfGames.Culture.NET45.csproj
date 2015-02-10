@@ -61,6 +61,7 @@
     <Compile Include="Translations\ImmutableTranslation.cs" />
     <Compile Include="Translations\ITranslation.cs" />
     <Compile Include="Translations\ITranslationProvider.cs" />
+    <Compile Include="Translations\MemoryTranslationProvider.cs" />
     <Compile Include="Translations\Translation.cs" />
     <Compile Include="CultureManager.cs" />
     <Compile Include="Codes\LanguageTag.cs" />

@@ -17,7 +17,7 @@ namespace MfGames.Culture.Codes
 	/// <remarks>
 	/// This is based on the HTTP Accept-Language header.
 	/// </remarks>
-	public class LanguageTagQuality
+	public class LanguageTagQuality : IComparable<LanguageTagQuality>
 	{
 		#region Static Fields
 
@@ -102,6 +102,24 @@ namespace MfGames.Culture.Codes
 
 		public LanguageTag LanguageTag { get; private set; }
 		public float Quality { get; private set; }
+
+		#endregion
+
+		#region Public Methods and Operators
+
+		public int CompareTo(LanguageTagQuality other)
+		{
+			// Sort quality from high to low.
+			int results = other.Quality.CompareTo(Quality);
+
+			if (results != 0)
+			{
+				return results;
+			}
+
+			// Otherwise, just use another qualifier.
+			return LanguageTag.CompareTo(other.LanguageTag);
+		}
 
 		#endregion
 	}

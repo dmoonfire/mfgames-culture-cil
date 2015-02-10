@@ -6,6 +6,7 @@
 // </license>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MfGames.Culture.Codes
@@ -17,7 +18,7 @@ namespace MfGames.Culture.Codes
 	/// <remarks>
 	/// This is modeled after the HTTP Accept-Language header.
 	/// </remarks>
-	public class LanguageTagSelector
+	public class LanguageTagSelector : IEnumerable<LanguageTagQuality>
 	{
 		#region Fields
 
@@ -57,6 +58,27 @@ namespace MfGames.Culture.Codes
 
 				languages.Add(quality);
 			}
+
+			// Make sure the qualities are sorted from high to low.
+			languages.Sort();
+		}
+
+		#endregion
+
+		#region Public Methods and Operators
+
+		public IEnumerator<LanguageTagQuality> GetEnumerator()
+		{
+			return languages.GetEnumerator();
+		}
+
+		#endregion
+
+		#region Explicit Interface Methods
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 
 		#endregion
