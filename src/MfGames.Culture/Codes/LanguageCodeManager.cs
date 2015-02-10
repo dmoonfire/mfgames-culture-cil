@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
 using MfGames.Culture.Translations;
 using MfGames.Extensions.System;
+using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Codes
 {
@@ -32,6 +34,8 @@ namespace MfGames.Culture.Codes
 
 		private readonly HashSet<LanguageCode> codes;
 
+		private MemoryTranslationProvider translations;
+
 		#endregion
 
 		#region Constructors and Destructors
@@ -46,6 +50,7 @@ namespace MfGames.Culture.Codes
 		public LanguageCodeManager()
 		{
 			codes = new HashSet<LanguageCode>();
+			translations = new MemoryTranslationProvider();
 		}
 
 		#endregion
@@ -72,24 +77,46 @@ namespace MfGames.Culture.Codes
 
 		#region Public Methods and Operators
 
+		[Pure]
+		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
+			LanguageCode languageCode)
+		{
+			return GetAlpha3ToNameTranslationPath(languageCode.Alpha3);
+		}
+
+		[Pure]
+		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
+			string languageCode)
+		{
+			return new HierarchicalPath("/ISO/639/Alpha3 Codes/" + languageCode);
+		}
+
+		[Pure]
+		public static HierarchicalPath GetNameToAlpha3TranslationPath(string name)
+		{
+			return new HierarchicalPath("/ISO/639/Alpha3 Names/" + name);
+		}
+
 		public void AddDefaults()
 		{
 			// We have to pre-create English and French since they are used
 			// for the translations in the file. However, we need the language
 			// codes for the translations, which means we have a special case
 			// where we have to inject the translations after the fact.
-			var englishTranslation = new Translation();
-			var frenchTranslation = new Translation();
+			var englishTranslation = new MemoryTranslationCollection();
+			var frenchTranslation = new MemoryTranslationCollection();
 			var english = new LanguageCode(englishTranslation, "en", null, "eng", false);
 			var french = new LanguageCode(frenchTranslation, "fr", "fre", "fra", false);
 			var englishTag = new LanguageTag(english);
 			var frenchTag = new LanguageTag(french);
 
-			englishTranslation.AddIntern(englishTag, "English");
-			englishTranslation.AddIntern(frenchTag, "anglais");
+			englishTranslation.Add(LanguageTag.All, "English");
+			englishTranslation.Add(englishTag, "English");
+			englishTranslation.Add(frenchTag, "anglais");
 
-			frenchTranslation.AddIntern(englishTag, "French");
-			frenchTranslation.AddIntern(frenchTag, "français");
+			frenchTranslation.Add(LanguageTag.All, "French");
+			frenchTranslation.Add(englishTag, "French");
+			frenchTranslation.Add(frenchTag, "français");
 
 			codes.Add(english);
 			codes.Add(french);
@@ -140,13 +167,14 @@ namespace MfGames.Culture.Codes
 					// changing the underlying translations in the code because
 					// as soon as this goes out of scope, the immutable verison
 					// in the code will be the only way to access it.
-					var translation = new Translation();
-					translation.AddIntern(englishTag, englishName);
-					translation.AddIntern(frenchTag, frenchName);
+					var names = new MemoryTranslationCollection();
+					names.Add(LanguageTag.All, englishName ?? frenchName);
+					names.Add(englishTag, englishName);
+					names.Add(frenchTag, frenchName);
 
 					// Add the code to the list.
 					var code = new LanguageCode(
-						translation,
+						names,
 						alpha2,
 						alpha3B,
 						alpha3T,

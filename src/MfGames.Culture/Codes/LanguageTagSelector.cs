@@ -20,6 +20,12 @@ namespace MfGames.Culture.Codes
 	/// </remarks>
 	public class LanguageTagSelector : IEnumerable<LanguageTagQuality>
 	{
+		#region Static Fields
+
+		private static readonly Lazy<LanguageTagSelector> all;
+
+		#endregion
+
 		#region Fields
 
 		private readonly List<LanguageTagQuality> languages;
@@ -27,6 +33,12 @@ namespace MfGames.Culture.Codes
 		#endregion
 
 		#region Constructors and Destructors
+
+		static LanguageTagSelector()
+		{
+			all = new Lazy<LanguageTagSelector>(
+				CreateAll);
+		}
 
 		public LanguageTagSelector()
 		{
@@ -63,6 +75,17 @@ namespace MfGames.Culture.Codes
 			languages.Sort();
 		}
 
+		public LanguageTagSelector(LanguageTag tag)
+		{
+			languages.Add(new LanguageTagQuality(tag, 1f));
+		}
+
+		#endregion
+
+		#region Public Properties
+
+		public static LanguageTagSelector All { get { return all.Value; } }
+
 		#endregion
 
 		#region Public Methods and Operators
@@ -79,6 +102,16 @@ namespace MfGames.Culture.Codes
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
+		}
+
+		#endregion
+
+		#region Methods
+
+		private static LanguageTagSelector CreateAll()
+		{
+			var results = new LanguageTagSelector(LanguageTag.All);
+			return results;
 		}
 
 		#endregion

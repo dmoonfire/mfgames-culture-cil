@@ -19,27 +19,35 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class LanguageCode : IEquatable<LanguageCode>
 	{
+		#region Static Fields
+
+		private static readonly Lazy<LanguageCode> all;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		static LanguageCode()
 		{
-			var allTranslation = new Translation();
-
-			All = new LanguageCode(allTranslation, "*", "*", "*", false);
+			all = new Lazy<LanguageCode>(
+				CreateAll);
 		}
 
-		public LanguageCode(Translation names, string alpha3T)
+		public LanguageCode(ITranslationCollection names, string alpha3T)
 			: this(names, null, alpha3T)
 		{
 		}
 
-		public LanguageCode(Translation names, string alpha2, string alpha3T)
+		public LanguageCode(
+			ITranslationCollection names,
+			string alpha2,
+			string alpha3T)
 			: this(names, alpha2, null, alpha3T)
 		{
 		}
 
 		public LanguageCode(
-			Translation names,
+			ITranslationCollection names,
 			string alpha2,
 			string alpha3B,
 			string alpha3T)
@@ -48,7 +56,7 @@ namespace MfGames.Culture.Codes
 		}
 
 		public LanguageCode(
-			ITranslation names,
+			ITranslationCollection names,
 			string alpha2,
 			string alpha3B,
 			string alpha3T,
@@ -65,12 +73,6 @@ namespace MfGames.Culture.Codes
 				throw new ArgumentNullException("alpha3T");
 			}
 
-			// Make sure we have a read-only translation, if we don't already.
-			if (!names.IsImmutable)
-			{
-				names = new ImmutableTranslation(names);
-			}
-
 			// Save the member variables.
 			Names = names;
 			Alpha2 = alpha2 == null ? null : string.Intern(alpha2.ToLowerInvariant());
@@ -83,7 +85,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageCode All { get; private set; }
+		public static LanguageCode All { get { return all.Value; } }
 
 		/// <summary>
 		/// Gets the two character ISO 639-1 code for the language. If there
@@ -115,7 +117,8 @@ namespace MfGames.Culture.Codes
 		public string Alpha3T { get; private set; }
 
 		public bool IsPrivateUse { get; private set; }
-		public ITranslation Names { get; set; }
+		public string Name { get { return Names.GetFallback(); } }
+		public ITranslationCollection Names { get; private set; }
 
 		#endregion
 
@@ -175,22 +178,22 @@ namespace MfGames.Culture.Codes
 		{
 			if (Alpha2 == null)
 			{
-				return string.Format(
-					"LanguageCode({0}, {1}, {2})",
-					Alpha3,
-					Names.Count == 0 ? "<Missing>" : Names.First,
-					Alpha2);
+				return string.Format("LanguageCode({0}, {1}, {2})", Alpha3, Name, Alpha2);
 			}
 
-			return string.Format(
-				"LanguageCode({0}, {1})",
-				Alpha3,
-				Names.Count == 0 ? "<Missing>" : Names.First);
+			return string.Format("LanguageCode({0}, {1})", Alpha3, Name);
 		}
 
 		#endregion
 
 		#region Methods
+
+		private static LanguageCode CreateAll()
+		{
+			var allTranslation = new MemoryTranslationCollection();
+
+			return new LanguageCode(allTranslation, "*", "*", "*", false);
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether this language is private use.

@@ -18,7 +18,7 @@ namespace MfGames.Culture.Codes
 		#region Constructors and Destructors
 
 		public CountryCode(
-			Translation names,
+			ITranslationCollection names,
 			string alpha2,
 			string alpha3,
 			short? numeric)
@@ -35,7 +35,7 @@ namespace MfGames.Culture.Codes
 
 		public string Alpha2 { get; private set; }
 		public string Alpha3 { get; private set; }
-		public Translation Names { get; private set; }
+		public ITranslationCollection Names { get; private set; }
 		public short? Numeric { get; private set; }
 
 		#endregion
@@ -44,10 +44,12 @@ namespace MfGames.Culture.Codes
 
 		public override string ToString()
 		{
+			string name = Names.GetFallback();
+
 			return string.Format(
 				"CountryCode({0}, {1})",
 				Alpha3,
-				Names.Count == 0 ? "<Missing>" : Names.First);
+				name ?? "<Missing>");
 		}
 
 		#endregion

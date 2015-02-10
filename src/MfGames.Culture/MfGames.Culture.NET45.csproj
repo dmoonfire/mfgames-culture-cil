@@ -58,11 +58,10 @@
     <Compile Include="Codes\LanguageTagSelector.cs" />
     <Compile Include="Culture.cs" />
     <Compile Include="Extensions\System\DateTimeExtensions.cs" />
-    <Compile Include="Translations\ImmutableTranslation.cs" />
-    <Compile Include="Translations\ITranslation.cs" />
+    <Compile Include="Translations\ITranslationCollection.cs" />
     <Compile Include="Translations\ITranslationProvider.cs" />
+    <Compile Include="Translations\MemoryTranslationCollection.cs" />
     <Compile Include="Translations\MemoryTranslationProvider.cs" />
-    <Compile Include="Translations\Translation.cs" />
     <Compile Include="CultureManager.cs" />
     <Compile Include="Codes\LanguageTag.cs" />
     <Compile Include="Codes\CountryCode.cs" />

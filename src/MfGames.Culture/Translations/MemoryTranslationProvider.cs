@@ -16,7 +16,7 @@ namespace MfGames.Culture.Translations
 	{
 		#region Fields
 
-		private readonly Dictionary<HierarchicalPath, Dictionary<LanguageTag, string>>
+		private readonly Dictionary<HierarchicalPath, MemoryTranslationCollection>
 			translations;
 
 		#endregion
@@ -26,7 +26,7 @@ namespace MfGames.Culture.Translations
 		public MemoryTranslationProvider()
 		{
 			translations =
-				new Dictionary<HierarchicalPath, Dictionary<LanguageTag, string>>();
+				new Dictionary<HierarchicalPath, MemoryTranslationCollection>();
 		}
 
 		#endregion
@@ -39,6 +39,7 @@ namespace MfGames.Culture.Translations
 			string translation)
 		{
 			var hierarchicalPath = new HierarchicalPath(path);
+
 			Add(hierarchicalPath, languageTag, translation);
 		}
 
@@ -50,7 +51,7 @@ namespace MfGames.Culture.Translations
 			// Add the path, if we don't have it.
 			if (!translations.ContainsKey(path))
 			{
-				translations[path] = new Dictionary<LanguageTag, string>();
+				translations[path] = new MemoryTranslationCollection();
 			}
 
 			// Set the value.
@@ -62,28 +63,16 @@ namespace MfGames.Culture.Translations
 			HierarchicalPath path)
 		{
 			// Make sure we have the path.
-			Dictionary<LanguageTag, string> pathTranslations;
+			MemoryTranslationCollection pathTranslations;
 
 			if (!translations.TryGetValue(path, out pathTranslations))
 			{
 				return null;
 			}
 
-			// Loop through the language choices and find the first one that
-			// matches a translation we have.
-			foreach (LanguageTagQuality quality in selector)
-			{
-				string translation;
-
-				if (pathTranslations.TryGetValue(quality.LanguageTag, out translation))
-				{
-					var results = new TranslationResult(quality, translation);
-					return results;
-				}
-			}
-
-			// If we got through the loop, then we don't have anything.
-			return null;
+			// Get the translation from the collection.
+			TranslationResult results = pathTranslations.GetTranslation(selector);
+			return results;
 		}
 
 		#endregion
