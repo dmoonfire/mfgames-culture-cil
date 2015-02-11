@@ -31,14 +31,14 @@ namespace MfGames.Culture.Calendars
 			hour.Lengths.Add(hourLength);
 
 			// Add in the minutes.
-			var minute = new LengthCycle("Minute");
+			var minute = new LengthCycle("Hour Minute");
 			var minuteLength = new LogicCycleLength(1, new Fraction(1, 24 * 60));
 
 			minute.Lengths.Add(minuteLength);
 			hour.Cycles.Add(minute);
 
 			// Add in the seconds.
-			var second = new LengthCycle("Second");
+			var second = new LengthCycle("Minute Second");
 			var secondLength = new LogicCycleLength(1, new Fraction(1, 24 * 60 * 60));
 
 			second.Lengths.Add(secondLength);

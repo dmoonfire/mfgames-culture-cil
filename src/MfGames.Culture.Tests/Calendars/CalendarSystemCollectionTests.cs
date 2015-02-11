@@ -53,8 +53,8 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(3, point.YearMonth, "Year Month");
 			Assert.AreEqual(4, point.MonthDay, "Month Day");
 			Assert.AreEqual(6, point.Hour, "Hour");
-			Assert.AreEqual(2, point.Minute, "Minute");
-			Assert.AreEqual(3, point.Second, "Second");
+			Assert.AreEqual(2, point.HourMinute, "Hour Minute");
+			Assert.AreEqual(3, point.MinuteSecond, "Minute Second");
 		}
 
 		#endregion

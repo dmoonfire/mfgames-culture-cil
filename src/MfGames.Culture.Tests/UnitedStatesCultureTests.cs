@@ -41,7 +41,7 @@ namespace MfGames.Culture.Tests
 			// Add in the known formats.
 			culture.Formats.Add(
 				"yyyy-MM-dd",
-				"$(Year:0000)-$(Year Month:00)-$(Month Day:00");
+				"$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
 		}
 
 		#endregion
