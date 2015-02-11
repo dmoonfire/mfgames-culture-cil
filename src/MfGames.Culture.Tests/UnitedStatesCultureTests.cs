@@ -19,7 +19,7 @@ namespace MfGames.Culture.Tests
 	{
 		#region Fields
 
-		private Culture culture;
+		private CultureSystem culture;
 
 		#endregion
 
@@ -29,7 +29,7 @@ namespace MfGames.Culture.Tests
 		public void SetUp()
 		{
 			// Create the culture we are populating.
-			culture = new Culture();
+			culture = new CultureSystem();
 
 			// Grab our two base calendars which includes formatting dates and times.
 			var gregorian = new GregorianCalendarSystem();
@@ -39,7 +39,9 @@ namespace MfGames.Culture.Tests
 			culture.Calendars.Add(duodecimal);
 
 			// Add in the known formats.
-			//culture.Formats.Add("yyyy-MM-dd", "")
+			culture.Formats.Add(
+				"yyyy-MM-dd",
+				"$(Year:0000)-$(Year Month:00)-$(Month Day:00");
 		}
 
 		#endregion

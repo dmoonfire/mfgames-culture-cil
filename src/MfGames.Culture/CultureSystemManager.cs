@@ -1,4 +1,4 @@
-﻿// <copyright file="CultureManager.cs" company="Moonfire Games">
+﻿// <copyright file="CultureSystemManager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -16,23 +16,23 @@ namespace MfGames.Culture
 	/// <summary>
 	/// Defines a common place to retrieve known cultures, calendars, and other elements.
 	/// </summary>
-	public class CultureManager
+	public class CultureSystemManager
 	{
 		#region Static Fields
 
-		private static CultureManager instance;
+		private static CultureSystemManager instance;
 
 		#endregion
 
 		#region Constructors and Destructors
 
-		static CultureManager()
+		static CultureSystemManager()
 		{
-			instance = new CultureManager();
+			instance = new CultureSystemManager();
 			instance.AddDefaults();
 		}
 
-		public CultureManager()
+		public CultureSystemManager()
 		{
 			Calendars = new ConcurrentDictionary<string, CalendarSystem>();
 		}
@@ -41,7 +41,7 @@ namespace MfGames.Culture
 
 		#region Public Properties
 
-		public static CultureManager Instance
+		public static CultureSystemManager Instance
 		{
 			get { return instance; }
 			set
@@ -50,7 +50,7 @@ namespace MfGames.Culture
 				{
 					throw new ArgumentNullException(
 						"value",
-						"CultureManager.Instance cannot be assigned a null value.");
+						"CultureSystemManager.Instance cannot be assigned a null value.");
 				}
 
 				instance = value;

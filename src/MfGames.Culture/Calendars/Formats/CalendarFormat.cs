@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using MfGames.Text;
+
 namespace MfGames.Culture.Calendars.Formats
 {
 	/// <summary>
@@ -14,5 +16,23 @@ namespace MfGames.Culture.Calendars.Formats
 	/// </summary>
 	public class CalendarFormat
 	{
+		#region Fields
+
+		private MacroExpansion macro;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public CalendarFormat(string macroFormat)
+			: this(new MacroExpansion(macroFormat))
+		{
+		}
+
+		public CalendarFormat(MacroExpansion macro)
+		{
+		}
+
+		#endregion
 	}
 }

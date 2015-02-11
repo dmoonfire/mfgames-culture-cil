@@ -47,6 +47,7 @@
     <Compile Include="Calendars\Calculations\ModCycleCalcualtion.cs" />
     <Compile Include="Calendars\DuodecimalCalendarSystem.cs" />
     <Compile Include="Calendars\Formats\CalendarFormat.cs" />
+    <Compile Include="Calendars\Formats\CalendarFormatCollection.cs" />
     <Compile Include="Calendars\GregorianCalendarSystem.cs" />
     <Compile Include="Calendars\Lengths\ArrayCycleLength.cs" />
     <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
@@ -56,13 +57,13 @@
     <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
     <Compile Include="Codes\LanguageTagQuality.cs" />
     <Compile Include="Codes\LanguageTagSelector.cs" />
-    <Compile Include="Culture.cs" />
+    <Compile Include="CultureSystem.cs" />
     <Compile Include="Extensions\System\DateTimeExtensions.cs" />
     <Compile Include="Translations\ITranslationCollection.cs" />
     <Compile Include="Translations\ITranslationProvider.cs" />
     <Compile Include="Translations\MemoryTranslationCollection.cs" />
     <Compile Include="Translations\MemoryTranslationProvider.cs" />
-    <Compile Include="CultureManager.cs" />
+    <Compile Include="CultureSystemManager.cs" />
     <Compile Include="Codes\LanguageTag.cs" />
     <Compile Include="Codes\CountryCode.cs" />
     <Compile Include="Codes\CountryCodeManager.cs" />

@@ -1,4 +1,4 @@
-﻿// <copyright file="Culture.cs" company="Moonfire Games">
+﻿// <copyright file="CultureSystem.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -6,16 +6,18 @@
 // </license>
 
 using MfGames.Culture.Calendars;
+using MfGames.Culture.Calendars.Formats;
 
 namespace MfGames.Culture
 {
-	public class Culture
+	public class CultureSystem
 	{
 		#region Constructors and Destructors
 
-		public Culture()
+		public CultureSystem()
 		{
 			Calendars = new CalendarSystemCollection();
+			Formats = new CalendarFormatCollection();
 		}
 
 		#endregion
@@ -23,6 +25,7 @@ namespace MfGames.Culture
 		#region Public Properties
 
 		public CalendarSystemCollection Calendars { get; private set; }
+		public CalendarFormatCollection Formats { get; private set; }
 
 		#endregion
 	}
