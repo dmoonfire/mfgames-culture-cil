@@ -31,7 +31,7 @@ namespace MfGames.Culture.Tests
 			// Create the culture we are populating.
 			culture = new CultureSystem();
 
-			// Grab our two base calendars which includes formatting dates and times.
+			// Grab our two base calendars.
 			var gregorian = new GregorianCalendarSystem();
 			var duodecimal = new DuodecimalCalendarSystem();
 

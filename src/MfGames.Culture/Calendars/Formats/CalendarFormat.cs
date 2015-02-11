@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using System.Collections.Generic;
+
 using MfGames.Text;
 
 namespace MfGames.Culture.Calendars.Formats
@@ -24,13 +26,55 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Constructors and Destructors
 
-		public CalendarFormat(string macroFormat)
-			: this(new MacroExpansion(macroFormat))
+		public CalendarFormat(string format)
 		{
+			// We use the basics of the macro expansion to pull out the
+			// segments. Then, we relace the variable ones with a
+			// format-specific version.
+			ParseFormat(format);
 		}
 
-		public CalendarFormat(MacroExpansion macro)
+		#endregion
+
+		#region Public Methods and Operators
+
+		public string ToString(CalendarPoint point)
 		{
+			string results = macro.Expand(point.Values);
+			return results;
+		}
+
+		#endregion
+
+		#region Methods
+
+		private void ParseFormat(string format)
+		{
+			// Set up the initial macro and use that to parse the segments
+			// out of it.
+			IMacroExpansionSegment[] segments = MacroExpansion.ParseSegments(format);
+
+			// Loop through the segments and build up a new list with a format-
+			// specific segment for the variables.
+			var newSegments = new List<IMacroExpansionSegment>();
+
+			foreach (IMacroExpansionSegment oldSegment in segments)
+			{
+				// If this is a variable segment, then we wrap it.
+				IMacroExpansionSegment segment = oldSegment;
+				var variable = segment as VariableMacroExpansionSegment;
+
+				if (variable != null)
+				{
+					segment = new CalendarFormatMacroExpansionSegment(variable);
+				}
+
+				// If we got this far, we don't know what to do with it.
+				newSegments.Add(segment);
+			}
+
+			// Create a new macro expansion with the new format.
+			macro = new MacroExpansion(newSegments);
 		}
 
 		#endregion
