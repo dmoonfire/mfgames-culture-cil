@@ -82,6 +82,13 @@ namespace MfGames.Culture.Calendars
 			return results;
 		}
 
+		public CalendarPoint Create(CalendarElementValueCollection values)
+		{
+			Fraction julianDate = GetJulianDate(values);
+			CalendarPoint point = Create(julianDate);
+			return point;
+		}
+
 		/// <summary>
 		/// Recursively retrieves all of the cycles.
 		/// </summary>
@@ -96,6 +103,11 @@ namespace MfGames.Culture.Calendars
 			}
 
 			return list;
+		}
+
+		public Fraction GetJulianDate(CalendarElementValueCollection values)
+		{
+			return new Fraction(0);
 		}
 
 		public CalendarElementValueCollection GetValues(Fraction julianDate)

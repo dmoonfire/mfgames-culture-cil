@@ -39,7 +39,18 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Public Methods and Operators
 
-		public Dictionary<string, int> ParseValues(string input)
+		public CalendarPoint Parse(string input, CalendarSystem calendar)
+		{
+			// First get the values for the input.
+			CalendarElementValueCollection values = ParseValues(input);
+
+			// Create a new calendar point from a given value.
+			CalendarPoint results = calendar.Create(values);
+
+			return results;
+		}
+
+		public CalendarElementValueCollection ParseValues(string input)
 		{
 			Dictionary<string, string> parsed = macro.Parse(input);
 			var values = new CalendarElementValueCollection();

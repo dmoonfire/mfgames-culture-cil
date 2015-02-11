@@ -6,7 +6,6 @@
 // </license>
 
 using System;
-using System.Collections.Generic;
 
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
@@ -31,9 +30,17 @@ namespace MfGames.Culture.Tests.Calendars
 		#region Public Methods and Operators
 
 		[Test]
+		public void IsoParse19871123()
+		{
+			CalendarPoint results = iso.Parse("1987-11-23", calendar);
+
+			Assert.AreEqual(point.JulianDate, results.JulianDate);
+		}
+
+		[Test]
 		public void IsoParseValues19871123()
 		{
-			Dictionary<string, int> results = iso.ParseValues("1987-11-23");
+			CalendarElementValueCollection results = iso.ParseValues("1987-11-23");
 
 			Assert.AreEqual(1987, results["Year"]);
 			Assert.AreEqual(11, results["Year Month"]);
