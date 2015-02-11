@@ -6,6 +6,7 @@
 // </license>
 
 using System;
+using System.Collections.Generic;
 
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
@@ -17,11 +18,35 @@ namespace MfGames.Culture.Tests.Calendars
 	[TestFixture]
 	public class CalendarFormatTests
 	{
+		#region Fields
+
 		private GregorianCalendarSystem calendar;
 
 		private CalendarFormat iso;
 
 		private CalendarPoint point;
+
+		#endregion
+
+		#region Public Methods and Operators
+
+		[Test]
+		public void IsoParseValues19871123()
+		{
+			Dictionary<string, int> results = iso.ParseValues("1987-11-23");
+
+			Assert.AreEqual(1987, results["Year"]);
+			Assert.AreEqual(11, results["Year Month"]);
+			Assert.AreEqual(23, results["Month Day"]);
+		}
+
+		[Test]
+		public void IsoToString19871123()
+		{
+			string results = iso.ToString(point);
+
+			Assert.AreEqual("1987-11-23", results);
+		}
 
 		[TestFixtureSetUp]
 		public void SetUp()
@@ -31,12 +56,6 @@ namespace MfGames.Culture.Tests.Calendars
 			iso = new CalendarFormat("$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
 		}
 
-		[Test]
-		public void IsoToString()
-		{
-			var results = iso.ToString(point);
-
-			Assert.AreEqual("1987-11-23", results);
-		}
+		#endregion
 	}
 }

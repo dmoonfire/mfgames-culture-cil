@@ -5,6 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
 using System.Collections.Generic;
 
 using MfGames.Text;
@@ -37,6 +38,19 @@ namespace MfGames.Culture.Calendars.Formats
 		#endregion
 
 		#region Public Methods and Operators
+
+		public Dictionary<string, int> ParseValues(string input)
+		{
+			Dictionary<string, string> parsed = macro.Parse(input);
+			var values = new CalendarElementValueCollection();
+
+			foreach (KeyValuePair<string, string> pair in parsed)
+			{
+				values[pair.Key] = Convert.ToInt32(pair.Value);
+			}
+
+			return values;
+		}
 
 		public string ToString(CalendarPoint point)
 		{

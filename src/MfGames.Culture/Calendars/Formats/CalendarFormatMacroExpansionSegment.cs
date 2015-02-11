@@ -6,6 +6,7 @@
 // </license>
 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 using MfGames.Text;
 
@@ -21,6 +22,7 @@ namespace MfGames.Culture.Calendars.Formats
 			// Save the components.
 			Field = segment.Field;
 			Format = segment.Format;
+			MacroIndex = segment.MacroIndex;
 
 			// If there is a "+1" at the end of the format, then change the
 			// offset to match.
@@ -40,6 +42,7 @@ namespace MfGames.Culture.Calendars.Formats
 
 		public string Field { get; set; }
 		public string Format { get; set; }
+		public int MacroIndex { get; set; }
 		public int Offset { get; set; }
 		public string Pattern { get; set; }
 
@@ -59,6 +62,11 @@ namespace MfGames.Culture.Calendars.Formats
 		public string GetRegex()
 		{
 			return Pattern;
+		}
+
+		public void Match(Dictionary<string, string> results, Match match)
+		{
+			results[Field] = match.Groups[MacroIndex].Value;
 		}
 
 		#endregion
