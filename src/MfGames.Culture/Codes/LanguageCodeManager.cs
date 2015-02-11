@@ -34,7 +34,7 @@ namespace MfGames.Culture.Codes
 
 		private readonly HashSet<LanguageCode> codes;
 
-		private MemoryTranslationProvider translations;
+		private readonly MemoryTranslationProvider translations;
 
 		#endregion
 
@@ -88,13 +88,7 @@ namespace MfGames.Culture.Codes
 		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
 			string languageCode)
 		{
-			return new HierarchicalPath("/ISO/639/Alpha3 Codes/" + languageCode);
-		}
-
-		[Pure]
-		public static HierarchicalPath GetNameToAlpha3TranslationPath(string name)
-		{
-			return new HierarchicalPath("/ISO/639/Alpha3 Names/" + name);
+			return new HierarchicalPath("/ISO/639/Alpha3/Codes/" + languageCode);
 		}
 
 		public void AddDefaults()
@@ -103,23 +97,42 @@ namespace MfGames.Culture.Codes
 			// for the translations in the file. However, we need the language
 			// codes for the translations, which means we have a special case
 			// where we have to inject the translations after the fact.
-			var englishTranslation = new MemoryTranslationCollection();
-			var frenchTranslation = new MemoryTranslationCollection();
-			var english = new LanguageCode(englishTranslation, "en", null, "eng", false);
-			var french = new LanguageCode(frenchTranslation, "fr", "fre", "fra", false);
+			var english = new LanguageCode("en", null, "eng", false);
+			var french = new LanguageCode("fr", "fre", "fra", false);
 			var englishTag = new LanguageTag(english);
 			var frenchTag = new LanguageTag(french);
 
-			englishTranslation.Add(LanguageTag.All, "English");
-			englishTranslation.Add(englishTag, "English");
-			englishTranslation.Add(frenchTag, "anglais");
-
-			frenchTranslation.Add(LanguageTag.All, "French");
-			frenchTranslation.Add(englishTag, "French");
-			frenchTranslation.Add(frenchTag, "français");
-
 			codes.Add(english);
 			codes.Add(french);
+
+			// Add in the initial translations for English and French. We use
+			// English for the fallback only because the developer reads
+			// English better.
+			translations.Add(
+				GetAlpha3ToNameTranslationPath(english),
+				LanguageTag.All,
+				"English");
+			translations.Add(
+				GetAlpha3ToNameTranslationPath(english),
+				englishTag,
+				"English");
+			translations.Add(
+				GetAlpha3ToNameTranslationPath(english),
+				frenchTag,
+				"anglais");
+
+			translations.Add(
+				GetAlpha3ToNameTranslationPath(french),
+				LanguageTag.All,
+				"French");
+			translations.Add(
+				GetAlpha3ToNameTranslationPath(french),
+				englishTag,
+				"French");
+			translations.Add(
+				GetAlpha3ToNameTranslationPath(french),
+				frenchTag,
+				"français");
 
 			// Load the defaults from an embedded resource.
 			Assembly assembly = GetType().Assembly;
@@ -163,24 +176,28 @@ namespace MfGames.Culture.Codes
 						alpha3B = null;
 					}
 
-					// Add in the translations. We don't have to worry about
-					// changing the underlying translations in the code because
-					// as soon as this goes out of scope, the immutable verison
-					// in the code will be the only way to access it.
-					var names = new MemoryTranslationCollection();
-					names.Add(LanguageTag.All, englishName ?? frenchName);
-					names.Add(englishTag, englishName);
-					names.Add(frenchTag, frenchName);
-
 					// Add the code to the list.
 					var code = new LanguageCode(
-						names,
 						alpha2,
 						alpha3B,
 						alpha3T,
 						false);
 
 					codes.Add(code);
+
+					// Add in the translations for these names.
+					translations.Add(
+						GetAlpha3ToNameTranslationPath(code),
+						LanguageTag.All,
+						englishName);
+					translations.Add(
+						GetAlpha3ToNameTranslationPath(code),
+						englishTag,
+						englishName);
+					translations.Add(
+						GetAlpha3ToNameTranslationPath(code),
+						frenchTag,
+						frenchName);
 				}
 			}
 		}

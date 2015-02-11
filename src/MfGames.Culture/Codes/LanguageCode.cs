@@ -7,8 +7,6 @@
 
 using System;
 
-using MfGames.Culture.Translations;
-
 namespace MfGames.Culture.Codes
 {
 	/// <summary>
@@ -19,62 +17,46 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class LanguageCode : IEquatable<LanguageCode>
 	{
-		#region Static Fields
-
-		private static readonly Lazy<LanguageCode> all;
-
-		#endregion
-
 		#region Constructors and Destructors
 
 		static LanguageCode()
 		{
-			all = new Lazy<LanguageCode>(
-				CreateAll);
+			All = new LanguageCode("*", "*", "*", false);
 		}
 
-		public LanguageCode(ITranslationCollection names, string alpha3T)
-			: this(names, null, alpha3T)
+		public LanguageCode(string alpha3T)
+			: this(null, alpha3T)
 		{
 		}
 
 		public LanguageCode(
-			ITranslationCollection names,
 			string alpha2,
 			string alpha3T)
-			: this(names, alpha2, null, alpha3T)
+			: this(alpha2, null, alpha3T)
 		{
 		}
 
 		public LanguageCode(
-			ITranslationCollection names,
 			string alpha2,
 			string alpha3B,
 			string alpha3T)
-			: this(names, alpha2, alpha3B, alpha3T, IsLanguageCodePrivateUse(alpha3T))
+			: this(alpha2, alpha3B, alpha3T, IsLanguageCodePrivateUse(alpha3T))
 		{
 		}
 
 		public LanguageCode(
-			ITranslationCollection names,
 			string alpha2,
 			string alpha3B,
 			string alpha3T,
 			bool isPrivateUse)
 		{
 			// Verify our contracts.
-			if (names == null)
-			{
-				throw new ArgumentNullException("names");
-			}
-
 			if (alpha3T == null)
 			{
 				throw new ArgumentNullException("alpha3T");
 			}
 
 			// Save the member variables.
-			Names = names;
 			Alpha2 = alpha2 == null ? null : string.Intern(alpha2.ToLowerInvariant());
 			Alpha3B = alpha3B == null ? null : string.Intern(alpha3B.ToLowerInvariant());
 			Alpha3T = string.Intern(alpha3T.ToLower());
@@ -85,7 +67,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageCode All { get { return all.Value; } }
+		public static LanguageCode All { get; private set; }
 
 		/// <summary>
 		/// Gets the two character ISO 639-1 code for the language. If there
@@ -117,8 +99,6 @@ namespace MfGames.Culture.Codes
 		public string Alpha3T { get; private set; }
 
 		public bool IsPrivateUse { get; private set; }
-		public string Name { get { return Names.GetFallback(); } }
-		public ITranslationCollection Names { get; private set; }
 
 		#endregion
 
@@ -176,24 +156,12 @@ namespace MfGames.Culture.Codes
 
 		public override string ToString()
 		{
-			if (Alpha2 == null)
-			{
-				return string.Format("LanguageCode({0}, {1}, {2})", Alpha3, Name, Alpha2);
-			}
-
-			return string.Format("LanguageCode({0}, {1})", Alpha3, Name);
+			return Alpha3;
 		}
 
 		#endregion
 
 		#region Methods
-
-		private static LanguageCode CreateAll()
-		{
-			var allTranslation = new MemoryTranslationCollection();
-
-			return new LanguageCode(allTranslation, "*", "*", "*", false);
-		}
 
 		/// <summary>
 		/// Gets a value indicating whether this language is private use.

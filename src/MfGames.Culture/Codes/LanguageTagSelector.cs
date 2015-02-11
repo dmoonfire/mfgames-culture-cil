@@ -20,12 +20,6 @@ namespace MfGames.Culture.Codes
 	/// </remarks>
 	public class LanguageTagSelector : IEnumerable<LanguageTagQuality>
 	{
-		#region Static Fields
-
-		private static readonly Lazy<LanguageTagSelector> all;
-
-		#endregion
-
 		#region Fields
 
 		private readonly List<LanguageTagQuality> languages;
@@ -36,8 +30,9 @@ namespace MfGames.Culture.Codes
 
 		static LanguageTagSelector()
 		{
-			all = new Lazy<LanguageTagSelector>(
-				CreateAll);
+			LanguageTag allLanguage = LanguageTag.All;
+
+			All = new LanguageTagSelector(allLanguage);
 		}
 
 		public LanguageTagSelector()
@@ -76,15 +71,18 @@ namespace MfGames.Culture.Codes
 		}
 
 		public LanguageTagSelector(LanguageTag tag)
+			: this()
 		{
-			languages.Add(new LanguageTagQuality(tag, 1f));
+			var quality = new LanguageTagQuality(tag, 1f);
+
+			languages.Add(quality);
 		}
 
 		#endregion
 
 		#region Public Properties
 
-		public static LanguageTagSelector All { get { return all.Value; } }
+		public static LanguageTagSelector All { get; private set; }
 
 		#endregion
 
@@ -102,16 +100,6 @@ namespace MfGames.Culture.Codes
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
-		}
-
-		#endregion
-
-		#region Methods
-
-		private static LanguageTagSelector CreateAll()
-		{
-			var results = new LanguageTagSelector(LanguageTag.All);
-			return results;
 		}
 
 		#endregion

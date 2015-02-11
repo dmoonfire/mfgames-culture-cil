@@ -15,17 +15,11 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class LanguageTag : IEquatable<LanguageTag>, IComparable<LanguageTag>
 	{
-		#region Static Fields
-
-		private static readonly Lazy<LanguageTag> all;
-
-		#endregion
-
 		#region Constructors and Destructors
 
 		static LanguageTag()
 		{
-			all = new Lazy<LanguageTag>(CreateAll);
+			All = new LanguageTag(LanguageCode.All);
 		}
 
 		public LanguageTag(LanguageCode language)
@@ -58,7 +52,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageTag All { get { return all.Value; } }
+		public static LanguageTag All { get; private set; }
 
 		/// <summary>
 		/// Gets the ISO 639 description of the language.
@@ -130,16 +124,6 @@ namespace MfGames.Culture.Codes
 		public override string ToString()
 		{
 			return Language.Alpha3;
-		}
-
-		#endregion
-
-		#region Methods
-
-		private static LanguageTag CreateAll()
-		{
-			var results = new LanguageTag(LanguageCode.All);
-			return results;
 		}
 
 		#endregion
