@@ -22,7 +22,7 @@ namespace MfGames.Culture.Codes
 	/// A manager class which ensures only a single instance of a <c>LanguageCode</c>
 	/// is created for a given language.
 	/// </summary>
-	public class LanguageCodeManager
+	public class LanguageCodeManager : ITranslationProvider
 	{
 		#region Static Fields
 
@@ -220,6 +220,13 @@ namespace MfGames.Culture.Codes
 			}
 
 			return codes.FirstOrDefault(c => c.Alpha3B == alpha3 || c.Alpha3T == alpha3);
+		}
+
+		public TranslationResult GetTranslation(
+			LanguageTagSelector selector,
+			HierarchicalPath path)
+		{
+			return translations.GetTranslation(selector, path);
 		}
 
 		#endregion

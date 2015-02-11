@@ -32,12 +32,7 @@ namespace MfGames.Culture.Codes
 			pattern = new Regex(@"\s*(\*|[\w-]+)(?:;q=(\d*\.\d*))?$");
 		}
 
-		public LanguageTagQuality(LanguageTag languageTag)
-			: this(languageTag, 1.0f)
-		{
-		}
-
-		public LanguageTagQuality(LanguageTag languageTag, float quality)
+		public LanguageTagQuality(LanguageTag languageTag, float quality = 1.0f)
 		{
 			// Assert our contracts.
 			if (languageTag == null)
