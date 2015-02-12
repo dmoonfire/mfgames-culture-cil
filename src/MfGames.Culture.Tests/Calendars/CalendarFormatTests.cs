@@ -7,8 +7,11 @@
 
 using System;
 
+using Fractions;
+
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
+using MfGames.Culture.Extensions.System;
 
 using NUnit.Framework;
 
@@ -19,6 +22,8 @@ namespace MfGames.Culture.Tests.Calendars
 	{
 		#region Fields
 
+		private CalendarFormat alpha3;
+
 		private GregorianCalendarSystem calendar;
 
 		private CalendarFormat iso;
@@ -28,6 +33,26 @@ namespace MfGames.Culture.Tests.Calendars
 		#endregion
 
 		#region Public Methods and Operators
+
+		[Test]
+		public void Alpha3Parse19870304()
+		{
+			CalendarPoint results = alpha3.Parse("Mar 4, 1987", calendar);
+			var date = new DateTime(1987, 3, 4);
+			Fraction julian = date.ToJulianDateFraction();
+
+			Assert.AreEqual(julian, results.JulianDate);
+		}
+
+		[Test]
+		public void Alpha3Parse19871123()
+		{
+			CalendarPoint results = alpha3.Parse("Nov 23, 1987", calendar);
+			var date = new DateTime(1987, 11, 23);
+			Fraction julian = date.ToJulianDateFraction();
+
+			Assert.AreEqual(julian, results.JulianDate);
+		}
 
 		[Test]
 		public void IsoParse19871123()
@@ -70,6 +95,8 @@ namespace MfGames.Culture.Tests.Calendars
 			calendar = new GregorianCalendarSystem();
 			point = calendar.Create(new DateTime(1987, 11, 23));
 			iso = new CalendarFormat("$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
+			alpha3 = new CalendarFormat(
+				"$(Year Month:S3/Short) $(Month Day:G0), $(Year:D4)");
 		}
 
 		#endregion

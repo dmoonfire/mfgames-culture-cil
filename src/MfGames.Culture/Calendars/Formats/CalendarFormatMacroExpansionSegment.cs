@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using MfGames.HierarchicalPaths;
 using MfGames.Text;
 
 namespace MfGames.Culture.Calendars.Formats
@@ -24,6 +25,19 @@ namespace MfGames.Culture.Calendars.Formats
 			Field = segment.Field;
 			Format = segment.Format;
 			MacroIndex = segment.MacroIndex;
+
+			// If we have a "/" in the format, then we are going to be doing
+			// a translation lookup.
+			if (Format.Contains("/"))
+			{
+				// Pull out the path.
+				int index = Format.IndexOf("/", StringComparison.InvariantCulture);
+				string path = Format.Substring(index);
+				TranslationLookup = new HierarchicalPath(path);
+
+				// Update the format so it only has the "S" code.
+				Format = Format.Substring(0, index);
+			}
 
 			// If there is a "+1" at the end of the format, then change the
 			// offset to match.
@@ -46,6 +60,7 @@ namespace MfGames.Culture.Calendars.Formats
 		public int MacroIndex { get; set; }
 		public int Offset { get; set; }
 		public string Pattern { get; set; }
+		public HierarchicalPath TranslationLookup { get; set; }
 
 		#endregion
 
