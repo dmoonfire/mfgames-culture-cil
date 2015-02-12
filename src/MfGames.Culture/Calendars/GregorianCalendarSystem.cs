@@ -127,6 +127,18 @@ namespace MfGames.Culture.Calendars
 			Add(year);
 		}
 
+		#endregion
+
+		#region Public Properties
+
+		public string CannonicalName { get; set; }
+		public HierarchicalPath TranslationPath { get; set; }
+		public MemoryTranslationProvider Translations { get; set; }
+
+		#endregion
+
+		#region Methods
+
 		private void SetupTranslations()
 		{
 			// This is the root translation path for everything.
@@ -157,15 +169,6 @@ namespace MfGames.Culture.Calendars
 				"Nov",
 				"Dec");
 		}
-
-		public MemoryTranslationProvider Translations { get; set; }
-
-		#endregion
-
-		#region Public Properties
-
-		public string CannonicalName { get; set; }
-		public HierarchicalPath TranslationPath { get; set; }
 
 		#endregion
 	}

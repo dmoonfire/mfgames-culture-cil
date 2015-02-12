@@ -30,15 +30,6 @@ namespace MfGames.Culture.Tests.Calendars
 		#region Public Methods and Operators
 
 		[Test]
-		public void IsoParse20000101()
-		{
-			CalendarPoint results = iso.Parse("2000-01-01", calendar);
-			var year2000 = calendar.Create(new DateTime(2000, 1, 1));
-
-			Assert.AreEqual(year2000.JulianDate, results.JulianDate);
-		}
-
-		[Test]
 		public void IsoParse19871123()
 		{
 			CalendarPoint results = iso.Parse("1987-11-23", calendar);
@@ -47,13 +38,22 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
+		public void IsoParse20000101()
+		{
+			CalendarPoint results = iso.Parse("2000-01-01", calendar);
+			CalendarPoint year2000 = calendar.Create(new DateTime(2000, 1, 1));
+
+			Assert.AreEqual(year2000.JulianDate, results.JulianDate);
+		}
+
+		[Test]
 		public void IsoParseValues19871123()
 		{
 			CalendarElementValueCollection results = iso.ParseValues("1987-11-23");
 
 			Assert.AreEqual(1987, results["Year"]);
-			Assert.AreEqual(11, results["Year Month"]);
-			Assert.AreEqual(23, results["Month Day"]);
+			Assert.AreEqual(10, results["Year Month"]);
+			Assert.AreEqual(22, results["Month Day"]);
 		}
 
 		[Test]

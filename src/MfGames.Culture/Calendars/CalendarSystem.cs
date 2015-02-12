@@ -122,7 +122,9 @@ namespace MfGames.Culture.Calendars
 				// the system calculate it's lengths.
 				var currentValues = new CalendarElementValueCollection();
 
-				Fraction julianDate = cycle.CalculateJulianDate(desiredValues, currentValues);
+				Fraction julianDate = cycle.CalculateJulianDate(
+					desiredValues,
+					currentValues);
 
 				return julianDate;
 			}

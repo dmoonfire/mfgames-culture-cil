@@ -51,8 +51,6 @@ namespace MfGames.Culture.Calendars.Cycles
 			Fraction julianDate = JulianDateOffset * -1;
 
 			// Loop through the lengths until we match our index.
-			var index = 0;
-
 			foreach (CycleLength length in Lengths)
 			{
 				// This will return zero if the length cannot handle the

@@ -14,11 +14,6 @@ namespace MfGames.Culture.Calendars.Lengths
 {
 	public class ArrayCycleLength : CycleLength
 	{
-		public override Fraction CalculateLength(string id, CalendarElementValueCollection desiredValues, CalendarElementValueCollection currentValues)
-		{
-			throw new NotImplementedException();
-		}
-
 		#region Constructors and Destructors
 
 		public ArrayCycleLength(
@@ -83,6 +78,33 @@ namespace MfGames.Culture.Calendars.Lengths
 
 			// Return the remaining relative.
 			return relativeJulianDay;
+		}
+
+		public override Fraction CalculateLength(
+			string id,
+			CalendarElementValueCollection desiredValues,
+			CalendarElementValueCollection currentValues)
+		{
+			// To figure out the lengths, just add up all the lengths leading
+			// up to the desired index.
+			int desiredIndex = desiredValues[id];
+			var index = 0;
+			var julianDate = new Fraction();
+
+			for (var i = 0; i < desiredIndex; i++)
+			{
+				// Get the length of this element.
+				Fraction length = GetFirstValidLength(currentValues, Lengths[i]);
+
+				julianDate += length;
+				index++;
+			}
+
+			// Put the index and return the results.
+			currentValues[id] = index;
+
+			return julianDate;
+			;
 		}
 
 		#endregion

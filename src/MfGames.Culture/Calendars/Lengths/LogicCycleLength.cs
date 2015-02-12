@@ -114,7 +114,7 @@ namespace MfGames.Culture.Calendars.Lengths
 		{
 			// Loop through and find the first one that is valid.
 			int desired = desiredValues[id];
-			Fraction julianDate = new Fraction();
+			var julianDate = new Fraction();
 			int index = currentValues.ContainsKey(id)
 				? currentValues[id]
 				: 0;
@@ -124,13 +124,16 @@ namespace MfGames.Culture.Calendars.Lengths
 				// Get the first applicable length that applies.
 				Fraction length = GetFirstValidLength(currentValues);
 
+				// Update the values and the index. We also have to
+				// update the currentValues so GetFirstValidLength makes the
+				// right decisions, but ReSharper complains if you try to use
+				// currentValues[id] directly in the above while expression.
 				julianDate += length;
 				index += Number;
+				currentValues[id] = index;
 			}
 
 			// Put the current value and return our calculated value.
-			currentValues[id] = index;
-		
 			return julianDate;
 		}
 

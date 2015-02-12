@@ -5,6 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -66,7 +67,18 @@ namespace MfGames.Culture.Calendars.Formats
 
 		public void Match(Dictionary<string, string> results, Match match)
 		{
-			results[Field] = match.Groups[MacroIndex].Value;
+			// Try to parse the value as an integer. If we can, then apply the
+			// offset to normalize the values.
+			int index;
+			string value = match.Groups[MacroIndex].Value;
+
+			if (Int32.TryParse(value, out index))
+			{
+				value = (index - Offset).ToString();
+			}
+
+			// Save the value in the results hash.
+			results[Field] = value;
 		}
 
 		#endregion
