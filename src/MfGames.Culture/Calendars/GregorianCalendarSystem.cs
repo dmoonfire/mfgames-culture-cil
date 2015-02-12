@@ -10,6 +10,9 @@ using Fractions;
 using MfGames.Culture.Calendars.Calculations;
 using MfGames.Culture.Calendars.Cycles;
 using MfGames.Culture.Calendars.Lengths;
+using MfGames.Culture.Codes;
+using MfGames.Culture.Translations;
+using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Calendars
 {
@@ -18,7 +21,18 @@ namespace MfGames.Culture.Calendars
 		#region Constructors and Destructors
 
 		public GregorianCalendarSystem()
+			: this(TranslationManager.Instance)
 		{
+		}
+
+		public GregorianCalendarSystem(TranslationManager translationManager)
+		{
+			// Set up the cannonical name which is used for various lookups.
+			CannonicalName = "Gregorian";
+
+			// Add in the names and set up translations.
+			SetupTranslations();
+
 			// Everything is hung off the year. We use a number of lengths for
 			// this. The first is to "fast forward" every 400 years until we
 			// get closer to the point. The second is to figure out the precise
@@ -112,6 +126,46 @@ namespace MfGames.Culture.Calendars
 			// everything else.
 			Add(year);
 		}
+
+		private void SetupTranslations()
+		{
+			// This is the root translation path for everything.
+			TranslationPath = new HierarchicalPath(
+				"/MfGames/Culture/Calendar/Gregorian/");
+			Translations = new MemoryTranslationProvider();
+
+			// Set up the names.
+			Translations.Add(
+				new HierarchicalPath("Name", TranslationPath),
+				LanguageTag.All,
+				"Gregorian");
+
+			// Add in the translations for the cycles.
+			Translations.AddRange(
+				new HierarchicalPath("Short", TranslationPath),
+				LanguageTag.All,
+				"Jan",
+				"Feb",
+				"Mar",
+				"Apr",
+				"May",
+				"Jun",
+				"Jul",
+				"Aug",
+				"Sep",
+				"Oct",
+				"Nov",
+				"Dec");
+		}
+
+		public MemoryTranslationProvider Translations { get; set; }
+
+		#endregion
+
+		#region Public Properties
+
+		public string CannonicalName { get; set; }
+		public HierarchicalPath TranslationPath { get; set; }
 
 		#endregion
 	}

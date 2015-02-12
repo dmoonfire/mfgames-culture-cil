@@ -6,6 +6,7 @@
 // </license>
 
 using System.Collections.Generic;
+using System.Linq;
 
 using MfGames.Culture.Codes;
 using MfGames.HierarchicalPaths;
@@ -56,6 +57,36 @@ namespace MfGames.Culture.Translations
 
 			// Set the value.
 			translations[path][languageTag] = translation;
+		}
+
+		/// <summary>
+		/// Adds a list of translations to the collection using the root key
+		/// and with a subkey of the zero-based index.
+		/// </summary>
+		public void AddRange(
+			HierarchicalPath rootPath,
+			LanguageTag languageTag,
+			params string[] names)
+		{
+			// Go through and add each one.
+			for (var i = 0; i < names.Length; i++)
+			{
+				var path = new HierarchicalPath(i.ToString(), rootPath);
+
+				Add(path, languageTag, names[i]);
+			}
+		}
+
+		/// <summary>
+		/// Adds a list of translations to the collection using the root key
+		/// and with a subkey of the zero-based index.
+		/// </summary>
+		public void AddRange(
+			HierarchicalPath rootPath,
+			LanguageTag languageTag,
+			IEnumerable<string> names)
+		{
+			AddRange(rootPath, languageTag, names.ToArray());
 		}
 
 		public TranslationResult GetTranslation(
