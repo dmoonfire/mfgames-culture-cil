@@ -35,7 +35,32 @@ namespace MfGames.Culture.Calendars.Cycles
 
 		#region Public Methods and Operators
 
-		public virtual void Calculate(
+		public virtual Fraction CalculateJulianDate(
+			CalendarElementValueCollection desiredValues,
+			CalendarElementValueCollection currentValues)
+		{
+			// Loop through the child cycles and see if we can add to the date.
+			foreach (Cycle cycle in Cycles)
+			{
+				// If we aren't in the collection, then move to the next one.
+				if (!desiredValues.ContainsKey(cycle.Id))
+				{
+					continue;
+				}
+
+				// We use this cycle for the basis.
+				Fraction julianDate = cycle.CalculateJulianDate(
+					desiredValues,
+					currentValues);
+
+				return julianDate;
+			}
+
+			// Just return the base date because we couldn't calculate this.
+			return new Fraction();
+		}
+
+		public virtual void CalculateValues(
 			Fraction julianDate,
 			CalendarElementValueCollection values)
 		{
@@ -43,7 +68,7 @@ namespace MfGames.Culture.Calendars.Cycles
 			// cycles to get their values.
 			foreach (Cycle cycle in Cycles)
 			{
-				cycle.Calculate(julianDate, values);
+				cycle.CalculateValues(julianDate, values);
 			}
 		}
 

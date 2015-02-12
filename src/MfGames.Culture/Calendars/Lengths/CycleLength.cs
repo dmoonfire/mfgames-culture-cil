@@ -18,6 +18,11 @@ namespace MfGames.Culture.Calendars.Lengths
 			CalendarElementValueCollection values,
 			Fraction relativeJulianDay);
 
+		public abstract Fraction CalculateLength(
+			string id,
+			CalendarElementValueCollection desiredValues,
+			CalendarElementValueCollection currentValues);
+
 		#endregion
 	}
 }

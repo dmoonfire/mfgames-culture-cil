@@ -13,6 +13,7 @@ using Fractions;
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Cycles;
 using MfGames.Culture.Calendars.Lengths;
+using MfGames.Culture.Extensions.System;
 
 using NUnit.Framework;
 
@@ -30,6 +31,63 @@ namespace MfGames.Culture.Tests.Calendars
 		#endregion
 
 		#region Public Methods and Operators
+
+		[Test]
+		public void CalculateJulianDate2000()
+		{
+			// Create the values we're matching.
+			var values = new CalendarElementValueCollection();
+
+			values["Year"] = 2000;
+
+			// Create the point.
+			Fraction julianDate = calendar.GetJulianDate(values);
+
+			// Compare the dates.
+			var date2000 = new DateTime(2000, 1, 1);
+			Fraction julian2000 = date2000.ToJulianDateFraction();
+
+			Assert.AreEqual(julian2000, julianDate);
+		}
+
+		[Test]
+		public void CalculateJulianDate200001()
+		{
+			// Create the values we're matching.
+			var values = new CalendarElementValueCollection();
+
+			values["Year"] = 2000;
+			values["Year Month"] = 0;
+
+			// Create the point.
+			Fraction julianDate = calendar.GetJulianDate(values);
+
+			// Compare the dates.
+			var date2000 = new DateTime(2000, 1, 1);
+			Fraction julian2000 = date2000.ToJulianDateFraction();
+
+			Assert.AreEqual(julian2000, julianDate);
+		}
+
+		[Test]
+		public void CalculateJulianDate20000101()
+		{
+			// Create the values we're matching.
+			var values = new CalendarElementValueCollection();
+
+			values["Year"] = 2000;
+			values["Year Month"] = 0;
+			values["Month Day"] = 0;
+
+			// Create the point.
+			Fraction julianDate = calendar.GetJulianDate(values);
+
+			// Compare the dates.
+			var date2000 = new DateTime(2000, 1, 1);
+			Fraction julian2000 = date2000.ToJulianDateFraction();
+
+			Assert.AreEqual(julian2000, julianDate);
+		}
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetup()

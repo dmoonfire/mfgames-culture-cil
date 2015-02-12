@@ -13,6 +13,22 @@ namespace MfGames.Culture.Calendars
 	public class CalendarElementValueCollection : Dictionary<string, int>,
 		IDictionary<string, object>
 	{
+		#region Constructors and Destructors
+
+		public CalendarElementValueCollection(CalendarElementValueCollection values)
+		{
+			foreach (KeyValuePair<string, int> pair in values)
+			{
+				this[pair.Key] = pair.Value;
+			}
+		}
+
+		public CalendarElementValueCollection()
+		{
+		}
+
+		#endregion
+
 		#region Explicit Interface Properties
 
 		bool ICollection<KeyValuePair<string, object>>.IsReadOnly

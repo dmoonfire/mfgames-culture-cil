@@ -42,7 +42,38 @@ namespace MfGames.Culture.Calendars.Cycles
 
 		#region Public Methods and Operators
 
-		public override void Calculate(
+		public override Fraction CalculateJulianDate(
+			CalendarElementValueCollection desiredValues,
+			CalendarElementValueCollection currentValues)
+		{
+			// Copy the Julian Date so we can add to it. We subtract the
+			// offset that we will add back when calculating the proper date.
+			Fraction julianDate = JulianDateOffset * -1;
+
+			// Loop through the lengths until we match our index.
+			var index = 0;
+
+			foreach (CycleLength length in Lengths)
+			{
+				// This will return zero if the length cannot handle the
+				// difference between the julian date and the calculated
+				// value.
+				Fraction julianLength = length.CalculateLength(
+					Id,
+					desiredValues,
+					currentValues);
+
+				julianDate += julianLength;
+			}
+
+			// Call the base version to get the rest of the related dates.
+			Fraction childLength = base.CalculateJulianDate(desiredValues, currentValues);
+			Fraction results = childLength + julianDate;
+
+			return results;
+		}
+
+		public override void CalculateValues(
 			Fraction julianDate,
 			CalendarElementValueCollection values)
 		{
@@ -70,7 +101,7 @@ namespace MfGames.Culture.Calendars.Cycles
 			}
 
 			// Call the base implementation to handle inner cycles.
-			base.Calculate(relativeDay, values);
+			base.CalculateValues(relativeDay, values);
 		}
 
 		#endregion

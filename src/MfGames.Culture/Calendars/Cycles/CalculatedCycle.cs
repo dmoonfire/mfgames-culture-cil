@@ -39,7 +39,7 @@ namespace MfGames.Culture.Calendars.Cycles
 
 		#region Public Methods and Operators
 
-		public override void Calculate(
+		public override void CalculateValues(
 			Fraction julianDate,
 			CalendarElementValueCollection values)
 		{
@@ -47,7 +47,7 @@ namespace MfGames.Culture.Calendars.Cycles
 			values[Id] = Calculation.GetIndex(values);
 
 			// Call the base implementation to handle inner cycles.
-			base.Calculate(julianDate, values);
+			base.CalculateValues(julianDate, values);
 		}
 
 		#endregion

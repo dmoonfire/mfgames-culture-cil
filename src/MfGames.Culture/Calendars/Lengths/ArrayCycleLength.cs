@@ -14,6 +14,11 @@ namespace MfGames.Culture.Calendars.Lengths
 {
 	public class ArrayCycleLength : CycleLength
 	{
+		public override Fraction CalculateLength(string id, CalendarElementValueCollection desiredValues, CalendarElementValueCollection currentValues)
+		{
+			throw new NotImplementedException();
+		}
+
 		#region Constructors and Destructors
 
 		public ArrayCycleLength(

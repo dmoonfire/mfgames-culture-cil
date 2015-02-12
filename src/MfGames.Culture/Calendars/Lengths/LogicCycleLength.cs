@@ -107,6 +107,33 @@ namespace MfGames.Culture.Calendars.Lengths
 			return relativeJulianDay;
 		}
 
+		public override Fraction CalculateLength(
+			string id,
+			CalendarElementValueCollection desiredValues,
+			CalendarElementValueCollection currentValues)
+		{
+			// Loop through and find the first one that is valid.
+			int desired = desiredValues[id];
+			Fraction julianDate = new Fraction();
+			int index = currentValues.ContainsKey(id)
+				? currentValues[id]
+				: 0;
+
+			while (desired - index >= Number)
+			{
+				// Get the first applicable length that applies.
+				Fraction length = GetFirstValidLength(currentValues);
+
+				julianDate += length;
+				index += Number;
+			}
+
+			// Put the current value and return our calculated value.
+			currentValues[id] = index;
+		
+			return julianDate;
+		}
+
 		#endregion
 
 		#region Methods

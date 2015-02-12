@@ -105,9 +105,31 @@ namespace MfGames.Culture.Calendars
 			return list;
 		}
 
-		public Fraction GetJulianDate(CalendarElementValueCollection values)
+		public Fraction GetJulianDate(CalendarElementValueCollection desiredValues)
 		{
-			return new Fraction(0);
+			// Go through the open cycles and use the first one we can find
+			// in the values collection.
+			foreach (Cycle cycle in Cycles)
+			{
+				// If we aren't in the collection, then move to the next one.
+				if (!desiredValues.ContainsKey(cycle.Id))
+				{
+					continue;
+				}
+
+				// We are going to use this cycle as the basis for the
+				// calculation. We also need a second set of values to help
+				// the system calculate it's lengths.
+				var currentValues = new CalendarElementValueCollection();
+
+				Fraction julianDate = cycle.CalculateJulianDate(desiredValues, currentValues);
+
+				return julianDate;
+			}
+
+			// If we break out of the loop, we don't have anything to calculate.
+			throw new IndexOutOfRangeException(
+				"Cannot calculate julian date from values collection.");
 		}
 
 		public CalendarElementValueCollection GetValues(Fraction julianDate)
@@ -119,7 +141,7 @@ namespace MfGames.Culture.Calendars
 
 			foreach (Cycle cycle in Cycles)
 			{
-				cycle.Calculate(julianDate, results);
+				cycle.CalculateValues(julianDate, results);
 			}
 
 			// Return the resulting value collection.
