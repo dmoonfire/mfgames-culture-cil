@@ -25,7 +25,8 @@ namespace MfGames.Culture.Calendars
 		{
 		}
 
-		public GregorianCalendarSystem(TranslationManager translationManager)
+		public GregorianCalendarSystem(ITranslationProvider translations)
+			: base(translations)
 		{
 			// Set up the cannonical name which is used for various lookups.
 			CannonicalName = "Gregorian";
@@ -129,14 +130,6 @@ namespace MfGames.Culture.Calendars
 
 		#endregion
 
-		#region Public Properties
-
-		public string CannonicalName { get; set; }
-		public HierarchicalPath TranslationPath { get; set; }
-		public MemoryTranslationProvider Translations { get; set; }
-
-		#endregion
-
 		#region Methods
 
 		private void SetupTranslations()
@@ -144,17 +137,20 @@ namespace MfGames.Culture.Calendars
 			// This is the root translation path for everything.
 			TranslationPath = new HierarchicalPath(
 				"/MfGames/Culture/Calendar/Gregorian/");
-			Translations = new MemoryTranslationProvider();
+			var translations = new MemoryTranslationProvider();
+
+			Translations = translations;
 
 			// Set up the names.
-			Translations.Add(
+			translations.Add(
 				new HierarchicalPath("Name", TranslationPath),
 				LanguageTag.All,
 				"Gregorian");
 
 			// Add in the translations for the cycles.
-			Translations.AddRange(
-				new HierarchicalPath("Short", TranslationPath),
+			var shortPath = new HierarchicalPath("Short", TranslationPath);
+			translations.AddRange(
+				shortPath,
 				LanguageTag.All,
 				"Jan",
 				"Feb",
@@ -168,6 +164,54 @@ namespace MfGames.Culture.Calendars
 				"Oct",
 				"Nov",
 				"Dec");
+			translations.Add(
+				new HierarchicalPath("jan", shortPath),
+				LanguageTag.All,
+				"0");
+			translations.Add(
+				new HierarchicalPath("feb", shortPath),
+				LanguageTag.All,
+				"1");
+			translations.Add(
+				new HierarchicalPath("mar", shortPath),
+				LanguageTag.All,
+				"2");
+			translations.Add(
+				new HierarchicalPath("apr", shortPath),
+				LanguageTag.All,
+				"3");
+			translations.Add(
+				new HierarchicalPath("may", shortPath),
+				LanguageTag.All,
+				"4");
+			translations.Add(
+				new HierarchicalPath("jun", shortPath),
+				LanguageTag.All,
+				"5");
+			translations.Add(
+				new HierarchicalPath("jul", shortPath),
+				LanguageTag.All,
+				"6");
+			translations.Add(
+				new HierarchicalPath("aug", shortPath),
+				LanguageTag.All,
+				"7");
+			translations.Add(
+				new HierarchicalPath("sep", shortPath),
+				LanguageTag.All,
+				"8");
+			translations.Add(
+				new HierarchicalPath("oct", shortPath),
+				LanguageTag.All,
+				"9");
+			translations.Add(
+				new HierarchicalPath("nov", shortPath),
+				LanguageTag.All,
+				"10");
+			translations.Add(
+				new HierarchicalPath("dec", shortPath),
+				LanguageTag.All,
+				"11");
 		}
 
 		#endregion

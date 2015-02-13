@@ -89,7 +89,7 @@ namespace MfGames.Culture.Translations
 			AddRange(rootPath, languageTag, names.ToArray());
 		}
 
-		public TranslationResult GetTranslation(
+		public TranslationResult GetTranslationResult(
 			LanguageTagSelector selector,
 			HierarchicalPath path)
 		{

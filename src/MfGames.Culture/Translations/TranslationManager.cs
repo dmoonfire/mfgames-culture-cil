@@ -12,7 +12,8 @@ using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Translations
 {
-	public class TranslationManager : List<ITranslationProvider>
+	public class TranslationManager : List<ITranslationProvider>,
+		ITranslationProvider
 	{
 		#region Static Fields
 
@@ -64,7 +65,7 @@ namespace MfGames.Culture.Translations
 			// Loop through the translations and try to find a better one.
 			foreach (ITranslationProvider provider in this)
 			{
-				TranslationResult providerResult = provider.GetTranslation(
+				TranslationResult providerResult = provider.GetTranslationResult(
 					selector,
 					path);
 
@@ -76,6 +77,29 @@ namespace MfGames.Culture.Translations
 
 			// Whatever we have at the end is it.
 			return result.Result;
+		}
+
+		public TranslationResult GetTranslationResult(
+			LanguageTagSelector selector,
+			HierarchicalPath path)
+		{
+			// Loop through the translations and try to find a better one.
+			TranslationResult result = null;
+
+			foreach (ITranslationProvider provider in this)
+			{
+				TranslationResult providerResult = provider.GetTranslationResult(
+					selector,
+					path);
+
+				if (providerResult != null && (result == null || providerResult > result))
+				{
+					result = providerResult;
+				}
+			}
+
+			// Whatever we have at the end is it.
+			return result;
 		}
 
 		#endregion

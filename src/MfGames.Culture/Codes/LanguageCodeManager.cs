@@ -222,11 +222,11 @@ namespace MfGames.Culture.Codes
 			return codes.FirstOrDefault(c => c.Alpha3B == alpha3 || c.Alpha3T == alpha3);
 		}
 
-		public TranslationResult GetTranslation(
+		public TranslationResult GetTranslationResult(
 			LanguageTagSelector selector,
 			HierarchicalPath path)
 		{
-			return translations.GetTranslation(selector, path);
+			return translations.GetTranslationResult(selector, path);
 		}
 
 		#endregion

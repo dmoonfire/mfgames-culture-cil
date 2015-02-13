@@ -72,13 +72,6 @@ namespace MfGames.Culture.Translations
 			return translations.Values.FirstOrDefault();
 		}
 
-		public TranslationResult GetTranslation(
-			LanguageTagSelector selector,
-			HierarchicalPath path)
-		{
-			return GetTranslation(selector);
-		}
-
 		public TranslationResult GetTranslation(LanguageTagSelector selector)
 		{
 			// Loop through the language choices and find the first one that
@@ -96,6 +89,13 @@ namespace MfGames.Culture.Translations
 
 			// If we got through the loop, then we don't have anything.
 			return null;
+		}
+
+		public TranslationResult GetTranslationResult(
+			LanguageTagSelector selector,
+			HierarchicalPath path)
+		{
+			return GetTranslation(selector);
 		}
 
 		#endregion

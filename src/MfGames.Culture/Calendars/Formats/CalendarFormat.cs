@@ -5,9 +5,10 @@
 //   MIT License (MIT)
 // </license>
 
-using System;
 using System.Collections.Generic;
 
+using MfGames.Culture.Codes;
+using MfGames.Culture.Translations;
 using MfGames.Text;
 
 namespace MfGames.Culture.Calendars.Formats
@@ -39,10 +40,26 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Public Methods and Operators
 
-		public CalendarPoint Parse(string input, CalendarSystem calendar)
+		public CalendarPoint Parse(
+			CalendarSystem calendar,
+			LanguageTagSelector selector,
+			string input)
+		{
+			return Parse(calendar, calendar.Translations, selector, input);
+		}
+
+		public CalendarPoint Parse(
+			CalendarSystem calendar,
+			ITranslationProvider translations,
+			LanguageTagSelector selector,
+			string input)
 		{
 			// First get the values for the input.
-			CalendarElementValueCollection values = ParseValues(input);
+			CalendarElementValueCollection values = ParseValues(
+				calendar,
+				translations,
+				selector,
+				input);
 
 			// Create a new calendar point from a given value.
 			CalendarPoint results = calendar.Create(values);
@@ -50,22 +67,38 @@ namespace MfGames.Culture.Calendars.Formats
 			return results;
 		}
 
-		public CalendarElementValueCollection ParseValues(string input)
+		public CalendarElementValueCollection ParseValues(
+			CalendarSystem calendar,
+			ITranslationProvider translations,
+			LanguageTagSelector selector,
+			string input)
 		{
-			Dictionary<string, string> parsed = macro.Parse(input);
-			var values = new CalendarElementValueCollection();
+			var context = new CalendarFormatMacroContext(
+				calendar,
+				translations,
+				selector);
 
-			foreach (KeyValuePair<string, string> pair in parsed)
-			{
-				values[pair.Key] = Convert.ToInt32(pair.Value);
-			}
+			macro.Parse(context, input);
 
-			return values;
+			return context.ElementValues;
+		}
+
+		public CalendarElementValueCollection ParseValues(
+			CalendarSystem calendar,
+			LanguageTagSelector selector,
+			string input)
+		{
+			return ParseValues(
+				calendar,
+				calendar.Translations,
+				selector,
+				input);
 		}
 
 		public string ToString(CalendarPoint point)
 		{
-			string results = macro.Expand(point.Values);
+			var context = new CalendarFormatMacroContext(point.Values);
+			string results = macro.Expand(context);
 			return results;
 		}
 

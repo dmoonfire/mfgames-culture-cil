@@ -25,7 +25,7 @@ namespace MfGames.Culture.Translations
 		/// <param name="selector">The langauges to accept and their weights.</param>
 		/// <param name="path">The identifier to the translation.</param>
 		/// <returns>A translated value or null.</returns>
-		TranslationResult GetTranslation(
+		TranslationResult GetTranslationResult(
 			LanguageTagSelector selector,
 			HierarchicalPath path);
 

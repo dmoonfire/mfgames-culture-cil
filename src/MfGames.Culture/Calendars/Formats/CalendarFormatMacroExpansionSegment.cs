@@ -6,9 +6,9 @@
 // </license>
 
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using MfGames.Culture.Translations;
 using MfGames.HierarchicalPaths;
 using MfGames.Text;
 
@@ -21,6 +21,12 @@ namespace MfGames.Culture.Calendars.Formats
 		public CalendarFormatMacroExpansionSegment(
 			VariableMacroExpansionSegment segment)
 		{
+			// Verify our contracts.
+			if (segment == null)
+			{
+				throw new ArgumentNullException("segment");
+			}
+
 			// Save the components.
 			Field = segment.Field;
 			Format = segment.Format;
@@ -30,10 +36,11 @@ namespace MfGames.Culture.Calendars.Formats
 			// a translation lookup.
 			if (Format.Contains("/"))
 			{
-				// Pull out the path.
+				// Pull out the path, but strip the "/" because we are going
+				// to use relative translations.
 				int index = Format.IndexOf("/", StringComparison.InvariantCulture);
-				string path = Format.Substring(index);
-				TranslationLookup = new HierarchicalPath(path);
+				string path = Format.Substring(index + 1);
+				TranslationLookup = path;
 
 				// Update the format so it only has the "S" code.
 				Format = Format.Substring(0, index);
@@ -60,16 +67,17 @@ namespace MfGames.Culture.Calendars.Formats
 		public int MacroIndex { get; set; }
 		public int Offset { get; set; }
 		public string Pattern { get; set; }
-		public HierarchicalPath TranslationLookup { get; set; }
+		public string TranslationLookup { get; set; }
 
 		#endregion
 
 		#region Public Methods and Operators
 
-		public string Expand(IDictionary<string, object> macros)
+		public string Expand(IMacroExpansionContext context)
 		{
 			// Get the value from inside the macro.
-			int value = (int)macros[Field] + Offset;
+			var formatContext = (CalendarFormatMacroContext)context;
+			int value = formatContext.ElementValues[Field] + Offset;
 
 			// Format it.
 			return value.ToString(Format);
@@ -80,20 +88,59 @@ namespace MfGames.Culture.Calendars.Formats
 			return Pattern;
 		}
 
-		public void Match(Dictionary<string, string> results, Match match)
+		public void Match(IMacroExpansionContext context, Match match)
 		{
+			// Cast our context to the custom one.
+			var formatContext = (CalendarFormatMacroContext)context;
+
 			// Try to parse the value as an integer. If we can, then apply the
 			// offset to normalize the values.
 			int index;
 			string value = match.Groups[MacroIndex].Value;
 
+			// Check to see if we have a character lookup. If we do, we need
+			// to translate it into a numeric value.
+			if (TranslationLookup != null)
+			{
+				// Look up the translation.
+				var translationPath = new HierarchicalPath(
+					value.ToLowerInvariant(),
+					new HierarchicalPath(
+						TranslationLookup,
+						formatContext.Calendar.TranslationPath));
+				TranslationResult translation = formatContext.Translations
+					.GetTranslationResult(
+						formatContext.Selector,
+						translationPath);
+
+				if (translation == null)
+				{
+					throw new IndexOutOfRangeException(
+						"Cannot find translation for: " + value + ".");
+				}
+
+				// Make sure we can parse it.
+				if (!Int32.TryParse(translation.Result, out index))
+				{
+					throw new InvalidOperationException(
+						"Cannot parse value as a numeric: " + translation.Result);
+				}
+
+				formatContext.ElementValues[Field] = index;
+				formatContext.Values[Field] = value;
+				return;
+			}
+
+			// If this is a number, we parse that.
 			if (Int32.TryParse(value, out index))
 			{
-				value = (index - Offset).ToString();
+				int result = index - Offset;
+				formatContext.ElementValues[Field] = result;
+				value = result.ToString();
 			}
 
 			// Save the value in the results hash.
-			results[Field] = value;
+			context.Values[Field] = value;
 		}
 
 		#endregion
