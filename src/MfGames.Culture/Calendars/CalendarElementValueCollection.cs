@@ -58,6 +58,18 @@ namespace MfGames.Culture.Calendars
 
 		#endregion
 
+		#region Public Methods and Operators
+
+		public void AddRange(CalendarElementValueCollection values)
+		{
+			foreach (KeyValuePair<string, int> pair in values)
+			{
+				this[pair.Key] = pair.Value;
+			}
+		}
+
+		#endregion
+
 		#region Explicit Interface Methods
 
 		void ICollection<KeyValuePair<string, object>>.Add(

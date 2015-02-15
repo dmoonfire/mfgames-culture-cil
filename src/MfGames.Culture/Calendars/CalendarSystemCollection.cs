@@ -5,6 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -85,7 +86,8 @@ namespace MfGames.Culture.Calendars
 			}
 
 			// Create a calendar point from the resulting collection.
-			return new CalendarPoint(cycles, values, julianDate);
+			//return new CalendarPoint(cycles, values, julianDate);
+			throw new NotImplementedException();
 		}
 
 		public IEnumerator<CalendarSystem> GetEnumerator()

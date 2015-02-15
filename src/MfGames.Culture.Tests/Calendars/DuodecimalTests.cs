@@ -38,8 +38,8 @@ namespace MfGames.Culture.Tests.Calendars
 			dynamic point = calendar.Create(julianDate);
 
 			Assert.AreEqual(1, point.Hour, "Hour");
-			Assert.AreEqual(0, point.Minute, "Minute");
-			Assert.AreEqual(0, point.Second, "Second");
+			Assert.AreEqual(0, point.HourMinute, "HourMinute");
+			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
 		}
 
 		[Test]
@@ -51,8 +51,8 @@ namespace MfGames.Culture.Tests.Calendars
 			dynamic point = calendar.Create(julianDate);
 
 			Assert.AreEqual(8, point.Hour, "Hour");
-			Assert.AreEqual(0, point.Minute, "Minute");
-			Assert.AreEqual(0, point.Second, "Second");
+			Assert.AreEqual(0, point.HourMinute, "HourMinute");
+			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
 		}
 
 		[Test]
@@ -61,8 +61,8 @@ namespace MfGames.Culture.Tests.Calendars
 			dynamic point = calendar.Create(new DateTime(2000, 1, 1, 8, 12, 0));
 
 			Assert.AreEqual(8, point.Hour, "Hour");
-			Assert.AreEqual(12, point.Minute, "Minute");
-			Assert.AreEqual(0, point.Second, "Second");
+			Assert.AreEqual(12, point.HourMinute, "HourMinute");
+			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
 		}
 
 		[Test]
@@ -72,8 +72,8 @@ namespace MfGames.Culture.Tests.Calendars
 			dynamic point = calendar.Create(julianDate);
 
 			Assert.AreEqual(12, point.Hour, "Hour");
-			Assert.AreEqual(0, point.Minute, "Minute");
-			Assert.AreEqual(0, point.Second, "Second");
+			Assert.AreEqual(0, point.HourMinute, "HourMinute");
+			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
 		}
 
 		[Test]
@@ -83,8 +83,8 @@ namespace MfGames.Culture.Tests.Calendars
 			dynamic point = calendar.Create(julianDate);
 
 			Assert.AreEqual(12, point.Hour, "Hour");
-			Assert.AreEqual(0, point.Minute, "Minute");
-			Assert.AreEqual(0, point.Second, "Second");
+			Assert.AreEqual(0, point.HourMinute, "HourMinute");
+			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
 		}
 
 		#endregion

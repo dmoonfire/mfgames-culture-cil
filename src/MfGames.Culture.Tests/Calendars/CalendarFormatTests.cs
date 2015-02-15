@@ -31,8 +31,6 @@ namespace MfGames.Culture.Tests.Calendars
 
 		private CalendarFormat iso;
 
-		private CalendarPoint point;
-
 		#endregion
 
 		#region Public Methods and Operators
@@ -51,6 +49,15 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
+		public void Alpha3ToString19870304()
+		{
+			var point = calendar.Create(new DateTime(1987, 3, 4));
+			string results = alpha3.ToString(point, calendar, englishSelector);
+
+			Assert.AreEqual("Mar 4, 1987", results);
+		}
+
+		[Test]
 		public void Alpha3Parse19871123()
 		{
 			CalendarPoint results = alpha3.Parse(
@@ -66,6 +73,7 @@ namespace MfGames.Culture.Tests.Calendars
 		[Test]
 		public void IsoParse19871123()
 		{
+			var point = calendar.Create(new DateTime(1987, 11, 23));
 			CalendarPoint results = iso.Parse(
 				calendar,
 				englishSelector,
@@ -102,7 +110,8 @@ namespace MfGames.Culture.Tests.Calendars
 		[Test]
 		public void IsoToString19871123()
 		{
-			string results = iso.ToString(point);
+			var point = calendar.Create(new DateTime(1987, 11, 23));
+			string results = iso.ToString(point, calendar, englishSelector);
 
 			Assert.AreEqual("1987-11-23", results);
 		}
@@ -111,7 +120,6 @@ namespace MfGames.Culture.Tests.Calendars
 		public void SetUp()
 		{
 			calendar = new GregorianCalendarSystem();
-			point = calendar.Create(new DateTime(1987, 11, 23));
 			iso = new CalendarFormat("$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
 			alpha3 = new CalendarFormat(
 				"$(Year Month:S3/Short) $(Month Day:G0+1), $(Year:D4)");

@@ -38,6 +38,7 @@
     <Compile Include="Calendars\CalendarPoint.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
     <Compile Include="Calendars\CalendarSystemCollection.cs" />
+    <Compile Include="Calendars\CalendarSystemExtensions.cs" />
     <Compile Include="Calendars\Cycles\CalculatedCycle.cs" />
     <Compile Include="Calendars\Cycles\Cycle.cs" />
     <Compile Include="Calendars\Calculations\CycleCalculation.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Calendars\Formats\CalendarFormatMacroContext.cs" />
     <Compile Include="Calendars\Formats\CalendarFormatMacroExpansionSegment.cs" />
     <Compile Include="Calendars\GregorianCalendarSystem.cs" />
+    <Compile Include="Calendars\ICalendarSystem.cs" />
     <Compile Include="Calendars\Lengths\ArrayCycleLength.cs" />
     <Compile Include="Calendars\Lengths\ConstantLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\CycleLength.cs" />

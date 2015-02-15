@@ -95,7 +95,23 @@ namespace MfGames.Culture.Calendars.Formats
 				input);
 		}
 
-		public string ToString(CalendarPoint point)
+		public string ToString(
+			CalendarPoint point,
+			CalendarSystem calendar,
+			LanguageTagSelector selector)
+		{
+			return ToString(
+				point,
+				calendar,
+				calendar.Translations,
+				selector);
+		}
+
+		public string ToString(
+			CalendarPoint point,
+			CalendarSystem calendar,
+			ITranslationProvider translations,
+			LanguageTagSelector selector)
 		{
 			var context = new CalendarFormatMacroContext(point.Values);
 			string results = macro.Expand(context);

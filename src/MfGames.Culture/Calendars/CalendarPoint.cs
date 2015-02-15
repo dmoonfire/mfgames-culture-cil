@@ -29,27 +29,33 @@ namespace MfGames.Culture.Calendars
 		#region Constructors and Destructors
 
 		public CalendarPoint(
-			IEnumerable<Cycle> cycles,
+			ICalendarSystem calendar,
 			CalendarElementValueCollection values,
 			Fraction julianDate)
 		{
 			// Establish the contracts.
-			if (cycles == null)
+			if (calendar == null)
 			{
 				throw new ArgumentNullException("calendar");
 			}
 
+			if (values == null)
+			{
+				throw new ArgumentNullException("values");
+			}
+
 			// Save the member variables.
+			Calendar = calendar;
 			JulianDate = julianDate;
 			Values = values;
 
 			// Populate the cycles.
-			this.cycles = new Dictionary<string, Cycle>();
+			cycles = new Dictionary<string, Cycle>();
 
-			foreach (Cycle cycle in cycles)
+			foreach (Cycle cycle in calendar.GetCycles())
 			{
-				this.cycles[cycle.Id] = cycle;
-				this.cycles[cycle.PascalId] = cycle;
+				cycles[cycle.Id] = cycle;
+				cycles[cycle.PascalId] = cycle;
 			}
 		}
 
@@ -57,6 +63,7 @@ namespace MfGames.Culture.Calendars
 
 		#region Public Properties
 
+		public ICalendarSystem Calendar { get; private set; }
 		public Fraction JulianDate { get; private set; }
 		public CalendarElementValueCollection Values { get; private set; }
 
@@ -105,36 +112,6 @@ namespace MfGames.Culture.Calendars
 			// If we can't find it, blow up.
 			throw new InvalidOperationException(
 				"Cannot find " + element.Id + " inside calendar point.");
-		}
-
-		#endregion
-
-		#region Methods
-
-		private CalendarElement GetElement(
-			string name,
-			CalendarElementCollection<Cycle> cycles)
-		{
-			// Look through all the elements in the calendar.
-			foreach (Cycle cycle in cycles)
-			{
-				// First check this value.
-				if (cycle.PascalId == name)
-				{
-					return cycle;
-				}
-
-				// Check inner cycles.
-				CalendarElement element = GetElement(name, cycle.Cycles);
-
-				if (element != null)
-				{
-					return element;
-				}
-			}
-
-			// If we get out of the loop, we can't find it.
-			return null;
 		}
 
 		#endregion
