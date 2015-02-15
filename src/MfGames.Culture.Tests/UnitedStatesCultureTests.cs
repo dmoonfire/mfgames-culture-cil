@@ -35,8 +35,8 @@ namespace MfGames.Culture.Tests
 			var gregorian = new GregorianCalendarSystem();
 			var duodecimal = new DuodecimalCalendarSystem();
 
-			culture.Calendars.Add(gregorian);
-			culture.Calendars.Add(duodecimal);
+			culture.Calendar.Add(gregorian);
+			culture.Calendar.Add(duodecimal);
 
 			// Add in the known formats.
 			culture.Formats.Add(

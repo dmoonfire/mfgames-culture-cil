@@ -5,6 +5,7 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
 using System.Collections.Generic;
 
 namespace MfGames.Culture.Calendars.Formats
@@ -19,10 +20,22 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Constructors and Destructors
 
-		public CalendarFormatCollection()
+		public CalendarFormatCollection(ICalendarSystem calendar)
 		{
+			if (calendar == null)
+			{
+				throw new ArgumentNullException("calendar");
+			}
+
+			Calendar = calendar;
 			formats = new List<CalendarFormat>();
 		}
+
+		#endregion
+
+		#region Public Properties
+
+		public ICalendarSystem Calendar { get; set; }
 
 		#endregion
 

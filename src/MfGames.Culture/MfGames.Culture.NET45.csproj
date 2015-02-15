@@ -37,8 +37,8 @@
     <Compile Include="Calendars\CalendarElementValueCollection.cs" />
     <Compile Include="Calendars\CalendarPoint.cs" />
     <Compile Include="Calendars\CalendarSystem.cs" />
-    <Compile Include="Calendars\CalendarSystemCollection.cs" />
     <Compile Include="Calendars\CalendarSystemExtensions.cs" />
+    <Compile Include="Calendars\CompositeCalendarSystem.cs" />
     <Compile Include="Calendars\Cycles\CalculatedCycle.cs" />
     <Compile Include="Calendars\Cycles\Cycle.cs" />
     <Compile Include="Calendars\Calculations\CycleCalculation.cs" />

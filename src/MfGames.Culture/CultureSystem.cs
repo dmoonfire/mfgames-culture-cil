@@ -16,15 +16,15 @@ namespace MfGames.Culture
 
 		public CultureSystem()
 		{
-			Calendars = new CalendarSystemCollection();
-			Formats = new CalendarFormatCollection();
+			Calendar = new CompositeCalendarSystem();
+			Formats = new CalendarFormatCollection(Calendar);
 		}
 
 		#endregion
 
 		#region Public Properties
 
-		public CalendarSystemCollection Calendars { get; private set; }
+		public CompositeCalendarSystem Calendar { get; private set; }
 		public CalendarFormatCollection Formats { get; private set; }
 
 		#endregion

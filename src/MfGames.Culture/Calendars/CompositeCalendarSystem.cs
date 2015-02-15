@@ -10,12 +10,11 @@ using System.Collections.Generic;
 
 using Fractions;
 
-using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Cycles;
 using MfGames.Culture.Translations;
 using MfGames.HierarchicalPaths;
 
-namespace MfGames.Culture.Tests.Calendars
+namespace MfGames.Culture.Calendars
 {
 	/// <summary>
 	/// Contains zero or more other CalendarSystems, providing a unified
