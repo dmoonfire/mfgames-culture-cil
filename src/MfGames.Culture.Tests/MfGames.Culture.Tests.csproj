@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendars\CalendarFormatCollectionTests.cs" />
     <Compile Include="Calendars\CalendarFormatTests.cs" />
     <Compile Include="Calendars\DuodecimalTests.cs" />
     <Compile Include="Calendars\GregorianDuodecimalTests.cs" />
