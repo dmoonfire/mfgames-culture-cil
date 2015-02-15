@@ -787,7 +787,8 @@ namespace MfGames.Culture.Tests.Calendars
 		[Test]
 		public void Verify20050101091807()
 		{
-			Fraction julianDate = new DateTime(2005, 1, 1, 9, 18, 7).ToJulianDateFraction();
+			Fraction julianDate =
+				new DateTime(2005, 1, 1, 9, 18, 7).ToJulianDateFraction();
 			dynamic point = calendar.Create(julianDate);
 
 			Assert.AreEqual(2005, point.Year, "Year");

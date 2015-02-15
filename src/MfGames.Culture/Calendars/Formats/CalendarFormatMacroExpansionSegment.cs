@@ -79,6 +79,22 @@ namespace MfGames.Culture.Calendars.Formats
 			var formatContext = (CalendarFormatMacroContext)context;
 			int value = formatContext.ElementValues[Field] + Offset;
 
+			// If the format is a string, then use that for the lookup key.
+			if (Format.StartsWith("S"))
+			{
+				var path = new HierarchicalPath(
+					value.ToString(),
+					new HierarchicalPath(
+						TranslationLookup,
+						formatContext.Calendar.TranslationPath));
+				TranslationResult result = formatContext.Calendar.Translations
+					.GetTranslationResult(
+						formatContext.Selector,
+						path);
+
+				return result.Result;
+			}
+
 			// Format it.
 			return value.ToString(Format);
 		}

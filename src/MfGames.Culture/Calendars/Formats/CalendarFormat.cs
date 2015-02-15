@@ -113,8 +113,14 @@ namespace MfGames.Culture.Calendars.Formats
 			ITranslationProvider translations,
 			LanguageTagSelector selector)
 		{
-			var context = new CalendarFormatMacroContext(point.Values);
+			var context = new CalendarFormatMacroContext(point.Values)
+			{
+				Calendar = calendar,
+				Translations = translations,
+				Selector = selector
+			};
 			string results = macro.Expand(context);
+
 			return results;
 		}
 
