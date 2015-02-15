@@ -785,6 +785,27 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
+		public void Verify20050101091807()
+		{
+			Fraction julianDate = new DateTime(2005, 1, 1, 9, 18, 7).ToJulianDateFraction();
+			dynamic point = calendar.Create(julianDate);
+
+			Assert.AreEqual(2005, point.Year, "Year");
+			Assert.AreEqual(0, point.YearDay, "YearDay");
+			Assert.AreEqual(2, point.Millennium, "Millennium");
+			Assert.AreEqual(20, point.Century, "Century");
+			Assert.AreEqual(200, point.Decade, "Decade");
+			Assert.AreEqual(0, point.MillenniumCentury, "MillenniumCentury");
+			Assert.AreEqual(0, point.CenturyDecade, "CenturyDecade");
+			Assert.AreEqual(5, point.DecadeYear, "DecadeYear");
+			Assert.AreEqual(0, point.YearMonth, "YearMonth");
+			Assert.AreEqual(0, point.MonthDay, "MonthDay");
+			Assert.AreEqual(9, point.Hour, "Hour");
+			Assert.AreEqual(18, point.HourMinute, "HourMinute");
+			Assert.AreEqual(7, point.MinuteSecond, "MinuteSecond");
+		}
+
+		[Test]
 		public void VerifyHour1()
 		{
 			decimal julianDate = 0.5m + 1m / 24m + 0m / 1440m + 0m / 86400m;
