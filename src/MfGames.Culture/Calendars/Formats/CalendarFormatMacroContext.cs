@@ -40,7 +40,7 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Public Properties
 
-		public CalendarSystem Calendar { get; set; }
+		public ICalendarSystem Calendar { get; set; }
 		public CalendarElementValueCollection ElementValues { get; private set; }
 		public LanguageTagSelector Selector { get; set; }
 		public ITranslationProvider Translations { get; set; }

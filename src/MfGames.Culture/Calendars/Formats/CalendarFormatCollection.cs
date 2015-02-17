@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 
+using MfGames.Culture.Codes;
+
 namespace MfGames.Culture.Calendars.Formats
 {
 	public class CalendarFormatCollection
@@ -19,6 +21,11 @@ namespace MfGames.Culture.Calendars.Formats
 		#endregion
 
 		#region Constructors and Destructors
+
+		public string ToString(CalendarPoint point, LanguageTagSelector selector)
+		{
+			return formats[0].ToString(point, Calendar, Calendar.Translations, selector);
+		}
 
 		public CalendarFormatCollection(ICalendarSystem calendar)
 		{

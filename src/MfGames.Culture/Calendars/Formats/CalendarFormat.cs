@@ -109,7 +109,7 @@ namespace MfGames.Culture.Calendars.Formats
 
 		public string ToString(
 			CalendarPoint point,
-			CalendarSystem calendar,
+			ICalendarSystem calendar,
 			ITranslationProvider translations,
 			LanguageTagSelector selector)
 		{
