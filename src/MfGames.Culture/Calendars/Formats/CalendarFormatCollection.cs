@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using MfGames.Culture.Codes;
 
@@ -16,7 +17,7 @@ namespace MfGames.Culture.Calendars.Formats
 	{
 		#region Fields
 
-		private readonly List<CalendarFormat> formats;
+		private readonly List<CalendarFormatEntry> formats;
 
 		#endregion
 
@@ -30,7 +31,7 @@ namespace MfGames.Culture.Calendars.Formats
 			}
 
 			Calendar = calendar;
-			formats = new List<CalendarFormat>();
+			formats = new List<CalendarFormatEntry>();
 		}
 
 		#endregion
@@ -52,14 +53,55 @@ namespace MfGames.Culture.Calendars.Formats
 
 		public void Add(string name, CalendarFormat format)
 		{
-			formats.Add(format);
+			var entry = new CalendarFormatEntry(name, format);
+
+			formats.Add(entry);
 		}
 
-		public string ToString(LanguageTagSelector selector, CalendarPoint point)
+		public string ToString(string formatName, CalendarPoint point)
 		{
-			return formats[0].ToString(Calendar, Calendar.Translations, selector, point);
+			return ToString(formatName, LanguageTagSelector.All, point);
+		}
+
+		public string ToString(
+			string formatName,
+			LanguageTagSelector selector,
+			CalendarPoint point)
+		{
+			CalendarFormat format = GetFormat(formatName);
+
+			return format.ToString(Calendar, Calendar.Translations, selector, point);
 		}
 
 		#endregion
+
+		#region Methods
+
+		private CalendarFormat GetFormat(string formatName)
+		{
+			return formats.First(e => e.Name == formatName).Format;
+		}
+
+		#endregion
+
+		private class CalendarFormatEntry
+		{
+			#region Constructors and Destructors
+
+			public CalendarFormatEntry(string name, CalendarFormat format)
+			{
+				Name = name;
+				Format = format;
+			}
+
+			#endregion
+
+			#region Public Properties
+
+			public CalendarFormat Format { get; set; }
+			public string Name { get; set; }
+
+			#endregion
+		}
 	}
 }

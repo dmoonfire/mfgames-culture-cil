@@ -7,12 +7,9 @@
 
 using System;
 
-using Fractions;
-
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
 using MfGames.Culture.Codes;
-using MfGames.Culture.Extensions.System;
 
 using NUnit.Framework;
 
@@ -29,17 +26,15 @@ namespace MfGames.Culture.Tests.Calendars
 
 		private CalendarFormatCollection formats;
 
-		private Fraction julian19871123;
-
 		#endregion
 
 		#region Public Methods and Operators
 
 		[Test]
-		public void FormatIso()
+		public void FormatIsoYearMonthDay()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = formats.ToString(englishSelector, point);
+			string results = formats.ToString("yyyy-MM-dd", point);
 
 			Assert.AreEqual("1987-11-23", results);
 		}
@@ -47,11 +42,12 @@ namespace MfGames.Culture.Tests.Calendars
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			julian19871123 = new DateTime(1987, 11, 23).ToJulianDateFraction();
+			// Set up some common points.
+			englishSelector = new LanguageTagSelector("eng;q=1.0, *;q=0.1");
+
 			calendar = new GregorianCalendarSystem();
 			formats = new CalendarFormatCollection(calendar);
 			formats.Add("yyyy-MM-dd", "$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)");
-			englishSelector = new LanguageTagSelector("eng;q=1.0, *;q=0.1");
 		}
 
 		#endregion
