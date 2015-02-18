@@ -68,7 +68,8 @@ namespace MfGames.Culture.Tests.Translations
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			LanguageCode englishLanguage = LanguageCodeManager.Instance.GetAlpha3("eng");
+			LanguageCode englishLanguage =
+				LanguageCodeManager.Instance.GetIsoAlpha3("eng");
 
 			english = new LanguageTag(englishLanguage);
 		}

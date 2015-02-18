@@ -22,11 +22,6 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Constructors and Destructors
 
-		public string ToString(CalendarPoint point, LanguageTagSelector selector)
-		{
-			return formats[0].ToString(point, Calendar, Calendar.Translations, selector);
-		}
-
 		public CalendarFormatCollection(ICalendarSystem calendar)
 		{
 			if (calendar == null)
@@ -58,6 +53,11 @@ namespace MfGames.Culture.Calendars.Formats
 		public void Add(string name, CalendarFormat format)
 		{
 			formats.Add(format);
+		}
+
+		public string ToString(CalendarPoint point, LanguageTagSelector selector)
+		{
+			return formats[0].ToString(point, Calendar, Calendar.Translations, selector);
 		}
 
 		#endregion

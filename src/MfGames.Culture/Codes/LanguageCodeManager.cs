@@ -6,6 +6,7 @@
 // </license>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
@@ -22,7 +23,8 @@ namespace MfGames.Culture.Codes
 	/// A manager class which ensures only a single instance of a <c>LanguageCode</c>
 	/// is created for a given language.
 	/// </summary>
-	public class LanguageCodeManager : ITranslationProvider
+	public class LanguageCodeManager : IEnumerable<LanguageCode>,
+		ITranslationProvider
 	{
 		#region Static Fields
 
@@ -73,6 +75,8 @@ namespace MfGames.Culture.Codes
 			}
 		}
 
+		public int Count { get { return codes.Count; } }
+
 		#endregion
 
 		#region Public Methods and Operators
@@ -81,14 +85,31 @@ namespace MfGames.Culture.Codes
 		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
 			LanguageCode languageCode)
 		{
-			return GetAlpha3ToNameTranslationPath(languageCode.Alpha3);
+			return GetAlpha3ToNameTranslationPath(languageCode.IsoAlpha3);
 		}
 
 		[Pure]
 		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
 			string languageCode)
 		{
-			return new HierarchicalPath("/ISO/639/Alpha3/Codes/" + languageCode);
+			return new HierarchicalPath("/ISO/639/IsoAlpha3/Codes/" + languageCode);
+		}
+
+		public void Add(LanguageCode languageCode)
+		{
+			if (languageCode == null)
+			{
+				throw new ArgumentNullException("languageCode");
+			}
+
+			codes.Add(languageCode);
+		}
+
+		public void Add(string isoAlpha3T)
+		{
+			var languageCode = new LanguageCode(isoAlpha3T);
+
+			Add(languageCode);
 		}
 
 		public void AddDefaults()
@@ -97,8 +118,8 @@ namespace MfGames.Culture.Codes
 			// for the translations in the file. However, we need the language
 			// codes for the translations, which means we have a special case
 			// where we have to inject the translations after the fact.
-			var english = new LanguageCode("en", null, "eng", false);
-			var french = new LanguageCode("fr", "fre", "fra", false);
+			var english = new LanguageCode("eng", "en", null, false);
+			var french = new LanguageCode("fra", "fr", "fre", false);
 			var englishTag = new LanguageTag(english);
 			var frenchTag = new LanguageTag(french);
 
@@ -176,11 +197,17 @@ namespace MfGames.Culture.Codes
 						alpha3B = null;
 					}
 
+					// We can't handle some codes.
+					if (alpha3T.Length != 3)
+					{
+						continue;
+					}
+
 					// Add the code to the list.
 					var code = new LanguageCode(
+						alpha3T,
 						alpha2,
 						alpha3B,
-						alpha3T,
 						false);
 
 					codes.Add(code);
@@ -204,22 +231,36 @@ namespace MfGames.Culture.Codes
 
 		public LanguageCode Get(string language)
 		{
-			if (language == "*")
-			{
-				return LanguageCode.All;
-			}
-
-			return GetAlpha3(language);
+			return language == "*"
+				? LanguageCode.Canonical
+				: GetIsoAlpha3(language);
 		}
 
-		public LanguageCode GetAlpha3(string alpha3)
+		public IEnumerator<LanguageCode> GetEnumerator()
 		{
-			if (alpha3 == "*")
-			{
-				return LanguageCode.All;
-			}
+			return codes.GetEnumerator();
+		}
 
-			return codes.FirstOrDefault(c => c.Alpha3B == alpha3 || c.Alpha3T == alpha3);
+		public LanguageCode GetIsoAlpha3(string alpha3)
+		{
+			return alpha3 == "*"
+				? LanguageCode.Canonical
+				: codes.FirstOrDefault(
+					c => c.IsoAlpha3B == alpha3 || c.IsoAlpha3T == alpha3);
+		}
+
+		public LanguageCode GetIsoAlpha3B(string alpha3)
+		{
+			return alpha3 == "*"
+				? LanguageCode.Canonical
+				: codes.FirstOrDefault(c => c.IsoAlpha3B == alpha3);
+		}
+
+		public LanguageCode GetIsoAlpha3T(string alpha3)
+		{
+			return alpha3 == "*"
+				? LanguageCode.Canonical
+				: codes.FirstOrDefault(c => c.IsoAlpha3T == alpha3);
 		}
 
 		public TranslationResult GetTranslationResult(
@@ -227,6 +268,15 @@ namespace MfGames.Culture.Codes
 			HierarchicalPath path)
 		{
 			return translations.GetTranslationResult(selector, path);
+		}
+
+		#endregion
+
+		#region Explicit Interface Methods
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 
 		#endregion

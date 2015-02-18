@@ -19,7 +19,7 @@ namespace MfGames.Culture.Codes
 
 		static LanguageTag()
 		{
-			All = new LanguageTag(LanguageCode.All);
+			All = new LanguageTag(LanguageCode.Canonical);
 		}
 
 		public LanguageTag(LanguageCode language)
@@ -123,7 +123,7 @@ namespace MfGames.Culture.Codes
 
 		public override string ToString()
 		{
-			return Language.Alpha3;
+			return Language.IsoAlpha3;
 		}
 
 		#endregion

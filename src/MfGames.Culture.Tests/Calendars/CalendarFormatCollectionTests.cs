@@ -25,11 +25,11 @@ namespace MfGames.Culture.Tests.Calendars
 
 		private GregorianCalendarSystem calendar;
 
+		private LanguageTagSelector englishSelector;
+
 		private CalendarFormatCollection formats;
 
 		private Fraction julian19871123;
-
-		private LanguageTagSelector englishSelector;
 
 		#endregion
 
@@ -38,8 +38,8 @@ namespace MfGames.Culture.Tests.Calendars
 		[Test]
 		public void FormatIso()
 		{
-			var point = calendar.Create(new DateTime(1987, 11, 23));
-			var results = formats.ToString(point, englishSelector);
+			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
+			string results = formats.ToString(point, englishSelector);
 
 			Assert.AreEqual("1987-11-23", results);
 		}
@@ -47,7 +47,7 @@ namespace MfGames.Culture.Tests.Calendars
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			this.julian19871123 = new DateTime(1987, 11, 23).ToJulianDateFraction();
+			julian19871123 = new DateTime(1987, 11, 23).ToJulianDateFraction();
 			calendar = new GregorianCalendarSystem();
 			formats = new CalendarFormatCollection(calendar);
 			formats.Add("yyyy-MM-dd", "$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)");

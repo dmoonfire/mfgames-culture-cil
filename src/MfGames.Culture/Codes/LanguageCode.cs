@@ -21,45 +21,69 @@ namespace MfGames.Culture.Codes
 
 		static LanguageCode()
 		{
-			All = new LanguageCode("*", "*", "*", false);
+			Canonical = new LanguageCode("*", "*", "*", false);
 		}
 
-		public LanguageCode(string alpha3T)
-			: this(null, alpha3T)
+		public LanguageCode(string isoAlpha3T)
+			: this(isoAlpha3T, null)
+		{
+		}
+
+		public LanguageCode(string isoAlpha3T, string isoAlpha2)
+			: this(isoAlpha3T, isoAlpha2, null)
+		{
+		}
+
+		public LanguageCode(string isoAlpha3T, string isoAlpha2, string isoAlpha3B)
+			: this(isoAlpha3T,
+				isoAlpha2,
+				isoAlpha3B,
+				IsLanguageCodePrivateUse(isoAlpha3T))
 		{
 		}
 
 		public LanguageCode(
-			string alpha2,
-			string alpha3T)
-			: this(alpha2, null, alpha3T)
-		{
-		}
-
-		public LanguageCode(
-			string alpha2,
-			string alpha3B,
-			string alpha3T)
-			: this(alpha2, alpha3B, alpha3T, IsLanguageCodePrivateUse(alpha3T))
-		{
-		}
-
-		public LanguageCode(
-			string alpha2,
-			string alpha3B,
-			string alpha3T,
+			string isoAlpha3T,
+			string isoAlpha2,
+			string isoAlpha3B,
 			bool isPrivateUse)
 		{
 			// Verify our contracts.
-			if (alpha3T == null)
+			if (isoAlpha3T == null)
 			{
-				throw new ArgumentNullException("alpha3T");
+				throw new ArgumentNullException("isoAlpha3T");
+			}
+
+			// Verify lengths.
+			if (isoAlpha3T != "*" && isoAlpha3T.Length != 3)
+			{
+				throw new ArgumentOutOfRangeException(
+					"isoAlpha3T",
+					"The ISO Alpha3 T code must be exactly three characters.");
+			}
+
+			if (isoAlpha3B != "*" && isoAlpha3B != null && isoAlpha3B.Length != 3)
+			{
+				throw new ArgumentOutOfRangeException(
+					"isoAlpha3B",
+					"The ISO Alpha3 B code must be exactly three characters.");
+			}
+
+			if (isoAlpha2 != "*" && isoAlpha2 != null && isoAlpha2.Length != 2)
+			{
+				throw new ArgumentOutOfRangeException(
+					"isoAlpha2",
+					"The ISO Alpha2 code must be exactly two characters.");
 			}
 
 			// Save the member variables.
-			Alpha2 = alpha2 == null ? null : string.Intern(alpha2.ToLowerInvariant());
-			Alpha3B = alpha3B == null ? null : string.Intern(alpha3B.ToLowerInvariant());
-			Alpha3T = string.Intern(alpha3T.ToLower());
+			IsoAlpha2 = isoAlpha2 == null
+				? null
+				: string.Intern(isoAlpha2.ToLowerInvariant());
+			IsoAlpha3B = isoAlpha3B == null
+				? null
+				: string.Intern(isoAlpha3B.ToLowerInvariant());
+			IsoAlpha3T = string.Intern(isoAlpha3T.ToLower());
 			IsPrivateUse = isPrivateUse;
 		}
 
@@ -67,27 +91,27 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageCode All { get; private set; }
+		public static LanguageCode Canonical { get; private set; }
 
 		/// <summary>
 		/// Gets the two character ISO 639-1 code for the language. If there
 		/// is no such code, this will be null.
 		/// </summary>
-		public string Alpha2 { get; private set; }
+		public string IsoAlpha2 { get; private set; }
 
 		/// <summary>
 		/// Gets the preferred three character ISO 639-2 code where the
 		/// terminological (ISO 639-2/T) takes precendences over the
 		/// bibiographic (ISO 639-2/B).
 		/// </summary>
-		public string Alpha3 { get { return Alpha3T ?? Alpha3B; } }
+		public string IsoAlpha3 { get { return IsoAlpha3T ?? IsoAlpha3B; } }
 
 		/// <summary>
 		/// Gets the three character ISO 639-2/B (bibiographic) code for the
 		/// language. In cases where the terminological (T) code is identical
 		/// to this one, then this may null to indicate no difference.
 		/// </summary>
-		public string Alpha3B { get; private set; }
+		public string IsoAlpha3B { get; private set; }
 
 		/// <summary>
 		/// Gets the three character ISO 639-2/T (terminological) code for the
@@ -96,7 +120,7 @@ namespace MfGames.Culture.Codes
 		/// <remarks>
 		/// This field will never be null.
 		/// </remarks>
-		public string Alpha3T { get; private set; }
+		public string IsoAlpha3T { get; private set; }
 
 		public bool IsPrivateUse { get; private set; }
 
@@ -126,7 +150,7 @@ namespace MfGames.Culture.Codes
 				return true;
 			}
 
-			return string.Equals(Alpha3T, other.Alpha3T);
+			return string.Equals(IsoAlpha3T, other.IsoAlpha3T);
 		}
 
 		public override bool Equals(object obj)
@@ -151,12 +175,12 @@ namespace MfGames.Culture.Codes
 
 		public override int GetHashCode()
 		{
-			return Alpha3T.GetHashCode();
+			return IsoAlpha3T.GetHashCode();
 		}
 
 		public override string ToString()
 		{
-			return Alpha3;
+			return IsoAlpha3T;
 		}
 
 		#endregion

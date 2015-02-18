@@ -59,6 +59,7 @@
     <Compile Include="Calendars\GregorianTests.cs" />
     <Compile Include="Codes\CountryCodeManagerTests.cs" />
     <Compile Include="Codes\LanguageCodeManagerTests.cs" />
+    <Compile Include="Codes\LanguageCodeTests.cs" />
     <Compile Include="Codes\LanguageTagQualityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translations\TranslationManagerTests.cs" />

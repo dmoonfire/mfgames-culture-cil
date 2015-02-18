@@ -81,7 +81,7 @@ namespace MfGames.Culture.Codes
 		public void AddDefaults(LanguageCodeManager languages)
 		{
 			// Set up the English language code.
-			LanguageCode english = languages.GetAlpha3("eng");
+			LanguageCode english = languages.GetIsoAlpha3("eng");
 			var englishTag = new LanguageTag(english);
 
 			// Load the defaults from an embedded resource.
