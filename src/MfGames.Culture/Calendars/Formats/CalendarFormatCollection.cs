@@ -55,7 +55,7 @@ namespace MfGames.Culture.Calendars.Formats
 			formats.Add(format);
 		}
 
-		public string ToString(CalendarPoint point, LanguageTagSelector selector)
+		public string ToString(LanguageTagSelector selector, CalendarPoint point)
 		{
 			return formats[0].ToString(Calendar, Calendar.Translations, selector, point);
 		}

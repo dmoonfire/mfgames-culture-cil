@@ -39,7 +39,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void FormatIso()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = formats.ToString(point, englishSelector);
+			string results = formats.ToString(englishSelector, point);
 
 			Assert.AreEqual("1987-11-23", results);
 		}
