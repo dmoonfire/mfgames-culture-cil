@@ -22,11 +22,11 @@ namespace MfGames.Culture.Codes
 	/// A manager class which ensures only a single instance of a <c>CountryCode</c>
 	/// is created for a given country.
 	/// </summary>
-	public class CountryCodeManager
+	public class CountryCodeManager : ICountryCodeManager
 	{
 		#region Static Fields
 
-		private static CountryCodeManager instance;
+		private static ICountryCodeManager instance;
 
 		#endregion
 
@@ -53,7 +53,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static CountryCodeManager Instance
+		public static ICountryCodeManager Instance
 		{
 			get { return instance; }
 			set
@@ -78,7 +78,7 @@ namespace MfGames.Culture.Codes
 			AddDefaults(LanguageCodeManager.Instance);
 		}
 
-		public void AddDefaults(LanguageCodeManager languages)
+		public void AddDefaults(ILanguageCodeManager languages)
 		{
 			// Set up the English language code.
 			LanguageCode english = languages.GetIsoAlpha3("eng");

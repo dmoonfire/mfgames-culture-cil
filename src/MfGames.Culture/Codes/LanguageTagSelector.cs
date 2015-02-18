@@ -46,7 +46,7 @@ namespace MfGames.Culture.Codes
 		}
 
 		public LanguageTagSelector(
-			LanguageCodeManager languageManager,
+			ILanguageCodeManager languageManager,
 			string selector)
 			: this()
 		{

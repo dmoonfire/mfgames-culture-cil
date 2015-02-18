@@ -39,7 +39,7 @@ namespace MfGames.Culture.Codes
 		{
 		}
 
-		public LanguageTag(LanguageCodeManager languages, string language)
+		public LanguageTag(ILanguageCodeManager languages, string language)
 			: this(languages.Get(language))
 		{
 		}

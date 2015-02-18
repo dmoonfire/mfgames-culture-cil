@@ -23,12 +23,11 @@ namespace MfGames.Culture.Codes
 	/// A manager class which ensures only a single instance of a <c>LanguageCode</c>
 	/// is created for a given language.
 	/// </summary>
-	public class LanguageCodeManager : IEnumerable<LanguageCode>,
-		ITranslationProvider
+	public class LanguageCodeManager : ILanguageCodeManager
 	{
 		#region Static Fields
 
-		private static LanguageCodeManager instance;
+		private static ILanguageCodeManager instance;
 
 		#endregion
 
@@ -59,7 +58,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageCodeManager Instance
+		public static ILanguageCodeManager Instance
 		{
 			get { return instance; }
 			set

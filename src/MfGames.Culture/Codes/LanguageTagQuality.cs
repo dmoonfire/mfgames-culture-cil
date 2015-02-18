@@ -59,7 +59,7 @@ namespace MfGames.Culture.Codes
 		{
 		}
 
-		public LanguageTagQuality(LanguageCodeManager languages, string selector)
+		public LanguageTagQuality(ILanguageCodeManager languages, string selector)
 		{
 			// Establish our contracts.
 			if (selector == null)
