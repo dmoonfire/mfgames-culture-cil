@@ -49,6 +49,7 @@
     <Compile Include="Calendars\DuodecimalCalendarSystem.cs" />
     <Compile Include="Calendars\Formats\CalendarFormat.cs" />
     <Compile Include="Calendars\Formats\CalendarFormatCollection.cs" />
+    <Compile Include="Calendars\Formats\CalendarFormatContext.cs" />
     <Compile Include="Calendars\Formats\CalendarFormatMacroContext.cs" />
     <Compile Include="Calendars\Formats\CalendarFormatMacroExpansionSegment.cs" />
     <Compile Include="Calendars\GregorianCalendarSystem.cs" />

@@ -54,33 +54,41 @@ namespace MfGames.Culture.Calendars.Formats
 			LanguageTagSelector selector,
 			string input)
 		{
-			// First get the values for the input.
-			CalendarElementValueCollection values = ParseValues(
+			var context = new CalendarFormatContext(
 				calendar,
 				translations,
-				selector,
+				selector);
+
+			return Parse(context, input);
+		}
+
+		public CalendarPoint Parse(
+			CalendarFormatContext context,
+			string input)
+		{
+			// First get the values for the input.
+			CalendarElementValueCollection values = ParseValues(
+				context,
 				input);
 
 			// Create a new calendar point from a given value.
-			CalendarPoint results = calendar.Create(values);
+			CalendarPoint results = context.Calendar.Create(values);
 
 			return results;
 		}
 
 		public CalendarElementValueCollection ParseValues(
-			CalendarSystem calendar,
+			ICalendarSystem calendar,
 			ITranslationProvider translations,
 			LanguageTagSelector selector,
 			string input)
 		{
-			var context = new CalendarFormatMacroContext(
+			var context = new CalendarFormatContext(
 				calendar,
 				translations,
 				selector);
 
-			macro.Parse(context, input);
-
-			return context.ElementValues;
+			return ParseValues(context, input);
 		}
 
 		public CalendarElementValueCollection ParseValues(
@@ -88,38 +96,47 @@ namespace MfGames.Culture.Calendars.Formats
 			LanguageTagSelector selector,
 			string input)
 		{
-			return ParseValues(
-				calendar,
-				calendar.Translations,
-				selector,
-				input);
+			return ParseValues(calendar, calendar.Translations, selector, input);
 		}
 
-		public string ToString(
-			CalendarPoint point,
-			CalendarSystem calendar,
-			LanguageTagSelector selector)
+		public CalendarElementValueCollection ParseValues(
+			CalendarFormatContext context,
+			string input)
 		{
-			return ToString(
-				point,
-				calendar,
-				calendar.Translations,
-				selector);
+			CalendarFormatMacroContext macroContext = context.CreateMacroContext();
+
+			macro.Parse(macroContext, input);
+
+			return macroContext.ElementValues;
 		}
 
 		public string ToString(
-			CalendarPoint point,
+			ICalendarSystem calendar,
+			LanguageTagSelector selector,
+			CalendarPoint point)
+		{
+			return ToString(calendar, calendar.Translations, selector, point);
+		}
+
+		public string ToString(
 			ICalendarSystem calendar,
 			ITranslationProvider translations,
-			LanguageTagSelector selector)
+			LanguageTagSelector selector,
+			CalendarPoint point)
 		{
-			var context = new CalendarFormatMacroContext(point.Values)
-			{
-				Calendar = calendar,
-				Translations = translations,
-				Selector = selector
-			};
-			string results = macro.Expand(context);
+			var context = new CalendarFormatContext(
+				calendar,
+				translations,
+				selector);
+
+			return ToString(context, point);
+		}
+
+		public string ToString(
+			CalendarFormatContext context,
+			CalendarPoint point)
+		{
+			string results = macro.Expand(context.CreateMacroContext(point));
 
 			return results;
 		}

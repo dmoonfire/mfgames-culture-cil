@@ -5,8 +5,6 @@
 //   MIT License (MIT)
 // </license>
 
-using MfGames.Culture.Codes;
-using MfGames.Culture.Translations;
 using MfGames.Text;
 
 namespace MfGames.Culture.Calendars.Formats
@@ -15,35 +13,20 @@ namespace MfGames.Culture.Calendars.Formats
 	{
 		#region Constructors and Destructors
 
-		public CalendarFormatMacroContext()
-		{
-			ElementValues = new CalendarElementValueCollection();
-		}
-
-		public CalendarFormatMacroContext(CalendarElementValueCollection values)
-		{
-			ElementValues = values;
-		}
-
 		public CalendarFormatMacroContext(
-			CalendarSystem calendar,
-			ITranslationProvider translations,
-			LanguageTagSelector selector)
-			: this()
+			CalendarFormatContext context,
+			CalendarElementValueCollection values)
 		{
-			Calendar = calendar;
-			Translations = translations;
-			Selector = selector;
+			Context = context;
+			ElementValues = values;
 		}
 
 		#endregion
 
 		#region Public Properties
 
-		public ICalendarSystem Calendar { get; set; }
+		public CalendarFormatContext Context { get; set; }
 		public CalendarElementValueCollection ElementValues { get; private set; }
-		public LanguageTagSelector Selector { get; set; }
-		public ITranslationProvider Translations { get; set; }
 
 		#endregion
 	}

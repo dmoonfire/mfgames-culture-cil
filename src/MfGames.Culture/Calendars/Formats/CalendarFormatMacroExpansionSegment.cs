@@ -86,10 +86,10 @@ namespace MfGames.Culture.Calendars.Formats
 					value.ToString(),
 					new HierarchicalPath(
 						TranslationLookup,
-						formatContext.Calendar.TranslationPath));
-				TranslationResult result = formatContext.Calendar.Translations
+						formatContext.Context.Calendar.TranslationPath));
+				TranslationResult result = formatContext.Context.Calendar.Translations
 					.GetTranslationResult(
-						formatContext.Selector,
+						formatContext.Context.Selector,
 						path);
 
 				return result.Result;
@@ -123,10 +123,10 @@ namespace MfGames.Culture.Calendars.Formats
 					value.ToLowerInvariant(),
 					new HierarchicalPath(
 						TranslationLookup,
-						formatContext.Calendar.TranslationPath));
-				TranslationResult translation = formatContext.Translations
+						formatContext.Context.Calendar.TranslationPath));
+				TranslationResult translation = formatContext.Context.Translations
 					.GetTranslationResult(
-						formatContext.Selector,
+						formatContext.Context.Selector,
 						translationPath);
 
 				if (translation == null)
