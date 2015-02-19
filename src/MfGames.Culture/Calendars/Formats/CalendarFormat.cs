@@ -6,6 +6,7 @@
 // </license>
 
 using System.Collections.Generic;
+using System.Linq;
 
 using MfGames.Culture.Codes;
 using MfGames.Culture.Translations;
@@ -39,6 +40,24 @@ namespace MfGames.Culture.Calendars.Formats
 		#endregion
 
 		#region Public Methods and Operators
+
+		public string GetMatchKey()
+		{
+			string results = string.Join(
+				":",
+				macro
+					.Segments
+					.OfType<CalendarFormatMacroExpansionSegment>()
+					.Select(s => s.Field)
+					.ToArray());
+			return results;
+		}
+
+		public bool IsMatch(string input)
+		{
+			bool results = macro.GetRegex().IsMatch(input);
+			return results;
+		}
 
 		public CalendarPoint Parse(
 			CalendarSystem calendar,

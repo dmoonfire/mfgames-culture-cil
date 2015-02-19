@@ -58,6 +58,22 @@ namespace MfGames.Culture.Calendars.Formats
 			formats.Add(entry);
 		}
 
+		public bool IsConflict(string input)
+		{
+			// Go through the formats and find all of them that apply for
+			// the input. Once we have that, find out if they apply to the
+			// same values. If they do and they have different field keys,
+			// then there is a potential conflict.
+			int count = formats
+				.Where(f => f.Format.IsMatch(input))
+				.Select(f => f.Format.GetMatchKey())
+				.OrderBy(r => r)
+				.Distinct()
+				.Count();
+
+			return count > 1;
+		}
+
 		public CalendarPoint Parse(
 			LanguageTagSelector selector,
 			string formatName,

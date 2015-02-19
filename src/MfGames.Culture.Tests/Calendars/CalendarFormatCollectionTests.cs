@@ -61,6 +61,20 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
+		public void IsConflictIso()
+		{
+			bool results = formats.IsConflict("1987-11-23");
+			Assert.IsFalse(results);
+		}
+
+		[Test]
+		public void IsConflictSlashed()
+		{
+			bool results = formats.IsConflict("11/23/1987");
+			Assert.IsTrue(results);
+		}
+
+		[Test]
 		public void ParseIsoYearMonthDay()
 		{
 			CalendarPoint point = formats.Parse(
