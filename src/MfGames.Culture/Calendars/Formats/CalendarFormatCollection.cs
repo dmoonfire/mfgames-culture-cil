@@ -58,6 +58,21 @@ namespace MfGames.Culture.Calendars.Formats
 			formats.Add(entry);
 		}
 
+		public string Format(string formatName, CalendarPoint point)
+		{
+			return Format(formatName, LanguageTagSelector.All, point);
+		}
+
+		public string Format(
+			string formatName,
+			LanguageTagSelector selector,
+			CalendarPoint point)
+		{
+			CalendarFormat format = GetFormat(formatName);
+
+			return format.Format(Calendar, Calendar.Translations, selector, point);
+		}
+
 		public bool IsConflict(string input)
 		{
 			// Go through the formats and find all of them that apply for
@@ -112,21 +127,6 @@ namespace MfGames.Culture.Calendars.Formats
 				input);
 
 			return results;
-		}
-
-		public string ToString(string formatName, CalendarPoint point)
-		{
-			return ToString(formatName, LanguageTagSelector.All, point);
-		}
-
-		public string ToString(
-			string formatName,
-			LanguageTagSelector selector,
-			CalendarPoint point)
-		{
-			CalendarFormat format = GetFormat(formatName);
-
-			return format.ToString(Calendar, Calendar.Translations, selector, point);
 		}
 
 		#endregion

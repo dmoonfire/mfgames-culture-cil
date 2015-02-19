@@ -33,6 +33,7 @@ namespace MfGames.Culture.Calendars
 		public CompositeCalendarSystem()
 		{
 			calendars = new List<ICalendarSystem>();
+			Translations = new MemoryTranslationProvider();
 		}
 
 		#endregion
@@ -41,12 +42,7 @@ namespace MfGames.Culture.Calendars
 
 		public string CannonicalName { get; set; }
 		public HierarchicalPath TranslationPath { get; set; }
-
-		public ITranslationProvider Translations
-		{
-			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
-		}
+		public ITranslationProvider Translations { get; set; }
 
 		#endregion
 
@@ -82,7 +78,9 @@ namespace MfGames.Culture.Calendars
 
 		public CalendarPoint Create(CalendarElementValueCollection values)
 		{
-			throw new NotImplementedException();
+			Fraction julianDate = GetJulianDate(values);
+			CalendarPoint point = Create(julianDate);
+			return point;
 		}
 
 		public ICollection<Cycle> GetCycles()

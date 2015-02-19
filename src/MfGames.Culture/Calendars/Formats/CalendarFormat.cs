@@ -41,6 +41,37 @@ namespace MfGames.Culture.Calendars.Formats
 
 		#region Public Methods and Operators
 
+		public string Format(
+			ICalendarSystem calendar,
+			LanguageTagSelector selector,
+			CalendarPoint point)
+		{
+			return Format(calendar, calendar.Translations, selector, point);
+		}
+
+		public string Format(
+			ICalendarSystem calendar,
+			ITranslationProvider translations,
+			LanguageTagSelector selector,
+			CalendarPoint point)
+		{
+			var context = new CalendarFormatContext(
+				calendar,
+				translations,
+				selector);
+
+			return Format(context, point);
+		}
+
+		public string Format(
+			CalendarFormatContext context,
+			CalendarPoint point)
+		{
+			string results = macro.Expand(context.CreateMacroContext(point));
+
+			return results;
+		}
+
 		public string GetMatchKey()
 		{
 			string results = string.Join(
@@ -127,37 +158,6 @@ namespace MfGames.Culture.Calendars.Formats
 			macro.Parse(macroContext, input);
 
 			return macroContext.ElementValues;
-		}
-
-		public string ToString(
-			ICalendarSystem calendar,
-			LanguageTagSelector selector,
-			CalendarPoint point)
-		{
-			return ToString(calendar, calendar.Translations, selector, point);
-		}
-
-		public string ToString(
-			ICalendarSystem calendar,
-			ITranslationProvider translations,
-			LanguageTagSelector selector,
-			CalendarPoint point)
-		{
-			var context = new CalendarFormatContext(
-				calendar,
-				translations,
-				selector);
-
-			return ToString(context, point);
-		}
-
-		public string ToString(
-			CalendarFormatContext context,
-			CalendarPoint point)
-		{
-			string results = macro.Expand(context.CreateMacroContext(point));
-
-			return results;
 		}
 
 		#endregion

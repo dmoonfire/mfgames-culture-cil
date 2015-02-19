@@ -65,7 +65,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void Alpha3ToString19870304()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 3, 4));
-			string results = alpha3.ToString(calendar, englishSelector, point);
+			string results = alpha3.Format(calendar, englishSelector, point);
 
 			Assert.AreEqual("Mar 4, 1987", results);
 		}
@@ -111,7 +111,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void IsoToString19871123()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = iso.ToString(calendar, englishSelector, point);
+			string results = iso.Format(calendar, englishSelector, point);
 
 			Assert.AreEqual("1987-11-23", results);
 		}

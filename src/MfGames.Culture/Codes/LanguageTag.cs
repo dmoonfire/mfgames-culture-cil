@@ -39,9 +39,23 @@ namespace MfGames.Culture.Codes
 		{
 		}
 
-		public LanguageTag(ILanguageCodeManager languages, string language)
-			: this(languages.Get(language))
+		public LanguageTag(ILanguageCodeManager languages, string tag)
 		{
+			// Establish our contracts.
+			if (languages == null)
+			{
+				throw new ArgumentNullException("languages");
+			}
+
+			if (tag == null)
+			{
+				throw new ArgumentNullException("language");
+			}
+
+			// Try to parse the language.
+			string language = tag.Split('-')[0];
+
+			Language = languages.Get(language);
 		}
 
 		private LanguageTag()

@@ -37,7 +37,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void FormatIsoYearMonthDay()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = formats.ToString("yyyy-MM-dd", point);
+			string results = formats.Format("yyyy-MM-dd", point);
 
 			Assert.AreEqual("1987-11-23", results);
 		}
@@ -46,7 +46,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void FormatSlashedDayMonthYear()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = formats.ToString("dd/MM/yyyy", point);
+			string results = formats.Format("dd/MM/yyyy", point);
 
 			Assert.AreEqual("23/11/1987", results);
 		}
@@ -55,7 +55,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void FormatSlashedMonthDayYear()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = formats.ToString("MM/dd/yyyy", point);
+			string results = formats.Format("MM/dd/yyyy", point);
 
 			Assert.AreEqual("11/23/1987", results);
 		}
