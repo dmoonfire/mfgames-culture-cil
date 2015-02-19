@@ -7,9 +7,12 @@
 
 using System;
 
+using Fractions;
+
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
 using MfGames.Culture.Codes;
+using MfGames.Culture.Extensions.System;
 
 using NUnit.Framework;
 
@@ -40,6 +43,15 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
+		public void FormatSlashedDayMonthYear()
+		{
+			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
+			string results = formats.ToString("dd/MM/yyyy", point);
+
+			Assert.AreEqual("23/11/1987", results);
+		}
+
+		[Test]
 		public void FormatSlashedMonthDayYear()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
@@ -47,13 +59,41 @@ namespace MfGames.Culture.Tests.Calendars
 
 			Assert.AreEqual("11/23/1987", results);
 		}
-		[Test]
-		public void FormatSlashedDayMonthYear()
-		{
-			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = formats.ToString("dd/MM/yyyy", point);
 
-			Assert.AreEqual("23/11/1987", results);
+		[Test]
+		public void ParseIsoYearMonthDay()
+		{
+			CalendarPoint point = formats.Parse(
+				englishSelector,
+				"yyyy-MM-dd",
+				"1987-11-23");
+			Fraction julian = new DateTime(1987, 11, 23).ToJulianDateFraction();
+
+			Assert.AreEqual(julian, point.JulianDate);
+		}
+
+		[Test]
+		public void ParseSlashedDayMonthYear()
+		{
+			CalendarPoint point = formats.Parse(
+				englishSelector,
+				"dd/MM/yyyy",
+				"23/11/1987");
+			Fraction julian = new DateTime(1987, 11, 23).ToJulianDateFraction();
+
+			Assert.AreEqual(julian, point.JulianDate);
+		}
+
+		[Test]
+		public void ParseSlashedMonthDayYear()
+		{
+			CalendarPoint point = formats.Parse(
+				englishSelector,
+				"MM/dd/yyyy",
+				"11/23/1987");
+			Fraction julian = new DateTime(1987, 11, 23).ToJulianDateFraction();
+
+			Assert.AreEqual(julian, point.JulianDate);
 		}
 
 		[TestFixtureSetUp]

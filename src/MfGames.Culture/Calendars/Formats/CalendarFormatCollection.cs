@@ -58,6 +58,20 @@ namespace MfGames.Culture.Calendars.Formats
 			formats.Add(entry);
 		}
 
+		public CalendarPoint Parse(
+			LanguageTagSelector selector,
+			string formatName,
+			string input)
+		{
+			CalendarFormat format = GetFormat(formatName);
+			var context = new CalendarFormatContext(
+				Calendar,
+				Calendar.Translations,
+				selector);
+			CalendarPoint results = format.Parse(context, input);
+			return results;
+		}
+
 		public string ToString(string formatName, CalendarPoint point)
 		{
 			return ToString(formatName, LanguageTagSelector.All, point);
