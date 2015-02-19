@@ -60,7 +60,7 @@ namespace MfGames.Culture.Calendars.Formats
 		}
 
 		public CalendarPoint Parse(
-			CalendarSystem calendar,
+			ICalendarSystem calendar,
 			LanguageTagSelector selector,
 			string input)
 		{
@@ -68,7 +68,7 @@ namespace MfGames.Culture.Calendars.Formats
 		}
 
 		public CalendarPoint Parse(
-			CalendarSystem calendar,
+			ICalendarSystem calendar,
 			ITranslationProvider translations,
 			LanguageTagSelector selector,
 			string input)
@@ -111,7 +111,7 @@ namespace MfGames.Culture.Calendars.Formats
 		}
 
 		public CalendarElementValueCollection ParseValues(
-			CalendarSystem calendar,
+			ICalendarSystem calendar,
 			LanguageTagSelector selector,
 			string input)
 		{

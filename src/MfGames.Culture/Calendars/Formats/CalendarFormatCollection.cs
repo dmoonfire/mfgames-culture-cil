@@ -88,6 +88,32 @@ namespace MfGames.Culture.Calendars.Formats
 			return results;
 		}
 
+		public CalendarPoint Parse(LanguageTagSelector selector, string input)
+		{
+			// If we have a conflict, throw an exception.
+			if (IsConflict(input))
+			{
+				throw new InvalidOperationException(
+					"There are multiple calendar formats that " +
+						"apply to the given input.");
+			}
+
+			// Grab the first one that applies.
+			CalendarFormat format = formats
+				.Where(f => f.Format.IsMatch(input))
+				.Select(f => f.Format)
+				.First();
+
+			// Format using this one.
+			CalendarPoint results = format.Parse(
+				Calendar,
+				Calendar.Translations,
+				selector,
+				input);
+
+			return results;
+		}
+
 		public string ToString(string formatName, CalendarPoint point)
 		{
 			return ToString(formatName, LanguageTagSelector.All, point);
