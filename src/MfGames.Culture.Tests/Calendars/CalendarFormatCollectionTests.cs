@@ -39,6 +39,23 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual("1987-11-23", results);
 		}
 
+		[Test]
+		public void FormatSlashedMonthDayYear()
+		{
+			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
+			string results = formats.ToString("MM/dd/yyyy", point);
+
+			Assert.AreEqual("11/23/1987", results);
+		}
+		[Test]
+		public void FormatSlashedDayMonthYear()
+		{
+			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
+			string results = formats.ToString("dd/MM/yyyy", point);
+
+			Assert.AreEqual("23/11/1987", results);
+		}
+
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
@@ -47,7 +64,10 @@ namespace MfGames.Culture.Tests.Calendars
 
 			calendar = new GregorianCalendarSystem();
 			formats = new CalendarFormatCollection(calendar);
+
 			formats.Add("yyyy-MM-dd", "$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)");
+			formats.Add("MM/dd/yyyy", "$(Year Month:D2+1)/$(Month Day:D2+1)/$(Year:D4)");
+			formats.Add("dd/MM/yyyy", "$(Month Day:D2+1)/$(Year Month:D2+1)/$(Year:D4)");
 		}
 
 		#endregion
