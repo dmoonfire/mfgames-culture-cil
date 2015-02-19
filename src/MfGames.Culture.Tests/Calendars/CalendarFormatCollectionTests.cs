@@ -87,6 +87,17 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
+		public void ParseIsoYearMonthDayWithoutSpecifier()
+		{
+			CalendarPoint point = formats.Parse(
+				englishSelector,
+				"1987-11-23");
+			Fraction julian = new DateTime(1987, 11, 23).ToJulianDateFraction();
+
+			Assert.AreEqual(julian, point.JulianDate);
+		}
+
+		[Test]
 		public void ParseSlashedDayMonthYear()
 		{
 			CalendarPoint point = formats.Parse(
@@ -111,24 +122,12 @@ namespace MfGames.Culture.Tests.Calendars
 		}
 
 		[Test]
-		public void ParseIsoYearMonthDayWithoutSpecifier()
-		{
-			CalendarPoint point = formats.Parse(
-				englishSelector,
-				"1987-11-23");
-			Fraction julian = new DateTime(1987, 11, 23).ToJulianDateFraction();
-
-			Assert.AreEqual(julian, point.JulianDate);
-		}
-
-		[Test]
 		public void ParseSlashedMonthDayYearWithoutSpecifier()
 		{
 			Assert.Throws<InvalidOperationException>(
-				() =>
-					formats.Parse(
-						englishSelector,
-						"11/23/1987"));
+				() => formats.Parse(
+					englishSelector,
+					"11/23/1987"));
 		}
 
 		[TestFixtureSetUp]
