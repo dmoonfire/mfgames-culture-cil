@@ -24,12 +24,6 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class CountryCodeManager : ICountryCodeManager
 	{
-		#region Static Fields
-
-		private static ICountryCodeManager instance;
-
-		#endregion
-
 		#region Fields
 
 		private readonly HashSet<CountryCode> codes;
@@ -38,12 +32,6 @@ namespace MfGames.Culture.Codes
 
 		#region Constructors and Destructors
 
-		static CountryCodeManager()
-		{
-			instance = new CountryCodeManager();
-			instance.AddDefaults();
-		}
-
 		public CountryCodeManager()
 		{
 			codes = new HashSet<CountryCode>();
@@ -51,32 +39,7 @@ namespace MfGames.Culture.Codes
 
 		#endregion
 
-		#region Public Properties
-
-		public static ICountryCodeManager Instance
-		{
-			get { return instance; }
-			set
-			{
-				if (value == null)
-				{
-					throw new ArgumentNullException(
-						"value",
-						"CountryCodeManager.Instance cannot be assigned a null value.");
-				}
-
-				instance = value;
-			}
-		}
-
-		#endregion
-
 		#region Public Methods and Operators
-
-		public void AddDefaults()
-		{
-			AddDefaults(LanguageCodeManager.Instance);
-		}
 
 		public void AddDefaults(ILanguageCodeManager languages)
 		{
@@ -136,6 +99,19 @@ namespace MfGames.Culture.Codes
 					codes.Add(code);
 				}
 			}
+		}
+
+		public CountryCode Get(string countryCode)
+		{
+			foreach (CountryCode code in codes)
+			{
+				if (code == countryCode)
+				{
+					return code;
+				}
+			}
+
+			throw new Exception("CountryCode not found for code " + countryCode + ".");
 		}
 
 		#endregion

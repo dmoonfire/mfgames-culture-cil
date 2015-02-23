@@ -35,16 +35,16 @@ namespace MfGames.Culture.Codes
 		}
 
 		public LanguageTag(string language)
-			: this(LanguageCodeManager.Instance, language)
+			: this(CodeManager.Instance, language)
 		{
 		}
 
-		public LanguageTag(ILanguageCodeManager languages, string tag)
+		public LanguageTag(CodeManager codes, string tag)
 		{
 			// Establish our contracts.
-			if (languages == null)
+			if (codes == null)
 			{
-				throw new ArgumentNullException("languages");
+				throw new ArgumentNullException("codes");
 			}
 
 			if (tag == null)
@@ -55,7 +55,7 @@ namespace MfGames.Culture.Codes
 			// Try to parse the language.
 			string language = tag.Split('-')[0];
 
-			Language = languages.Get(language);
+			Language = codes.Languages.Get(language);
 		}
 
 		private LanguageTag()
@@ -67,6 +67,7 @@ namespace MfGames.Culture.Codes
 		#region Public Properties
 
 		public static LanguageTag Canonical { get; private set; }
+		public CountryCode Country { get; private set; }
 
 		/// <summary>
 		/// Gets the ISO 639 description of the language.

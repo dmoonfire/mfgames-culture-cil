@@ -42,12 +42,12 @@ namespace MfGames.Culture.Codes
 		}
 
 		public LanguageTagSelector(string selector)
-			: this(LanguageCodeManager.Instance, selector)
+			: this(CodeManager.Instance, selector)
 		{
 		}
 
 		public LanguageTagSelector(
-			ILanguageCodeManager languageManager,
+			CodeManager codes,
 			string selector)
 			: this()
 		{
@@ -62,7 +62,7 @@ namespace MfGames.Culture.Codes
 
 			foreach (string part in parts)
 			{
-				var quality = new LanguageTagQuality(languageManager, part);
+				var quality = new LanguageTagQuality(codes, part);
 
 				languages.Add(quality);
 			}

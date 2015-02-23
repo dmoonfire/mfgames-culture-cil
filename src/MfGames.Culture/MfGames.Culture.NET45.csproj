@@ -60,6 +60,7 @@
     <Compile Include="Calendars\Lengths\IfModLengthLogic.cs" />
     <Compile Include="Calendars\Lengths\ILengthLogic.cs" />
     <Compile Include="Calendars\Lengths\LogicCycleLength.cs" />
+    <Compile Include="Codes\CodeManager.cs" />
     <Compile Include="Codes\ICountryCodeManager.cs" />
     <Compile Include="Codes\ILanguageCodeManager.cs" />
     <Compile Include="Codes\LanguageTagQuality.cs" />

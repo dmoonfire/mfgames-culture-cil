@@ -27,7 +27,7 @@ namespace MfGames.Culture.Codes
 	{
 		#region Static Fields
 
-		private static ILanguageCodeManager instance;
+		private static ICountryCodeManager countries;
 
 		#endregion
 
@@ -41,13 +41,6 @@ namespace MfGames.Culture.Codes
 
 		#region Constructors and Destructors
 
-		static LanguageCodeManager()
-		{
-			// The default is to have the modern world's values.
-			instance = new LanguageCodeManager();
-			instance.AddDefaults();
-		}
-
 		public LanguageCodeManager()
 		{
 			codes = new HashSet<LanguageCode>();
@@ -57,22 +50,6 @@ namespace MfGames.Culture.Codes
 		#endregion
 
 		#region Public Properties
-
-		public static ILanguageCodeManager Instance
-		{
-			get { return instance; }
-			set
-			{
-				if (value == null)
-				{
-					throw new ArgumentNullException(
-						"value",
-						"LanguageCodeManager.Instance cannot be assigned a null value.");
-				}
-
-				instance = value;
-			}
-		}
 
 		public int Count { get { return codes.Count; } }
 

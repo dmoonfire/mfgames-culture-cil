@@ -11,9 +11,9 @@ namespace MfGames.Culture.Codes
 	{
 		#region Public Methods and Operators
 
-		void AddDefaults();
-
 		void AddDefaults(ILanguageCodeManager languages);
+
+		CountryCode Get(string countryCode);
 
 		#endregion
 	}

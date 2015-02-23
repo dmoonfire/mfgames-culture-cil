@@ -10,7 +10,7 @@ using MfGames.Culture.Translations;
 namespace MfGames.Culture.Codes
 {
 	/// <summary>
-	/// An immutable identifier for an ISO 3166 country code including support for 
+	/// An immutable identifier for an ISO 3166 country code including support for
 	/// unknown countries.
 	/// </summary>
 	public class CountryCode
@@ -41,6 +41,21 @@ namespace MfGames.Culture.Codes
 		#endregion
 
 		#region Public Methods and Operators
+
+		public static bool operator ==(CountryCode countryCode, string code)
+		{
+			if (ReferenceEquals(countryCode, null))
+			{
+				return false;
+			}
+
+			return countryCode.Alpha2 == code || countryCode.Alpha3 == code;
+		}
+
+		public static bool operator !=(CountryCode countryCode, string code)
+		{
+			return !(countryCode == code);
+		}
 
 		public override string ToString()
 		{

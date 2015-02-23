@@ -69,7 +69,7 @@ namespace MfGames.Culture.Tests.Translations
 		public void SetUp()
 		{
 			LanguageCode englishLanguage =
-				LanguageCodeManager.Instance.GetIsoAlpha3("eng");
+				CodeManager.Instance.Languages.GetIsoAlpha3("eng");
 
 			english = new LanguageTag(englishLanguage);
 		}

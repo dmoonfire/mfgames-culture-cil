@@ -19,10 +19,15 @@ namespace MfGames.Culture.Tests.Codes
 		[Test]
 		public void AddDefaultsDoesNotBreak()
 		{
-			// Create the manager and populate the list.
-			var manager = new CountryCodeManager();
+			// Create the languages with defaults.
+			var languages = new LanguageCodeManager();
 
-			manager.AddDefaults();
+			languages.AddDefaults();
+
+			// Create the country code manager.
+			var countries = new CountryCodeManager();
+
+			countries.AddDefaults(languages);
 		}
 
 		#endregion

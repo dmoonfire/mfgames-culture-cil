@@ -36,15 +36,15 @@ namespace MfGames.Culture.Tests.Codes
 		[Test]
 		public void CreateCustomCodes()
 		{
-			LanguageCodeManager.Instance = new LanguageCodeManager
+			var languages = new LanguageCodeManager
 			{
 				new LanguageCode("xmi"),
 				"xlo"
 			};
 
-			Assert.AreEqual(2, LanguageCodeManager.Instance.Count);
+			Assert.AreEqual(2, languages.Count);
 
-			foreach (LanguageCode lc in LanguageCodeManager.Instance)
+			foreach (LanguageCode lc in languages)
 			{
 				Assert.IsNull(lc.IsoAlpha2);
 			}

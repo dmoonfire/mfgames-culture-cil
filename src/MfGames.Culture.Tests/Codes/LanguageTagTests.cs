@@ -49,10 +49,10 @@ namespace MfGames.Culture.Tests.Codes
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			languages = LanguageCodeManager.Instance;
+			languages = CodeManager.Instance.Languages;
 			english = languages.Get("eng");
 
-			countries = CountryCodeManager.Instance;
+			countries = CodeManager.Instance.Countries;
 			unitedStates = countries.Get("US");
 		}
 

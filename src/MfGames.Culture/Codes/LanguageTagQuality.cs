@@ -55,11 +55,11 @@ namespace MfGames.Culture.Codes
 		}
 
 		public LanguageTagQuality(string selector)
-			: this(LanguageCodeManager.Instance, selector)
+			: this(CodeManager.Instance, selector)
 		{
 		}
 
-		public LanguageTagQuality(ILanguageCodeManager languages, string selector)
+		public LanguageTagQuality(CodeManager codes, string selector)
 		{
 			// Establish our contracts.
 			if (selector == null)
@@ -78,7 +78,7 @@ namespace MfGames.Culture.Codes
 			}
 
 			// Figure out the language.
-			LanguageTag = new LanguageTag(match.Groups[1].Value);
+			LanguageTag = new LanguageTag(codes, match.Groups[1].Value);
 
 			// Parse the quality, defaulting to one if we don't have it.
 			float quality;
