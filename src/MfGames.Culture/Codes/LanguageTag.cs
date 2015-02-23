@@ -19,7 +19,7 @@ namespace MfGames.Culture.Codes
 
 		static LanguageTag()
 		{
-			All = new LanguageTag(LanguageCode.Canonical);
+			Canonical = new LanguageTag(LanguageCode.Canonical);
 		}
 
 		public LanguageTag(LanguageCode language)
@@ -66,7 +66,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageTag All { get; private set; }
+		public static LanguageTag Canonical { get; private set; }
 
 		/// <summary>
 		/// Gets the ISO 639 description of the language.

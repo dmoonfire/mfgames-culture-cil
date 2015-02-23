@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MfGames.Culture.Codes
 {
@@ -30,7 +31,7 @@ namespace MfGames.Culture.Codes
 
 		static LanguageTagSelector()
 		{
-			LanguageTag allLanguage = LanguageTag.All;
+			LanguageTag allLanguage = LanguageTag.Canonical;
 
 			All = new LanguageTagSelector(allLanguage);
 		}
@@ -91,6 +92,15 @@ namespace MfGames.Culture.Codes
 		public IEnumerator<LanguageTagQuality> GetEnumerator()
 		{
 			return languages.GetEnumerator();
+		}
+
+		public override string ToString()
+		{
+			string results = string.Join(
+				", ",
+				languages.Select(l => l.ToString()));
+
+			return results;
 		}
 
 		#endregion

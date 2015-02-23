@@ -56,7 +56,7 @@ namespace MfGames.Culture.Translations
 			string fallback = null)
 		{
 			// Start with the fallback as the "best".
-			LanguageTag fallbackLanguage = LanguageTag.All;
+			LanguageTag fallbackLanguage = LanguageTag.Canonical;
 			var fallbackQuality = new LanguageTagQuality(fallbackLanguage, 0);
 			var result = new TranslationResult(
 				fallbackQuality,

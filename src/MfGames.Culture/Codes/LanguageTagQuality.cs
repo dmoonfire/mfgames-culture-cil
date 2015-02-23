@@ -116,6 +116,11 @@ namespace MfGames.Culture.Codes
 			return LanguageTag.CompareTo(other.LanguageTag);
 		}
 
+		public override string ToString()
+		{
+			return string.Format("{0};q={1:G1}", LanguageTag, Quality);
+		}
+
 		#endregion
 	}
 }

@@ -114,7 +114,7 @@ namespace MfGames.Culture.Codes
 					// Create the translations for this country.
 					var translation = new MemoryTranslationCollection();
 
-					translation.Add(LanguageTag.All, commonName ?? formalName);
+					translation.Add(LanguageTag.Canonical, commonName ?? formalName);
 
 					if (!string.IsNullOrWhiteSpace(commonName))
 					{

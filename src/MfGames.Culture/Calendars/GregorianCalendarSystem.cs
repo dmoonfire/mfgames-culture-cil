@@ -144,14 +144,14 @@ namespace MfGames.Culture.Calendars
 			// Set up the names.
 			translations.Add(
 				new HierarchicalPath("Name", TranslationPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"Gregorian");
 
 			// Add in the translations for the cycles.
 			var shortPath = new HierarchicalPath("Short", TranslationPath);
 			translations.AddRange(
 				shortPath,
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"Jan",
 				"Feb",
 				"Mar",
@@ -166,51 +166,51 @@ namespace MfGames.Culture.Calendars
 				"Dec");
 			translations.Add(
 				new HierarchicalPath("jan", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"0");
 			translations.Add(
 				new HierarchicalPath("feb", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"1");
 			translations.Add(
 				new HierarchicalPath("mar", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"2");
 			translations.Add(
 				new HierarchicalPath("apr", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"3");
 			translations.Add(
 				new HierarchicalPath("may", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"4");
 			translations.Add(
 				new HierarchicalPath("jun", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"5");
 			translations.Add(
 				new HierarchicalPath("jul", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"6");
 			translations.Add(
 				new HierarchicalPath("aug", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"7");
 			translations.Add(
 				new HierarchicalPath("sep", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"8");
 			translations.Add(
 				new HierarchicalPath("oct", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"9");
 			translations.Add(
 				new HierarchicalPath("nov", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"10");
 			translations.Add(
 				new HierarchicalPath("dec", shortPath),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"11");
 		}
 

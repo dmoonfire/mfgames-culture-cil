@@ -130,7 +130,7 @@ namespace MfGames.Culture.Codes
 			// English better.
 			translations.Add(
 				GetAlpha3ToNameTranslationPath(english),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"English");
 			translations.Add(
 				GetAlpha3ToNameTranslationPath(english),
@@ -143,7 +143,7 @@ namespace MfGames.Culture.Codes
 
 			translations.Add(
 				GetAlpha3ToNameTranslationPath(french),
-				LanguageTag.All,
+				LanguageTag.Canonical,
 				"French");
 			translations.Add(
 				GetAlpha3ToNameTranslationPath(french),
@@ -214,7 +214,7 @@ namespace MfGames.Culture.Codes
 					// Add in the translations for these names.
 					translations.Add(
 						GetAlpha3ToNameTranslationPath(code),
-						LanguageTag.All,
+						LanguageTag.Canonical,
 						englishName);
 					translations.Add(
 						GetAlpha3ToNameTranslationPath(code),
