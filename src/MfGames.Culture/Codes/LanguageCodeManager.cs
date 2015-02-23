@@ -207,14 +207,41 @@ namespace MfGames.Culture.Codes
 
 		public LanguageCode Get(string language)
 		{
-			return language == "*"
-				? LanguageCode.Canonical
-				: GetIsoAlpha3(language);
+			// Check for canonical first.
+			if (language == "*")
+			{
+				return LanguageCode.Canonical;
+			}
+
+			// Check ISO 639 codes.
+			LanguageCode code = GetIsoAlpha3(language);
+
+			if (code != null)
+			{
+				return code;
+			}
+
+			code = GetIsoAlpha2(language);
+
+			if (code != null)
+			{
+				return code;
+			}
+
+			// We can't find it.
+			return null;
 		}
 
 		public IEnumerator<LanguageCode> GetEnumerator()
 		{
 			return codes.GetEnumerator();
+		}
+
+		public LanguageCode GetIsoAlpha2(string alpha2)
+		{
+			return alpha2 == "*"
+				? LanguageCode.Canonical
+				: codes.FirstOrDefault(c => c.IsoAlpha2 == alpha2);
 		}
 
 		public LanguageCode GetIsoAlpha3(string alpha3)

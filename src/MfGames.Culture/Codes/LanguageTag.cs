@@ -6,6 +6,7 @@
 // </license>
 
 using System;
+using System.Collections.Generic;
 
 namespace MfGames.Culture.Codes
 {
@@ -15,6 +16,12 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class LanguageTag : IEquatable<LanguageTag>, IComparable<LanguageTag>
 	{
+		#region Fields
+
+		private List<string> privateUseTags;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		static LanguageTag()
@@ -49,17 +56,31 @@ namespace MfGames.Culture.Codes
 
 			if (tag == null)
 			{
-				throw new ArgumentNullException("language");
+				throw new ArgumentNullException("tag");
 			}
 
-			// Try to parse the language.
-			string language = tag.Split('-')[0];
+			if (string.IsNullOrWhiteSpace(tag))
+			{
+				throw new ArgumentException("Language tag cannot be a blank string.", "tag");
+			}
 
-			Language = codes.Languages.Get(language);
-		}
+			// Try to parse the language tag out into its components. This can
+			// be a relatively complex process, which depends on a left to
+			// right order for operation.
+			string[] parts = tag.Split('-');
 
-		private LanguageTag()
-		{
+			// From the beginning, we have either a language code or an private
+			// use extension. The private use will consume everything when it
+			// parses, leaving nothing else. According to the specification,
+			// all codes are case insensitive.
+			var index = 0;
+
+			// We check the extension first, then go through the tag ending with
+			// another extension.
+			ParsePrivateUse(parts, ref index);
+			ParseLanguage(codes, parts, ref index);
+			ParseCountry(codes, parts, ref index);
+			ParsePrivateUse(parts, ref index);
 		}
 
 		#endregion
@@ -139,6 +160,95 @@ namespace MfGames.Culture.Codes
 		public override string ToString()
 		{
 			return Language.IsoAlpha3;
+		}
+
+		#endregion
+
+		#region Methods
+
+		private void ParseCountry(CodeManager codes, string[] parts, ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			if (index >= parts.Length)
+			{
+				return;
+			}
+
+			// We only allow two and three-character countries and regions.
+			string country = parts[index];
+
+			if (country.Length != 2 && country.Length != 3)
+			{
+				return;
+			}
+
+			// Try to look up the country.
+			Country = codes.Countries.Get(country);
+
+			if (Country == null)
+			{
+				throw new InvalidOperationException(
+					"Found an invalid country code: " + country + ".");
+			}
+
+			// Increment the index to move to the next part.
+			index++;
+		}
+
+		private void ParseLanguage(CodeManager codes, string[] parts, ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			if (index >= parts.Length)
+			{
+				return;
+			}
+
+			// Grab the first element as a language.
+			string language = parts[index];
+
+			Language = codes.Languages.Get(language);
+
+			if (Language == null)
+			{
+				throw new InvalidOperationException(
+					"Cannot create a language tag without a language code.");
+			}
+
+			// Increment the index to move to the next part.
+			index++;
+		}
+
+		private void ParsePrivateUse(string[] parts, ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			if (index >= parts.Length)
+			{
+				return;
+			}
+
+			// If the current code is an "x", then the rest of the tag
+			// is private use.
+			if (!String.Equals(parts[0], "X", StringComparison.CurrentCultureIgnoreCase))
+			{
+				return;
+			}
+
+			// Increment the index and make sure we have at least one item.
+			index++;
+
+			if (index >= parts.Length)
+			{
+				throw new InvalidOperationException(
+					"Cannot have a private use subtag without at least one tag.");
+			}
+
+			// Pull in the rest of the elements.
+			privateUseTags = new List<string>();
+
+			for (; index < parts.Length; index++)
+			{
+				privateUseTags.Add(parts[index]);
+			}
 		}
 
 		#endregion
