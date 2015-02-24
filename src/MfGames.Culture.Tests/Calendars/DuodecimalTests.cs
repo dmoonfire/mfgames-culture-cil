@@ -40,6 +40,23 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(1, point.Hour, "Hour");
 			Assert.AreEqual(0, point.HourMinute, "HourMinute");
 			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
+			Assert.AreEqual(0, point.Meridiem, "Meridiem");
+			Assert.AreEqual(1, point.MeridiemHour, "MeridiemHour");
+		}
+
+		[Test]
+		public void VerifyHour15()
+		{
+			// We have to add "1m / 864000m" because of repeating decimals.
+			decimal julianDate = 0.5m + 15m / 24m + 0m / 1440m + 0m / 86400m
+				+ 1m / 864000m;
+			dynamic point = calendar.Create(julianDate);
+
+			Assert.AreEqual(15, point.Hour, "Hour");
+			Assert.AreEqual(0, point.HourMinute, "HourMinute");
+			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
+			Assert.AreEqual(1, point.Meridiem, "Meridiem");
+			Assert.AreEqual(3, point.MeridiemHour, "MeridiemHour");
 		}
 
 		[Test]
@@ -53,6 +70,8 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(8, point.Hour, "Hour");
 			Assert.AreEqual(0, point.HourMinute, "HourMinute");
 			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
+			Assert.AreEqual(0, point.Meridiem, "Meridiem");
+			Assert.AreEqual(8, point.MeridiemHour, "MeridiemHour");
 		}
 
 		[Test]
@@ -63,6 +82,8 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(8, point.Hour, "Hour");
 			Assert.AreEqual(12, point.HourMinute, "HourMinute");
 			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
+			Assert.AreEqual(0, point.Meridiem, "Meridiem");
+			Assert.AreEqual(8, point.MeridiemHour, "MeridiemHour");
 		}
 
 		[Test]
@@ -74,6 +95,8 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(12, point.Hour, "Hour");
 			Assert.AreEqual(0, point.HourMinute, "HourMinute");
 			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
+			Assert.AreEqual(1, point.Meridiem, "Meridiem");
+			Assert.AreEqual(0, point.MeridiemHour, "MeridiemHour");
 		}
 
 		[Test]
@@ -85,6 +108,8 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(12, point.Hour, "Hour");
 			Assert.AreEqual(0, point.HourMinute, "HourMinute");
 			Assert.AreEqual(0, point.MinuteSecond, "MinuteSecond");
+			Assert.AreEqual(1, point.Meridiem, "Meridiem");
+			Assert.AreEqual(0, point.MeridiemHour, "MeridiemHour");
 		}
 
 		#endregion

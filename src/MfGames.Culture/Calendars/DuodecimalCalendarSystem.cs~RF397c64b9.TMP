@@ -46,7 +46,7 @@ namespace MfGames.Culture.Calendars
 			var meridiem = new LengthCycle("Meridiem")
 			{
 				JulianDateOffset = new Fraction(0.5m),
-				StripWholeDays = true
+				StripWholeDays = true,
 			};
 			var meridiemLength = new LogicCycleLength(1, new Fraction(1, 2));
 
