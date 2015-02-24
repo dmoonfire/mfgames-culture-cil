@@ -5,9 +5,9 @@
 //   MIT License (MIT)
 // </license>
 
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using CsvHelper;
@@ -92,15 +92,7 @@ namespace MfGames.Culture.Codes
 
 		public ScriptCode Get(string scriptCode)
 		{
-			foreach (ScriptCode code in codes)
-			{
-				if (code == scriptCode)
-				{
-					return code;
-				}
-			}
-
-			throw new Exception("ScriptCode not found for code " + scriptCode + ".");
+			return codes.FirstOrDefault(code => code.Equals(scriptCode));
 		}
 
 		#endregion

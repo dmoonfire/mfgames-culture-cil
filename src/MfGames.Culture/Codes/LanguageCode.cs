@@ -180,7 +180,7 @@ namespace MfGames.Culture.Codes
 
 		public override string ToString()
 		{
-			return IsoAlpha3T;
+			return IsoAlpha2 ?? IsoAlpha3;
 		}
 
 		#endregion

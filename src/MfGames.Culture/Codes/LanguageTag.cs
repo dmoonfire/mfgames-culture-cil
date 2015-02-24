@@ -17,12 +17,6 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class LanguageTag : IEquatable<LanguageTag>, IComparable<LanguageTag>
 	{
-		#region Fields
-
-		private List<string> privateUseTags;
-
-		#endregion
-
 		#region Constructors and Destructors
 
 		static LanguageTag()
@@ -111,6 +105,7 @@ namespace MfGames.Culture.Codes
 		/// </value>
 		public LanguageCode Language { get; private set; }
 
+		public ImmutableList<string> PrivateUse { get; private set; }
 		public ScriptCode Script { get; private set; }
 		public ImmutableList<string> Variants { get; private set; }
 
@@ -175,7 +170,44 @@ namespace MfGames.Culture.Codes
 
 		public override string ToString()
 		{
-			return Language.IsoAlpha3;
+			// Build up a list of tags.
+			var tags = new List<string>();
+
+			// Go through the codes.
+			if (Language != null)
+			{
+				tags.Add(Language.IsoAlpha2);
+			}
+
+			tags.AddRange(ExtendedLanguageTags);
+
+			if (Script != null)
+			{
+				tags.Add(Script.Alpha4);
+			}
+
+			if (Country != null)
+			{
+				tags.Add(Country.Alpha2);
+			}
+
+			tags.AddRange(Variants);
+
+			foreach (LanguageTagExtension extension in Extensions)
+			{
+				tags.Add(extension.Type);
+				tags.AddRange(extension.Tags);
+			}
+
+			if (PrivateUse.Count > 0)
+			{
+				tags.Add("x");
+				tags.AddRange(PrivateUse);
+			}
+
+			// Return the resulting tags, combined together with dashes.
+			string results = string.Join("-", tags.ToArray());
+			return results;
 		}
 
 		#endregion
@@ -303,34 +335,35 @@ namespace MfGames.Culture.Codes
 		private void ParsePrivateUse(string[] parts, ref int index)
 		{
 			// Make sure we aren't at the end of the string.
-			if (index >= parts.Length)
+			ImmutableList<string> list = ImmutableList<string>.Empty;
+
+			if (index < parts.Length)
 			{
-				return;
+				// If the current code is an "x", then the rest of the tag
+				// is private use.
+				if (!String.Equals(parts[0], "X", StringComparison.CurrentCultureIgnoreCase))
+				{
+					return;
+				}
+
+				// Increment the index and make sure we have at least one item.
+				index++;
+
+				if (index >= parts.Length)
+				{
+					throw new InvalidOperationException(
+						"Cannot have a private use subtag without at least one tag.");
+				}
+
+				// Pull in the rest of the elements.
+				for (; index < parts.Length; index++)
+				{
+					list.Add(string.Intern(parts[index].ToLower()));
+				}
 			}
 
-			// If the current code is an "x", then the rest of the tag
-			// is private use.
-			if (!String.Equals(parts[0], "X", StringComparison.CurrentCultureIgnoreCase))
-			{
-				return;
-			}
-
-			// Increment the index and make sure we have at least one item.
-			index++;
-
-			if (index >= parts.Length)
-			{
-				throw new InvalidOperationException(
-					"Cannot have a private use subtag without at least one tag.");
-			}
-
-			// Pull in the rest of the elements.
-			privateUseTags = new List<string>();
-
-			for (; index < parts.Length; index++)
-			{
-				privateUseTags.Add(parts[index]);
-			}
+			// Set the private use list.
+			PrivateUse = list;
 		}
 
 		private void ParseScript(CodeManager codes, string[] parts, ref int index)

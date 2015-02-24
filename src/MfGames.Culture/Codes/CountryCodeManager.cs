@@ -103,7 +103,7 @@ namespace MfGames.Culture.Codes
 
 		public CountryCode Get(string countryCode)
 		{
-			return codes.FirstOrDefault(code => code == countryCode);
+			return codes.FirstOrDefault(code => code.Equals(countryCode));
 		}
 
 		public CountryCode GetIsoAlpha2(string countryCode)

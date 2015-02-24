@@ -39,19 +39,9 @@ namespace MfGames.Culture.Codes
 
 		#region Public Methods and Operators
 
-		public static bool operator ==(ScriptCode scriptCode, string code)
+		public bool Equals(string code)
 		{
-			if (ReferenceEquals(scriptCode, null))
-			{
-				return false;
-			}
-
-			return scriptCode.Alpha4 == code || scriptCode.Alpha4 == code;
-		}
-
-		public static bool operator !=(ScriptCode scriptCode, string code)
-		{
-			return !(scriptCode == code);
+			return code == Alpha4;
 		}
 
 		public override string ToString()

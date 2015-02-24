@@ -25,7 +25,7 @@ namespace MfGames.Culture.Tests.Codes
 			Assert.AreEqual("hye", armenian.IsoAlpha3T);
 			Assert.AreEqual("arm", armenian.IsoAlpha3B);
 			Assert.AreEqual("hy", armenian.IsoAlpha2);
-			Assert.AreEqual("hye", armenian.ToString());
+			Assert.AreEqual("hy", armenian.ToString());
 		}
 
 		[Test]

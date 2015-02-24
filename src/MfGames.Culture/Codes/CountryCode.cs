@@ -42,29 +42,14 @@ namespace MfGames.Culture.Codes
 
 		#region Public Methods and Operators
 
-		public static bool operator ==(CountryCode countryCode, string code)
+		public bool Equals(string code)
 		{
-			if (ReferenceEquals(countryCode, null))
-			{
-				return false;
-			}
-
-			return countryCode.Alpha2 == code || countryCode.Alpha3 == code;
-		}
-
-		public static bool operator !=(CountryCode countryCode, string code)
-		{
-			return !(countryCode == code);
+			return Alpha2 == code || Alpha3 == code;
 		}
 
 		public override string ToString()
 		{
-			string name = Names.GetFallback();
-
-			return string.Format(
-				"CountryCode({0}, {1})",
-				Alpha3,
-				name ?? "<Missing>");
+			return Alpha2 ?? Alpha3;
 		}
 
 		#endregion

@@ -35,6 +35,7 @@ namespace MfGames.Culture.Tests.Codes
 
 			Assert.AreEqual(english, tag.Language, "Language is unexpected.");
 			Assert.AreEqual(unitedStates, tag.Country, "Country is unexpected.");
+			Assert.AreEqual("en-US", tag.ToString(), "ToString is unexpected.");
 		}
 
 		[Test]
@@ -44,6 +45,7 @@ namespace MfGames.Culture.Tests.Codes
 
 			Assert.AreEqual(english, tag.Language, "Language is unexpected.");
 			Assert.AreEqual(null, tag.Country, "Country is unexpected.");
+			Assert.AreEqual("en", tag.ToString(), "ToString is unexpected.");
 		}
 
 		[TestFixtureSetUp]
