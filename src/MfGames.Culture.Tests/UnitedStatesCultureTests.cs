@@ -57,18 +57,15 @@ namespace MfGames.Culture.Tests
 			// Create the culture we are populating.
 			culture = new CultureSystem
 			{
-				Selector = new LanguageTagSelector("en-US;q=1.0, en;q=0.8; *;q=0.1")
+				Selector = new LanguageTagSelector("en-US;q=1.0, en;q=0.8, *;q=0.1")
 			};
 
-			// Grab our two base calendars.
+			// Grab our two base calendars and add them the culture.
 			var gregorian = new GregorianCalendarSystem();
 			var duodecimal = new DuodecimalCalendarSystem();
 
-			var calendar = new CompositeCalendarSystem();
-			calendar.Add(gregorian);
-			calendar.Add(duodecimal);
-
-			culture.Calendar = calendar;
+			culture.Calendar.Add(gregorian);
+			culture.Calendar.Add(duodecimal);
 
 			// Add in the known formats.
 			culture.Formats.Add(

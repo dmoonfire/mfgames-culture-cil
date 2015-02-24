@@ -26,7 +26,7 @@ namespace MfGames.Culture
 
 		#region Public Properties
 
-		public ICalendarSystem Calendar { get; set; }
+		public CompositeCalendarSystem Calendar { get; private set; }
 		public CalendarFormatCollection Formats { get; private set; }
 		public LanguageTagSelector Selector { get; set; }
 
