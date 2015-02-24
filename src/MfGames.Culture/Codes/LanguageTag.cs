@@ -125,7 +125,7 @@ namespace MfGames.Culture.Codes
 
 		public int CompareTo(LanguageTag other)
 		{
-			return ToString().CompareTo(other.ToString());
+			return String.Compare(ToString(), other.ToString(), StringComparison.Ordinal);
 		}
 
 		public bool Equals(LanguageTag other)
