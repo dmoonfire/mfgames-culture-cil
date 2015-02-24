@@ -7,6 +7,8 @@
 
 using System;
 
+using MfGames.Culture.Translations;
+
 namespace MfGames.Culture.Codes
 {
 	public class CodeManager
@@ -25,6 +27,8 @@ namespace MfGames.Culture.Codes
 
 		private ScriptCodeManager scripts;
 
+		private ITranslationManager translations;
+
 		#endregion
 
 		#region Constructors and Destructors
@@ -36,7 +40,8 @@ namespace MfGames.Culture.Codes
 			{
 				Languages = new LanguageCodeManager(),
 				Countries = new CountryCodeManager(),
-				Scripts = new ScriptCodeManager()
+				Scripts = new ScriptCodeManager(),
+				Translations = new MemoryTranslationProvider()
 			};
 
 			// Add in the default values.
@@ -110,6 +115,22 @@ namespace MfGames.Culture.Codes
 				}
 
 				scripts = value;
+			}
+		}
+
+		public ITranslationManager Translations
+		{
+			get { return translations; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException(
+						"value",
+						"Translations cannot be assigned a null value.");
+				}
+
+				translations = value;
 			}
 		}
 

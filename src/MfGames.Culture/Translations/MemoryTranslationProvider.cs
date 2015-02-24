@@ -5,20 +5,19 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using MfGames.Culture.Codes;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Translations
 {
-	public class MemoryTranslationProvider : ITranslationProvider
+	public class MemoryTranslationProvider : ITranslationManager
 	{
 		#region Fields
 
-		private readonly Dictionary<HierarchicalPath, MemoryTranslationCollection>
-			translations;
+		private readonly Dictionary<string, MemoryTranslationCollection> translations;
 
 		#endregion
 
@@ -26,8 +25,7 @@ namespace MfGames.Culture.Translations
 
 		public MemoryTranslationProvider()
 		{
-			translations =
-				new Dictionary<HierarchicalPath, MemoryTranslationCollection>();
+			translations = new Dictionary<string, MemoryTranslationCollection>();
 		}
 
 		#endregion
@@ -35,45 +33,44 @@ namespace MfGames.Culture.Translations
 		#region Public Methods and Operators
 
 		public void Add(
-			string path,
+			string key,
 			LanguageTag languageTag,
 			string translation)
 		{
-			var hierarchicalPath = new HierarchicalPath(path);
-
-			Add(hierarchicalPath, languageTag, translation);
-		}
-
-		public void Add(
-			HierarchicalPath path,
-			LanguageTag languageTag,
-			string translation)
-		{
-			// Add the path, if we don't have it.
-			if (!translations.ContainsKey(path))
+			// Add the key, if we don't have it.
+			if (!translations.ContainsKey(key))
 			{
-				translations[path] = new MemoryTranslationCollection();
+				translations[key] = new MemoryTranslationCollection();
 			}
 
 			// Set the value.
-			translations[path][languageTag] = translation;
+			translations[key][languageTag] = translation;
 		}
 
 		/// <summary>
 		/// Adds a list of translations to the collection using the root key
-		/// and with a subkey of the zero-based index.
+		/// and with a subkey of the zero-based index. The format must include
+		/// a "{0}" for the numerical index.
 		/// </summary>
 		public void AddRange(
-			HierarchicalPath rootPath,
+			string format,
 			LanguageTag languageTag,
 			params string[] names)
 		{
-			// Go through and add each one.
+			// Check our constraints.
+			if (!format.Contains("{0}"))
+			{
+				throw new ArgumentException(
+					"Format string must have a '{0}' somewhere in its contents.",
+					"format");
+			}
+
+			// Loop through all the names and add the translation for each one.
 			for (var i = 0; i < names.Length; i++)
 			{
-				var path = new HierarchicalPath(i.ToString(), rootPath);
+				string key = string.Format(format, i);
 
-				Add(path, languageTag, names[i]);
+				Add(key, languageTag, names[i]);
 			}
 		}
 
@@ -82,21 +79,21 @@ namespace MfGames.Culture.Translations
 		/// and with a subkey of the zero-based index.
 		/// </summary>
 		public void AddRange(
-			HierarchicalPath rootPath,
+			string format,
 			LanguageTag languageTag,
 			IEnumerable<string> names)
 		{
-			AddRange(rootPath, languageTag, names.ToArray());
+			AddRange(format, languageTag, names.ToArray());
 		}
 
 		public TranslationResult GetTranslationResult(
-			LanguageTagSelector selector,
-			HierarchicalPath path)
+			string key,
+			LanguageTagSelector selector)
 		{
-			// Make sure we have the path.
+			// Make sure we have the key.
 			MemoryTranslationCollection pathTranslations;
 
-			if (!translations.TryGetValue(path, out pathTranslations))
+			if (!translations.TryGetValue(key, out pathTranslations))
 			{
 				return null;
 			}

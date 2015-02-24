@@ -12,7 +12,6 @@ using Fractions;
 
 using MfGames.Culture.Calendars.Cycles;
 using MfGames.Culture.Translations;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Calendars
 {
@@ -31,15 +30,15 @@ namespace MfGames.Culture.Calendars
 			Cycles = new CalendarElementCollection<Cycle>();
 		}
 
-		public CalendarSystem(ITranslationProvider translations)
+		public CalendarSystem(ITranslationProvider codes)
 			: this()
 		{
-			if (translations == null)
+			if (codes == null)
 			{
-				throw new ArgumentNullException("translations");
+				throw new ArgumentNullException("codes");
 			}
 
-			Translations = translations;
+			Codes = codes;
 		}
 
 		#endregion
@@ -48,8 +47,7 @@ namespace MfGames.Culture.Calendars
 
 		public string CannonicalName { get; set; }
 		public CalendarElementCollection<Cycle> Cycles { get; private set; }
-		public HierarchicalPath TranslationPath { get; set; }
-		public ITranslationProvider Translations { get; set; }
+		public ITranslationProvider Codes { get; set; }
 
 		#endregion
 

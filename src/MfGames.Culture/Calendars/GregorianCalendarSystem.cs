@@ -21,12 +21,12 @@ namespace MfGames.Culture.Calendars
 		#region Constructors and Destructors
 
 		public GregorianCalendarSystem()
-			: this(TranslationManager.Instance)
+			: this(CodeManager.Instance)
 		{
 		}
 
-		public GregorianCalendarSystem(ITranslationProvider translations)
-			: base(translations)
+		public GregorianCalendarSystem(CodeManager codes)
+			: base(codes)
 		{
 			// Set up the cannonical name which is used for various lookups.
 			CannonicalName = "Gregorian";
@@ -135,11 +135,11 @@ namespace MfGames.Culture.Calendars
 		private void SetupTranslations()
 		{
 			// This is the root translation path for everything.
-			TranslationPath = new HierarchicalPath(
+			new HierarchicalPath(
 				"/MfGames/Culture/Calendar/Gregorian/");
 			var translations = new MemoryTranslationProvider();
 
-			Translations = translations;
+			Codes = translations;
 
 			// Set up the names.
 			translations.Add(

@@ -88,9 +88,7 @@ namespace MfGames.Culture.Calendars.Formats
 						TranslationLookup,
 						formatContext.Context.Calendar.TranslationPath));
 				TranslationResult result = formatContext.Context.Calendar.Translations
-					.GetTranslationResult(
-						formatContext.Context.Selector,
-						path);
+					.GetTranslationResult(path, formatContext.Context.Selector);
 
 				return result.Result;
 			}
@@ -125,9 +123,7 @@ namespace MfGames.Culture.Calendars.Formats
 						TranslationLookup,
 						formatContext.Context.Calendar.TranslationPath));
 				TranslationResult translation = formatContext.Context.Translations
-					.GetTranslationResult(
-						formatContext.Context.Selector,
-						translationPath);
+					.GetTranslationResult(translationPath, formatContext.Context.Selector);
 
 				if (translation == null)
 				{

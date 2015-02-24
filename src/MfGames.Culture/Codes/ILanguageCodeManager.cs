@@ -26,7 +26,7 @@ namespace MfGames.Culture.Codes
 
 		void Add(string isoAlpha3T);
 
-		void AddDefaults();
+		void AddDefaults(CodeManager codeManager);
 
 		LanguageCode Get(string language);
 

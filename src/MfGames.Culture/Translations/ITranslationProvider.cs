@@ -6,7 +6,6 @@
 // </license>
 
 using MfGames.Culture.Codes;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Translations
 {
@@ -20,14 +19,15 @@ namespace MfGames.Culture.Translations
 
 		/// <summary>
 		/// Retrieves a translation from the provider or null if one cannot be
-		/// supplied.
+		/// supplied. The resulting translation will always be the highest one
+		/// as chosen by the selector.
 		/// </summary>
-		/// <param name="selector">The langauges to accept and their weights.</param>
-		/// <param name="path">The identifier to the translation.</param>
+		/// <param name="key">The key to identify the translation selected.</param>
+		/// <param name="selector">The langauges that are acceptable and the preference for each one.</param>
 		/// <returns>A translated value or null.</returns>
 		TranslationResult GetTranslationResult(
-			LanguageTagSelector selector,
-			HierarchicalPath path);
+			string key,
+			LanguageTagSelector selector);
 
 		#endregion
 	}

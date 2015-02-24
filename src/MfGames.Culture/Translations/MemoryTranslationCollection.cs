@@ -6,21 +6,16 @@
 // </license>
 
 using System.Collections.Generic;
-using System.Linq;
 
 using MfGames.Culture.Codes;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Translations
 {
-	public class MemoryTranslationCollection : ITranslationCollection,
-		ITranslationProvider
+	public class MemoryTranslationCollection : ITranslationCollection
 	{
 		#region Fields
 
 		private readonly Dictionary<LanguageTag, string> translations;
-
-		private LanguageTag defaultLanguageTag;
 
 		#endregion
 
@@ -38,15 +33,7 @@ namespace MfGames.Culture.Translations
 		public string this[LanguageTag languageTag]
 		{
 			get { return translations[languageTag]; }
-			set
-			{
-				translations[languageTag] = value;
-
-				if (defaultLanguageTag == null)
-				{
-					defaultLanguageTag = languageTag;
-				}
-			}
+			set { translations[languageTag] = value; }
 		}
 
 		#endregion
@@ -58,24 +45,11 @@ namespace MfGames.Culture.Translations
 			this[tag] = translation;
 		}
 
-		public string GetFallback()
-		{
-			// Try to get the "all" name.
-			TranslationResult result = GetTranslation(LanguageTagSelector.All);
-
-			if (result != null)
-			{
-				return result.Result;
-			}
-
-			// If we don't, then just grab one.
-			return translations.Values.FirstOrDefault();
-		}
-
 		public TranslationResult GetTranslation(LanguageTagSelector selector)
 		{
 			// Loop through the language choices and find the first one that
-			// matches a translation we have.
+			// matches a translation we have. This works because selector is
+			// always sorted in order of preference.
 			foreach (LanguageTagQuality quality in selector)
 			{
 				string translation;
@@ -89,13 +63,6 @@ namespace MfGames.Culture.Translations
 
 			// If we got through the loop, then we don't have anything.
 			return null;
-		}
-
-		public TranslationResult GetTranslationResult(
-			LanguageTagSelector selector,
-			HierarchicalPath path)
-		{
-			return GetTranslation(selector);
 		}
 
 		#endregion

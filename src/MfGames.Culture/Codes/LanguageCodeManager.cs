@@ -8,14 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
 using MfGames.Culture.Translations;
 using MfGames.Extensions.System;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Codes
 {
@@ -25,17 +23,11 @@ namespace MfGames.Culture.Codes
 	/// </summary>
 	public class LanguageCodeManager : ILanguageCodeManager
 	{
-		#region Static Fields
-
-		private static ICountryCodeManager countries;
-
-		#endregion
-
 		#region Fields
 
 		private readonly HashSet<LanguageCode> codes;
 
-		private readonly MemoryTranslationProvider translations;
+		private string translationKeyFormat;
 
 		#endregion
 
@@ -44,7 +36,8 @@ namespace MfGames.Culture.Codes
 		public LanguageCodeManager()
 		{
 			codes = new HashSet<LanguageCode>();
-			translations = new MemoryTranslationProvider();
+
+			TranslationKeyFormat = "/ISO/639/IsoAlpha3/Codes/{0}";
 		}
 
 		#endregion
@@ -53,23 +46,32 @@ namespace MfGames.Culture.Codes
 
 		public int Count { get { return codes.Count; } }
 
+		public string TranslationKeyFormat
+		{
+			get { return translationKeyFormat; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException(
+						"value",
+						"Cannot assign a null translation key format.");
+				}
+
+				if (!value.Contains("{0}"))
+				{
+					throw new ArgumentException(
+						"The translation key format must have a '{0}' in the format.",
+						"value");
+				}
+
+				translationKeyFormat = value;
+			}
+		}
+
 		#endregion
 
 		#region Public Methods and Operators
-
-		[Pure]
-		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
-			LanguageCode languageCode)
-		{
-			return GetAlpha3ToNameTranslationPath(languageCode.IsoAlpha3);
-		}
-
-		[Pure]
-		public static HierarchicalPath GetAlpha3ToNameTranslationPath(
-			string languageCode)
-		{
-			return new HierarchicalPath("/ISO/639/IsoAlpha3/Codes/" + languageCode);
-		}
 
 		public void Add(LanguageCode languageCode)
 		{
@@ -88,7 +90,7 @@ namespace MfGames.Culture.Codes
 			Add(languageCode);
 		}
 
-		public void AddDefaults()
+		public void AddDefaults(CodeManager codeManager)
 		{
 			// We have to pre-create English and French since they are used
 			// for the translations in the file. However, we need the language
@@ -96,38 +98,25 @@ namespace MfGames.Culture.Codes
 			// where we have to inject the translations after the fact.
 			var english = new LanguageCode("eng", "en", null, false);
 			var french = new LanguageCode("fra", "fr", "fre", false);
-			var englishTag = new LanguageTag(english);
 			var frenchTag = new LanguageTag(french);
 
 			codes.Add(english);
 			codes.Add(french);
 
-			// Add in the initial translations for English and French. We use
-			// English for the fallback only because the developer reads
-			// English better.
-			translations.Add(
-				GetAlpha3ToNameTranslationPath(english),
-				LanguageTag.Canonical,
-				"English");
-			translations.Add(
-				GetAlpha3ToNameTranslationPath(english),
-				englishTag,
-				"English");
-			translations.Add(
-				GetAlpha3ToNameTranslationPath(english),
+			// Add in the initial translations for English and French for
+			// Englisha nd French.
+			ITranslationManager translations = codeManager.Translations;
+
+			AddLanguageNameTranslation(
+				translations,
+				english,
+				"English",
 				frenchTag,
 				"anglais");
-
-			translations.Add(
-				GetAlpha3ToNameTranslationPath(french),
-				LanguageTag.Canonical,
-				"French");
-			translations.Add(
-				GetAlpha3ToNameTranslationPath(french),
-				englishTag,
-				"French");
-			translations.Add(
-				GetAlpha3ToNameTranslationPath(french),
+			AddLanguageNameTranslation(
+				translations,
+				french,
+				"French",
 				frenchTag,
 				"français");
 
@@ -189,16 +178,10 @@ namespace MfGames.Culture.Codes
 					codes.Add(code);
 
 					// Add in the translations for these names.
-					translations.Add(
-						GetAlpha3ToNameTranslationPath(code),
-						LanguageTag.Canonical,
-						englishName);
-					translations.Add(
-						GetAlpha3ToNameTranslationPath(code),
-						englishTag,
-						englishName);
-					translations.Add(
-						GetAlpha3ToNameTranslationPath(code),
+					AddLanguageNameTranslation(
+						translations,
+						code,
+						englishName,
 						frenchTag,
 						frenchName);
 				}
@@ -267,10 +250,10 @@ namespace MfGames.Culture.Codes
 		}
 
 		public TranslationResult GetTranslationResult(
-			LanguageTagSelector selector,
-			HierarchicalPath path)
+			string key,
+			LanguageTagSelector selector)
 		{
-			return translations.GetTranslationResult(selector, path);
+			return translations.GetTranslationResult(key, selector);
 		}
 
 		#endregion
@@ -280,6 +263,40 @@ namespace MfGames.Culture.Codes
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Adds a translated name for a code into the translation.
+		/// </summary>
+		/// <remarks>
+		/// This uses English as the canonical name simply because the
+		/// developer speaks English better than French.</remarks>
+		/// <param name="translations"></param>
+		/// <param name="languageCode"></param>
+		/// <param name="englishName"></param>
+		/// <param name="frenchName"></param>
+		private void AddLanguageNameTranslation(
+			ITranslationManager translations,
+			LanguageCode languageCode,
+			string englishName,
+			LanguageTag french,
+			string frenchName)
+		{
+			// Figure out the path.
+			string key = string.Format(translationKeyFormat, languageCode.IsoAlpha3);
+
+			translations.Add(
+				key,
+				LanguageTag.Canonical,
+				englishName);
+			translations.Add(
+				key,
+				french,
+				frenchName);
 		}
 
 		#endregion

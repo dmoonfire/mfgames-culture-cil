@@ -72,6 +72,7 @@
     <Compile Include="CultureSystem.cs" />
     <Compile Include="Extensions\System\DateTimeExtensions.cs" />
     <Compile Include="Translations\ITranslationCollection.cs" />
+    <Compile Include="Translations\ITranslationManager.cs" />
     <Compile Include="Translations\ITranslationProvider.cs" />
     <Compile Include="Translations\MemoryTranslationCollection.cs" />
     <Compile Include="Translations\MemoryTranslationProvider.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="Codes\LanguageCode.cs" />
     <Compile Include="Codes\LanguageCodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Translations\TranslationManager.cs" />
+    <Compile Include="Translations\CompositeTranslationProvider.cs" />
     <Compile Include="Translations\TranslationResult.cs" />
   </ItemGroup>
   <ItemGroup>

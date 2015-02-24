@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace MfGames.Culture.Codes
 {
@@ -79,6 +80,12 @@ namespace MfGames.Culture.Codes
 			languages.Add(quality);
 		}
 
+		private LanguageTagSelector(params LanguageTagQuality[] qualities)
+		{
+			languages = qualities.ToList();
+			languages.Sort();
+		}
+
 		#endregion
 
 		#region Public Properties
@@ -88,6 +95,22 @@ namespace MfGames.Culture.Codes
 		#endregion
 
 		#region Public Methods and Operators
+
+		/// <summary>
+		/// Creates a language tag selector from the UI culture at a quality of
+		/// 1.0 with a canonical tag at 0.1f.
+		/// </summary>
+		/// <returns></returns>
+		public static LanguageTagSelector FromThreadUICulture()
+		{
+			Thread thread = Thread.CurrentThread;
+			var tag = new LanguageTag(thread.CurrentUICulture.IetfLanguageTag);
+			var selector = new LanguageTagSelector(
+				new LanguageTagQuality(tag),
+				new LanguageTagQuality(LanguageTag.Canonical, 0.1f));
+
+			return selector;
+		}
 
 		public IEnumerator<LanguageTagQuality> GetEnumerator()
 		{

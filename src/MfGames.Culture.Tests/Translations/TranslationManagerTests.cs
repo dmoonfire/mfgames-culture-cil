@@ -27,7 +27,7 @@ namespace MfGames.Culture.Tests.Translations
 		[Test]
 		public void FallbackTranslation()
 		{
-			var manager = new TranslationManager();
+			var manager = new CompositeTranslationProvider();
 			var selector = new LanguageTagSelector("*");
 			var path = new HierarchicalPath("/");
 			string results = manager.GetTranslation(selector, path, "fallback");
@@ -43,7 +43,7 @@ namespace MfGames.Culture.Tests.Translations
 			var memoryProvider = new MemoryTranslationProvider();
 			memoryProvider.Add(path, english, "English A");
 
-			var manager = new TranslationManager { memoryProvider };
+			var manager = new CompositeTranslationProvider { memoryProvider };
 			var selector = new LanguageTagSelector("eng;q=1.0");
 			string results = manager.GetTranslation(selector, path, "fallback");
 
@@ -58,7 +58,7 @@ namespace MfGames.Culture.Tests.Translations
 			var memoryProvider = new MemoryTranslationProvider();
 			memoryProvider.Add(path, english, "English A");
 
-			var manager = new TranslationManager { memoryProvider };
+			var manager = new CompositeTranslationProvider { memoryProvider };
 			var selector = new LanguageTagSelector("fra;q=1.0");
 			string results = manager.GetTranslation(selector, path, "fallback");
 

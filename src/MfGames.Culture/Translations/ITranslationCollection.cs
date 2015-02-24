@@ -13,12 +13,6 @@ namespace MfGames.Culture.Translations
 	{
 		#region Public Methods and Operators
 
-		/// <summary>
-		/// Gets a fallback translation from the collection.
-		/// </summary>
-		/// <returns></returns>
-		string GetFallback();
-
 		TranslationResult GetTranslation(LanguageTagSelector selector);
 
 		#endregion

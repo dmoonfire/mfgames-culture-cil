@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using Fractions;
 
 using MfGames.Culture.Calendars.Cycles;
-using MfGames.Culture.Translations;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Calendars
 {
@@ -20,8 +18,6 @@ namespace MfGames.Culture.Calendars
 		#region Public Properties
 
 		string CannonicalName { get; set; }
-		HierarchicalPath TranslationPath { get; set; }
-		ITranslationProvider Translations { get; set; }
 
 		#endregion
 
