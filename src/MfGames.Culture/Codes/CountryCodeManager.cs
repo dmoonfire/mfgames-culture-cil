@@ -5,9 +5,9 @@
 //   MIT License (MIT)
 // </license>
 
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using CsvHelper;
@@ -103,15 +103,12 @@ namespace MfGames.Culture.Codes
 
 		public CountryCode Get(string countryCode)
 		{
-			foreach (CountryCode code in codes)
-			{
-				if (code == countryCode)
-				{
-					return code;
-				}
-			}
+			return codes.FirstOrDefault(code => code == countryCode);
+		}
 
-			throw new Exception("CountryCode not found for code " + countryCode + ".");
+		public CountryCode GetIsoAlpha2(string countryCode)
+		{
+			return codes.FirstOrDefault(code => code.Alpha2 == countryCode);
 		}
 
 		#endregion

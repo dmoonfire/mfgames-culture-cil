@@ -1,11 +1,11 @@
 #
 # ISO 15924 - Codes for the representation of names of scripts
 #             Codes pour la représentation des noms d’écritures
-# Format: 
+# Format:
 #             Code;N°;English Name;Nom français;PVA;Date
 #
 # http://unicode.org/iso15924/iso15924-text.html
-
+Code;Numeric;English;French;Alias;Date
 Adlm;166;Adlam;adlam;;2014-11-15
 Afak;439;Afaka;afaka;;2010-12-21
 Aghb;239;Caucasian Albanian;aghbanien;Caucasian_Albanian;2014-11-15

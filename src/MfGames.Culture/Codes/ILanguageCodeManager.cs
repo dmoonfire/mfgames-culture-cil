@@ -30,6 +30,8 @@ namespace MfGames.Culture.Codes
 
 		LanguageCode Get(string language);
 
+		LanguageCode GetIsoAlpha2(string alpha2);
+
 		LanguageCode GetIsoAlpha3(string alpha3);
 
 		LanguageCode GetIsoAlpha3B(string alpha3);
@@ -37,7 +39,5 @@ namespace MfGames.Culture.Codes
 		LanguageCode GetIsoAlpha3T(string alpha3);
 
 		#endregion
-
-		LanguageCode GetIsoAlpha2(string alpha2);
 	}
 }

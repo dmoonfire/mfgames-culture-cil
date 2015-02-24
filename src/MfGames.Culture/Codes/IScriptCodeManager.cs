@@ -1,4 +1,4 @@
-// <copyright file="ICountryCodeManager.cs" company="Moonfire Games">
+// <copyright file="IScriptCodeManager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -7,15 +7,11 @@
 
 namespace MfGames.Culture.Codes
 {
-	public interface ICountryCodeManager
+	public interface IScriptCodeManager
 	{
 		#region Public Methods and Operators
 
-		void AddDefaults(ILanguageCodeManager languages);
-
-		CountryCode Get(string countryCode);
-
-		CountryCode GetIsoAlpha2(string countryCode);
+		ScriptCode Get(string scriptCode);
 
 		#endregion
 	}

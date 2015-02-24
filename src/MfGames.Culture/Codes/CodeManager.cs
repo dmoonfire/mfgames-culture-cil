@@ -23,6 +23,8 @@ namespace MfGames.Culture.Codes
 
 		private ILanguageCodeManager languages;
 
+		private ScriptCodeManager scripts;
+
 		#endregion
 
 		#region Constructors and Destructors
@@ -33,12 +35,14 @@ namespace MfGames.Culture.Codes
 			instance = new CodeManager
 			{
 				Languages = new LanguageCodeManager(),
-				Countries = new CountryCodeManager()
+				Countries = new CountryCodeManager(),
+				Scripts = new ScriptCodeManager()
 			};
 
 			// Add in the default values.
 			instance.Languages.AddDefaults();
 			instance.Countries.AddDefaults(instance.Languages);
+			instance.Scripts.AddDefaults(instance.Languages);
 		}
 
 		#endregion
@@ -90,6 +94,22 @@ namespace MfGames.Culture.Codes
 				}
 
 				languages = value;
+			}
+		}
+
+		public ScriptCodeManager Scripts
+		{
+			get { return scripts; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException(
+						"value",
+						"Scripts cannot be assigned a null value.");
+				}
+
+				scripts = value;
 			}
 		}
 

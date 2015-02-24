@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace MfGames.Culture.Codes
 {
@@ -79,8 +80,18 @@ namespace MfGames.Culture.Codes
 			// another extension.
 			ParsePrivateUse(parts, ref index);
 			ParseLanguage(codes, parts, ref index);
+			ParseExtendedLanguageTags(parts, ref index);
+			ParseScript(codes, parts, ref index);
 			ParseCountry(codes, parts, ref index);
+			ParseVariants(parts, ref index);
+			ParseExtensions(parts, ref index);
 			ParsePrivateUse(parts, ref index);
+
+			// If we still have tags left, its invalid.
+			if (index < parts.Length)
+			{
+				throw new InvalidOperationException("Could not parse language tag.");
+			}
 		}
 
 		#endregion
@@ -89,6 +100,8 @@ namespace MfGames.Culture.Codes
 
 		public static LanguageTag Canonical { get; private set; }
 		public CountryCode Country { get; private set; }
+		public ImmutableList<string> ExtendedLanguageTags { get; private set; }
+		public ImmutableList<LanguageTagExtension> Extensions { get; private set; }
 
 		/// <summary>
 		/// Gets the ISO 639 description of the language.
@@ -97,6 +110,9 @@ namespace MfGames.Culture.Codes
 		/// The language object.
 		/// </value>
 		public LanguageCode Language { get; private set; }
+
+		public ScriptCode Script { get; private set; }
+		public ImmutableList<string> Variants { get; private set; }
 
 		#endregion
 
@@ -177,13 +193,13 @@ namespace MfGames.Culture.Codes
 			// We only allow two and three-character countries and regions.
 			string country = parts[index];
 
-			if (country.Length != 2 && country.Length != 3)
+			if (country.Length != 2)
 			{
 				return;
 			}
 
 			// Try to look up the country.
-			Country = codes.Countries.Get(country);
+			Country = codes.Countries.GetIsoAlpha2(country);
 
 			if (Country == null)
 			{
@@ -193,6 +209,72 @@ namespace MfGames.Culture.Codes
 
 			// Increment the index to move to the next part.
 			index++;
+		}
+
+		private void ParseExtendedLanguageTags(
+			string[] parts,
+			ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			ImmutableList<string> list = ImmutableList<string>.Empty;
+
+			if (index < parts.Length)
+			{
+				// See if we have at least one valid code. Extended languages are
+				// always three characters each, in lower case.
+				string value = parts[index].ToLower();
+				while (value.Length == 3)
+				{
+					// Add them to the list.
+					list = list.Add(string.Intern(value));
+					index++;
+				}
+
+				// If we have no items, then we're done.
+				if (list.Count > 3)
+				{
+					throw new InvalidOperationException(
+						"The BCP 47 spcification only allows three extended language tags.");
+				}
+			}
+
+			// Save it for later.
+			ExtendedLanguageTags = list;
+		}
+
+		private void ParseExtensions(string[] parts, ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			var list = new List<LanguageTagExtension>();
+
+			while (index < parts.Length)
+			{
+				// Variant codes are 5-8 characters or 4 characters with an
+				// initial digit.
+				string value = parts[index].ToLowerInvariant();
+				int length = value.Length;
+
+				if (length != 1 && value != "x")
+				{
+					break;
+				}
+
+				// Create a language extension and validate its contents.
+				var extension = new LanguageTagExtension(value, parts, ref index);
+
+				// Make sure we don't have the list.
+				if (list.Contains(extension))
+				{
+					throw new Exception("A single extension tag cannot show more than once.");
+				}
+
+				// Add it to the list.
+				list.Add(extension);
+			}
+
+			// Save it for later.
+			list.Sort();
+			Extensions = list.ToImmutableList();
 		}
 
 		private void ParseLanguage(CodeManager codes, string[] parts, ref int index)
@@ -249,6 +331,66 @@ namespace MfGames.Culture.Codes
 			{
 				privateUseTags.Add(parts[index]);
 			}
+		}
+
+		private void ParseScript(CodeManager codes, string[] parts, ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			if (index >= parts.Length)
+			{
+				return;
+			}
+
+			// We only allow four-character script codes.
+			string script = parts[index];
+
+			if (script.Length != 4)
+			{
+				return;
+			}
+
+			// Try to look up the country.
+			Script = codes.Scripts.Get(script);
+
+			if (Script == null)
+			{
+				throw new InvalidOperationException(
+					"Found an invalid script code: " + script + ".");
+			}
+
+			// Increment the index to move to the next part.
+			index++;
+		}
+
+		private void ParseVariants(string[] parts, ref int index)
+		{
+			// Make sure we aren't at the end of the string.
+			ImmutableList<string> list = ImmutableList<string>.Empty;
+
+			while (index < parts.Length)
+			{
+				// Variant codes are 5-8 characters or 4 characters with an
+				// initial digit.
+				string value = parts[index].ToLowerInvariant();
+				int length = value.Length;
+
+				if (length < 5 || length > 8)
+				{
+					break;
+				}
+
+				if (length == 4 && char.IsDigit(value[0]))
+				{
+					break;
+				}
+
+				// Add them to the list.
+				list = list.Add(string.Intern(value));
+				index++;
+			}
+
+			// Save it for later.
+			Variants = list;
 		}
 
 		#endregion
