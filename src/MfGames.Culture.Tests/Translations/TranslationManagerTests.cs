@@ -38,7 +38,7 @@ namespace MfGames.Culture.Tests.Translations
 		public void FoundTranslation()
 		{
 			var key = "Lost in Translation";
-			var memoryProvider = new MemoryTranslationProvider();
+			var memoryProvider = new MemoryTranslationManager();
 
 			memoryProvider.Add(key, english, "English A");
 
@@ -53,7 +53,7 @@ namespace MfGames.Culture.Tests.Translations
 		{
 			var key = "Lost in Translation";
 
-			var memoryProvider = new MemoryTranslationProvider();
+			var memoryProvider = new MemoryTranslationManager();
 
 			memoryProvider.Add(key, english, "English A");
 

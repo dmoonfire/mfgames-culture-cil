@@ -1,19 +1,17 @@
-// <copyright file="MemoryTranslationProvider.cs" company="Moonfire Games">
+// <copyright file="MemoryTranslationManager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
 //   MIT License (MIT)
 // </license>
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using MfGames.Culture.Codes;
 
 namespace MfGames.Culture.Translations
 {
-	public class MemoryTranslationProvider : ITranslationManager
+	public class MemoryTranslationManager : ITranslationManager
 	{
 		#region Fields
 
@@ -23,7 +21,7 @@ namespace MfGames.Culture.Translations
 
 		#region Constructors and Destructors
 
-		public MemoryTranslationProvider()
+		public MemoryTranslationManager()
 		{
 			translations = new Dictionary<string, MemoryTranslationCollection>();
 		}
@@ -45,45 +43,6 @@ namespace MfGames.Culture.Translations
 
 			// Set the value.
 			translations[key][languageTag] = translation;
-		}
-
-		/// <summary>
-		/// Adds a list of translations to the collection using the root key
-		/// and with a subkey of the zero-based index. The format must include
-		/// a "{0}" for the numerical index.
-		/// </summary>
-		public void AddRange(
-			string format,
-			LanguageTag languageTag,
-			params string[] names)
-		{
-			// Check our constraints.
-			if (!format.Contains("{0}"))
-			{
-				throw new ArgumentException(
-					"Format string must have a '{0}' somewhere in its contents.",
-					"format");
-			}
-
-			// Loop through all the names and add the translation for each one.
-			for (var i = 0; i < names.Length; i++)
-			{
-				string key = string.Format(format, i);
-
-				Add(key, languageTag, names[i]);
-			}
-		}
-
-		/// <summary>
-		/// Adds a list of translations to the collection using the root key
-		/// and with a subkey of the zero-based index.
-		/// </summary>
-		public void AddRange(
-			string format,
-			LanguageTag languageTag,
-			IEnumerable<string> names)
-		{
-			AddRange(format, languageTag, names.ToArray());
 		}
 
 		public TranslationResult GetTranslationResult(

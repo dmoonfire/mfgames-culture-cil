@@ -29,7 +29,6 @@ namespace MfGames.Culture.Calendars
 			: base(codes)
 		{
 			// Set up the cannonical name which is used for various lookups.
-			CannonicalName = "Gregorian";
 
 			// Add in the names and set up translations.
 			SetupTranslations();
@@ -137,7 +136,7 @@ namespace MfGames.Culture.Calendars
 			// This is the root translation path for everything.
 			new HierarchicalPath(
 				"/MfGames/Culture/Calendar/Gregorian/");
-			var translations = new MemoryTranslationProvider();
+			var translations = new MemoryTranslationManager();
 
 			Codes = translations;
 

@@ -41,7 +41,7 @@ namespace MfGames.Culture.Codes
 				Languages = new LanguageCodeManager(),
 				Countries = new CountryCodeManager(),
 				Scripts = new ScriptCodeManager(),
-				Translations = new MemoryTranslationProvider()
+				Translations = new MemoryTranslationManager()
 			};
 
 			// Add in the default values.

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using Fractions;
 
 using MfGames.Culture.Calendars.Cycles;
-using MfGames.Culture.Translations;
 
 namespace MfGames.Culture.Calendars
 {
@@ -25,26 +24,14 @@ namespace MfGames.Culture.Calendars
 
 		private readonly List<ICalendarSystem> calendars;
 
-		private readonly CompositeTranslationProvider translations;
-
 		#endregion
 
 		#region Constructors and Destructors
 
-		public string TranslationFormat { get { throw new NotImplementedException(); } }
-
 		public CompositeCalendarSystem()
 		{
 			calendars = new List<ICalendarSystem>();
-			translations = new CompositeTranslationProvider();
 		}
-
-		#endregion
-
-		#region Public Properties
-
-		public string CannonicalName { get; set; }
-		public ITranslationProvider Translations { get { return translations; } }
 
 		#endregion
 
@@ -59,9 +46,6 @@ namespace MfGames.Culture.Calendars
 
 			calendars.Remove(calendar);
 			calendars.Add(calendar);
-
-			translations.Providers.Remove(calendar.Translations);
-			translations.Providers.Add(calendar.Translations);
 		}
 
 		public CalendarPoint Create(Fraction julianDate)

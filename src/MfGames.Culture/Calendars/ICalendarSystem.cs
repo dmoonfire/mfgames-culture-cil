@@ -10,24 +10,11 @@ using System.Collections.Generic;
 using Fractions;
 
 using MfGames.Culture.Calendars.Cycles;
-using MfGames.Culture.Translations;
 
 namespace MfGames.Culture.Calendars
 {
 	public interface ICalendarSystem
 	{
-		#region Public Properties
-
-		string CannonicalName { get; set; }
-		ITranslationProvider Translations { get; }
-		/// <summary>
-		/// Gets a format string suitable for string.Format that translates
-		/// "{0}" as the category name and "{1}" for a lookup code.
-		/// </summary>
-		string TranslationFormat { get; }
-
-		#endregion
-
 		#region Public Methods and Operators
 
 		CalendarPoint Create(Fraction julianDate);

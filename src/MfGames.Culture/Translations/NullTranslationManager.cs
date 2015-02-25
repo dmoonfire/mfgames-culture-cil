@@ -1,4 +1,4 @@
-// <copyright file="ITranslationManager.cs" company="Moonfire Games">
+// <copyright file="NullTranslationManager.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -9,17 +9,20 @@ using MfGames.Culture.Codes;
 
 namespace MfGames.Culture.Translations
 {
-	/// <summary>
-	/// Describes the interface for something that can set or add translations.
-	/// </summary>
-	public interface ITranslationManager : ITranslationProvider
+	public class NullTranslationManager : ITranslationManager
 	{
 		#region Public Methods and Operators
 
-		void Add(
+		public void Add(string key, LanguageTag languageTag, string translation)
+		{
+		}
+
+		public TranslationResult GetTranslationResult(
 			string key,
-			LanguageTag languageTag,
-			string translation);
+			LanguageTagSelector selector)
+		{
+			return null;
+		}
 
 		#endregion
 	}
