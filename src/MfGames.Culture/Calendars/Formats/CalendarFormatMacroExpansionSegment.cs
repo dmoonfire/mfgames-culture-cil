@@ -82,13 +82,11 @@ namespace MfGames.Culture.Calendars.Formats
 			// If the format is a string, then use that for the lookup key.
 			if (Format.StartsWith("S"))
 			{
-				var path = new HierarchicalPath(
-					value.ToString(),
-					new HierarchicalPath(
-						TranslationLookup,
-						formatContext.Context.Calendar.TranslationPath));
-				TranslationResult result = formatContext.Context.Calendar.Translations
-					.GetTranslationResult(path, formatContext.Context.Selector);
+				string key = value.ToString();
+				TranslationResult result = formatContext
+					.Context
+					.Translations
+					.GetTranslationResult(key, formatContext.Context.Selector);
 
 				return result.Result;
 			}
@@ -117,13 +115,11 @@ namespace MfGames.Culture.Calendars.Formats
 			if (TranslationLookup != null)
 			{
 				// Look up the translation.
-				var translationPath = new HierarchicalPath(
-					value.ToLowerInvariant(),
-					new HierarchicalPath(
-						TranslationLookup,
-						formatContext.Context.Calendar.TranslationPath));
-				TranslationResult translation = formatContext.Context.Translations
-					.GetTranslationResult(translationPath, formatContext.Context.Selector);
+				string key = value.ToLowerInvariant();
+				TranslationResult translation = formatContext
+					.Context
+					.Translations
+					.GetTranslationResult(key, formatContext.Context.Selector);
 
 				if (translation == null)
 				{

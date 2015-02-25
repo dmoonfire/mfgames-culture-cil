@@ -12,7 +12,6 @@ using MfGames.Culture.Calendars.Cycles;
 using MfGames.Culture.Calendars.Lengths;
 using MfGames.Culture.Codes;
 using MfGames.Culture.Translations;
-using MfGames.HierarchicalPaths;
 
 namespace MfGames.Culture.Calendars
 {
@@ -21,18 +20,7 @@ namespace MfGames.Culture.Calendars
 		#region Constructors and Destructors
 
 		public GregorianCalendarSystem()
-			: this(CodeManager.Instance)
 		{
-		}
-
-		public GregorianCalendarSystem(CodeManager codes)
-			: base(codes)
-		{
-			// Set up the cannonical name which is used for various lookups.
-
-			// Add in the names and set up translations.
-			SetupTranslations();
-
 			// Everything is hung off the year. We use a number of lengths for
 			// this. The first is to "fast forward" every 400 years until we
 			// get closer to the point. The second is to figure out the precise
@@ -129,27 +117,15 @@ namespace MfGames.Culture.Calendars
 
 		#endregion
 
-		#region Methods
+		#region Public Methods and Operators
 
-		private void SetupTranslations()
+		public void AddTranslations(
+			ITranslationManager translations,
+			string prefix = "")
 		{
-			// This is the root translation path for everything.
-			new HierarchicalPath(
-				"/MfGames/Culture/Calendar/Gregorian/");
-			var translations = new MemoryTranslationManager();
-
-			Codes = translations;
-
-			// Set up the names.
-			translations.Add(
-				new HierarchicalPath("Name", TranslationPath),
-				LanguageTag.Canonical,
-				"Gregorian");
-
 			// Add in the translations for the cycles.
-			var shortPath = new HierarchicalPath("Short", TranslationPath);
-			translations.AddRange(
-				shortPath,
+			translations.AddBidirectionalRange(
+				prefix + "Short.",
 				LanguageTag.Canonical,
 				"Jan",
 				"Feb",
@@ -163,54 +139,6 @@ namespace MfGames.Culture.Calendars
 				"Oct",
 				"Nov",
 				"Dec");
-			translations.Add(
-				new HierarchicalPath("jan", shortPath),
-				LanguageTag.Canonical,
-				"0");
-			translations.Add(
-				new HierarchicalPath("feb", shortPath),
-				LanguageTag.Canonical,
-				"1");
-			translations.Add(
-				new HierarchicalPath("mar", shortPath),
-				LanguageTag.Canonical,
-				"2");
-			translations.Add(
-				new HierarchicalPath("apr", shortPath),
-				LanguageTag.Canonical,
-				"3");
-			translations.Add(
-				new HierarchicalPath("may", shortPath),
-				LanguageTag.Canonical,
-				"4");
-			translations.Add(
-				new HierarchicalPath("jun", shortPath),
-				LanguageTag.Canonical,
-				"5");
-			translations.Add(
-				new HierarchicalPath("jul", shortPath),
-				LanguageTag.Canonical,
-				"6");
-			translations.Add(
-				new HierarchicalPath("aug", shortPath),
-				LanguageTag.Canonical,
-				"7");
-			translations.Add(
-				new HierarchicalPath("sep", shortPath),
-				LanguageTag.Canonical,
-				"8");
-			translations.Add(
-				new HierarchicalPath("oct", shortPath),
-				LanguageTag.Canonical,
-				"9");
-			translations.Add(
-				new HierarchicalPath("nov", shortPath),
-				LanguageTag.Canonical,
-				"10");
-			translations.Add(
-				new HierarchicalPath("dec", shortPath),
-				LanguageTag.Canonical,
-				"11");
 		}
 
 		#endregion

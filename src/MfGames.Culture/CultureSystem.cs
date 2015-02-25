@@ -5,20 +5,30 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
+
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
 using MfGames.Culture.Codes;
+using MfGames.Culture.Translations;
 
 namespace MfGames.Culture
 {
 	public class CultureSystem
 	{
+		#region Fields
+
+		private ITranslationManager translations;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		public CultureSystem()
 		{
 			Calendar = new CompositeCalendarSystem();
-			Formats = new CalendarFormatCollection(Calendar);
+			Translations = new MemoryTranslationManager();
+			Formats = new CalendarFormatCollection(Calendar, Translations);
 			Selector = LanguageTagSelector.Canonical;
 		}
 
@@ -29,6 +39,23 @@ namespace MfGames.Culture
 		public CompositeCalendarSystem Calendar { get; private set; }
 		public CalendarFormatCollection Formats { get; private set; }
 		public LanguageTagSelector Selector { get; set; }
+
+		public ITranslationManager Translations
+		{
+			get { return translations; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException(
+						"value",
+						"Cannot assign a null translation.");
+				}
+
+				translations = value;
+				Formats.Translations = value;
+			}
+		}
 
 		#endregion
 

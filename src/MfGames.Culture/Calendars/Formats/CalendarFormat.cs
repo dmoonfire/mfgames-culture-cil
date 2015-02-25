@@ -43,14 +43,6 @@ namespace MfGames.Culture.Calendars.Formats
 
 		public string Format(
 			ICalendarSystem calendar,
-			LanguageTagSelector selector,
-			CalendarPoint point)
-		{
-			return Format(calendar, calendar.Translations, selector, point);
-		}
-
-		public string Format(
-			ICalendarSystem calendar,
 			ITranslationProvider translations,
 			LanguageTagSelector selector,
 			CalendarPoint point)
@@ -88,14 +80,6 @@ namespace MfGames.Culture.Calendars.Formats
 		{
 			bool results = macro.GetRegex().IsMatch(input);
 			return results;
-		}
-
-		public CalendarPoint Parse(
-			ICalendarSystem calendar,
-			LanguageTagSelector selector,
-			string input)
-		{
-			return Parse(calendar, calendar.Translations, selector, input);
 		}
 
 		public CalendarPoint Parse(
@@ -139,14 +123,6 @@ namespace MfGames.Culture.Calendars.Formats
 				selector);
 
 			return ParseValues(context, input);
-		}
-
-		public CalendarElementValueCollection ParseValues(
-			ICalendarSystem calendar,
-			LanguageTagSelector selector,
-			string input)
-		{
-			return ParseValues(calendar, calendar.Translations, selector, input);
 		}
 
 		public CalendarElementValueCollection ParseValues(

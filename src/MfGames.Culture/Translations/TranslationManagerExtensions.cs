@@ -5,7 +5,6 @@
 //   MIT License (MIT)
 // </license>
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +16,22 @@ namespace MfGames.Culture.Translations
 	{
 		#region Public Methods and Operators
 
+		public static void AddBidirectionalRange(
+			this ITranslationManager translations,
+			string prefix,
+			LanguageTag languageTag,
+			params string[] names)
+		{
+			// Loop through all the names and add the translation for each one.
+			for (var i = 0; i < names.Length; i++)
+			{
+				string key = prefix + i;
+
+				translations.Add(key, languageTag, names[i]);
+				translations.Add(names[i].ToLowerInvariant(), languageTag, i.ToString());
+			}
+		}
+
 		/// <summary>
 		/// Adds a list of translations to the collection using the root key
 		/// and with a subkey of the zero-based index. The format must include
@@ -24,22 +39,14 @@ namespace MfGames.Culture.Translations
 		/// </summary>
 		public static void AddRange(
 			this ITranslationManager translations,
-			string format,
+			string prefix,
 			LanguageTag languageTag,
 			params string[] names)
 		{
-			// Check our constraints.
-			if (!format.Contains("{0}"))
-			{
-				throw new ArgumentException(
-					"Format string must have a '{0}' somewhere in its contents.",
-					"format");
-			}
-
 			// Loop through all the names and add the translation for each one.
 			for (var i = 0; i < names.Length; i++)
 			{
-				string key = string.Format(format, i);
+				string key = prefix + i;
 
 				translations.Add(key, languageTag, names[i]);
 			}
@@ -51,11 +58,11 @@ namespace MfGames.Culture.Translations
 		/// </summary>
 		public static void AddRange(
 			this ITranslationManager translations,
-			string format,
+			string prefix,
 			LanguageTag languageTag,
 			IEnumerable<string> names)
 		{
-			AddRange(translations, format, languageTag, names.ToArray());
+			AddRange(translations, prefix, languageTag, names.ToArray());
 		}
 
 		#endregion

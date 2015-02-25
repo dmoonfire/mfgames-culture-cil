@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using MfGames.Culture.Codes;
+using MfGames.Culture.Translations;
 
 namespace MfGames.Culture.Calendars.Formats
 {
@@ -19,11 +20,15 @@ namespace MfGames.Culture.Calendars.Formats
 
 		private readonly List<CalendarFormatEntry> formats;
 
+		private ITranslationProvider translations;
+
 		#endregion
 
 		#region Constructors and Destructors
 
-		public CalendarFormatCollection(ICalendarSystem calendar)
+		public CalendarFormatCollection(
+			ICalendarSystem calendar,
+			ITranslationProvider translations)
 		{
 			if (calendar == null)
 			{
@@ -32,6 +37,7 @@ namespace MfGames.Culture.Calendars.Formats
 
 			Calendar = calendar;
 			formats = new List<CalendarFormatEntry>();
+			Translations = translations;
 		}
 
 		#endregion
@@ -39,6 +45,21 @@ namespace MfGames.Culture.Calendars.Formats
 		#region Public Properties
 
 		public ICalendarSystem Calendar { get; set; }
+
+		public ITranslationProvider Translations
+		{
+			get { return translations; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException(
+						"value",
+						"Cannot assign a null translations to the collection.");
+				}
+				translations = value;
+			}
+		}
 
 		#endregion
 
@@ -70,7 +91,7 @@ namespace MfGames.Culture.Calendars.Formats
 		{
 			CalendarFormat format = GetFormat(formatName);
 
-			return format.Format(Calendar, Calendar.Translations, selector, point);
+			return format.Format(Calendar, translations, selector, point);
 		}
 
 		public bool IsConflict(string input)
@@ -97,7 +118,7 @@ namespace MfGames.Culture.Calendars.Formats
 			CalendarFormat format = GetFormat(formatName);
 			var context = new CalendarFormatContext(
 				Calendar,
-				Calendar.Translations,
+				translations,
 				selector);
 			CalendarPoint results = format.Parse(context, input);
 			return results;
@@ -122,7 +143,7 @@ namespace MfGames.Culture.Calendars.Formats
 			// Format using this one.
 			CalendarPoint results = format.Parse(
 				Calendar,
-				Calendar.Translations,
+				translations,
 				selector,
 				input);
 

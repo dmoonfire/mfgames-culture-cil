@@ -30,23 +30,10 @@ namespace MfGames.Culture.Calendars
 			Cycles = new CalendarElementCollection<Cycle>();
 		}
 
-		public CalendarSystem(
-			CodeManager codes)
-			: this()
-		{
-			if (codes == null)
-			{
-				throw new ArgumentNullException("codes");
-			}
-
-			Codes = codes;
-		}
-
 		#endregion
 
 		#region Public Properties
 
-		public CodeManager Codes { get; set; }
 		public CalendarElementCollection<Cycle> Cycles { get; private set; }
 
 		#endregion
