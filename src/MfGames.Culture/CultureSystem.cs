@@ -27,8 +27,8 @@ namespace MfGames.Culture
 		public CultureSystem()
 		{
 			Calendar = new CompositeCalendarSystem();
-			Translations = new MemoryTranslationManager();
-			Formats = new CalendarFormatCollection(Calendar, Translations);
+			translations = new MemoryTranslationManager();
+			Formats = new CalendarFormatCollection(Calendar, translations);
 			Selector = LanguageTagSelector.Canonical;
 		}
 

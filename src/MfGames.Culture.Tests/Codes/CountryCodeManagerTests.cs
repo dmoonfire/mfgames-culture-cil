@@ -6,6 +6,7 @@
 // </license>
 
 using MfGames.Culture.Codes;
+using MfGames.Culture.Translations;
 
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace MfGames.Culture.Tests.Codes
 			// Create the languages with defaults.
 			var languages = new LanguageCodeManager();
 
-			languages.AddDefaults();
+			languages.AddDefaults(new NullTranslationManager());
 
 			// Create the country code manager.
 			var countries = new CountryCodeManager();

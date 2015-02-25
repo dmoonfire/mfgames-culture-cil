@@ -26,9 +26,10 @@ namespace MfGames.Culture.Translations
 			for (var i = 0; i < names.Length; i++)
 			{
 				string key = prefix + i;
+				string reverseKey = prefix + names[i].ToLowerInvariant();
 
 				translations.Add(key, languageTag, names[i]);
-				translations.Add(names[i].ToLowerInvariant(), languageTag, i.ToString());
+				translations.Add(reverseKey, languageTag, i.ToString());
 			}
 		}
 

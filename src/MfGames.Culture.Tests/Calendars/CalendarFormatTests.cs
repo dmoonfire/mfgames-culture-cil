@@ -13,6 +13,7 @@ using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
 using MfGames.Culture.Codes;
 using MfGames.Culture.Extensions.System;
+using MfGames.Culture.Translations;
 
 using NUnit.Framework;
 
@@ -31,6 +32,8 @@ namespace MfGames.Culture.Tests.Calendars
 
 		private CalendarFormat iso;
 
+		private MemoryTranslationManager translations;
+
 		#endregion
 
 		#region Public Methods and Operators
@@ -40,6 +43,7 @@ namespace MfGames.Culture.Tests.Calendars
 		{
 			CalendarPoint results = alpha3.Parse(
 				calendar,
+				translations,
 				englishSelector,
 				"Mar 4, 1987");
 			var date = new DateTime(1987, 3, 4);
@@ -53,6 +57,7 @@ namespace MfGames.Culture.Tests.Calendars
 		{
 			CalendarPoint results = alpha3.Parse(
 				calendar,
+				translations,
 				englishSelector,
 				"Nov 23, 1987");
 			var date = new DateTime(1987, 11, 23);
@@ -65,7 +70,11 @@ namespace MfGames.Culture.Tests.Calendars
 		public void Alpha3ToString19870304()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 3, 4));
-			string results = alpha3.Format(calendar, englishSelector, point);
+			string results = alpha3.Format(
+				calendar,
+				translations,
+				englishSelector,
+				point);
 
 			Assert.AreEqual("Mar 4, 1987", results);
 		}
@@ -76,6 +85,7 @@ namespace MfGames.Culture.Tests.Calendars
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
 			CalendarPoint results = iso.Parse(
 				calendar,
+				translations,
 				englishSelector,
 				"1987-11-23");
 
@@ -87,6 +97,7 @@ namespace MfGames.Culture.Tests.Calendars
 		{
 			CalendarPoint results = iso.Parse(
 				calendar,
+				translations,
 				englishSelector,
 				"2000-01-01");
 			CalendarPoint year2000 = calendar.Create(new DateTime(2000, 1, 1));
@@ -99,6 +110,7 @@ namespace MfGames.Culture.Tests.Calendars
 		{
 			CalendarElementValueCollection results = iso.ParseValues(
 				calendar,
+				translations,
 				englishSelector,
 				"1987-11-23");
 
@@ -111,7 +123,7 @@ namespace MfGames.Culture.Tests.Calendars
 		public void IsoToString19871123()
 		{
 			CalendarPoint point = calendar.Create(new DateTime(1987, 11, 23));
-			string results = iso.Format(calendar, englishSelector, point);
+			string results = iso.Format(calendar, translations, englishSelector, point);
 
 			Assert.AreEqual("1987-11-23", results);
 		}
@@ -120,10 +132,13 @@ namespace MfGames.Culture.Tests.Calendars
 		public void SetUp()
 		{
 			calendar = new GregorianCalendarSystem();
+			translations = new MemoryTranslationManager();
 			iso = new CalendarFormat("$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
 			alpha3 = new CalendarFormat(
-				"$(Year Month:S3/Short) $(Month Day:G0+1), $(Year:D4)");
+				"$(Year Month:S3/Short.) $(Month Day:G0+1), $(Year:D4)");
 			englishSelector = new LanguageTagSelector("eng;q=1.0, *;q=0.1");
+
+			calendar.AddTranslations(translations);
 		}
 
 		#endregion

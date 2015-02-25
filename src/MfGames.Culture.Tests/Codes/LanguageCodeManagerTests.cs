@@ -6,6 +6,7 @@
 // </license>
 
 using MfGames.Culture.Codes;
+using MfGames.Culture.Translations;
 
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace MfGames.Culture.Tests.Codes
 			// Create the manager and populate the list.
 			var manager = new LanguageCodeManager();
 
-			manager.AddDefaults();
+			manager.AddDefaults(new NullTranslationManager());
 		}
 
 		[Test]

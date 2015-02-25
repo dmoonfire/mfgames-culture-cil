@@ -13,6 +13,7 @@ using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Formats;
 using MfGames.Culture.Codes;
 using MfGames.Culture.Extensions.System;
+using MfGames.Culture.Translations;
 
 using NUnit.Framework;
 
@@ -28,6 +29,8 @@ namespace MfGames.Culture.Tests.Calendars
 		private LanguageTagSelector englishSelector;
 
 		private CalendarFormatCollection formats;
+
+		private MemoryTranslationManager translations;
 
 		#endregion
 
@@ -137,7 +140,10 @@ namespace MfGames.Culture.Tests.Calendars
 			englishSelector = new LanguageTagSelector("eng;q=1.0, *;q=0.1");
 
 			calendar = new GregorianCalendarSystem();
-			formats = new CalendarFormatCollection(calendar);
+			translations = new MemoryTranslationManager();
+			formats = new CalendarFormatCollection(calendar, translations);
+
+			calendar.AddTranslations(translations);
 
 			formats.Add("yyyy-MM-dd", "$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)");
 			formats.Add("MM/dd/yyyy", "$(Year Month:D2+1)/$(Month Day:D2+1)/$(Year:D4)");

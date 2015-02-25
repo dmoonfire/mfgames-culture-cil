@@ -9,7 +9,6 @@ using System;
 using System.Text.RegularExpressions;
 
 using MfGames.Culture.Translations;
-using MfGames.HierarchicalPaths;
 using MfGames.Text;
 
 namespace MfGames.Culture.Calendars.Formats
@@ -40,7 +39,7 @@ namespace MfGames.Culture.Calendars.Formats
 				// to use relative translations.
 				int index = Format.IndexOf("/", StringComparison.InvariantCulture);
 				string path = Format.Substring(index + 1);
-				TranslationLookup = path;
+				TranslationPrefix = path;
 
 				// Update the format so it only has the "S" code.
 				Format = Format.Substring(0, index);
@@ -67,7 +66,7 @@ namespace MfGames.Culture.Calendars.Formats
 		public int MacroIndex { get; set; }
 		public int Offset { get; set; }
 		public string Pattern { get; set; }
-		public string TranslationLookup { get; set; }
+		public string TranslationPrefix { get; set; }
 
 		#endregion
 
@@ -82,13 +81,18 @@ namespace MfGames.Culture.Calendars.Formats
 			// If the format is a string, then use that for the lookup key.
 			if (Format.StartsWith("S"))
 			{
-				string key = value.ToString();
-				TranslationResult result = formatContext
-					.Context
-					.Translations
-					.GetTranslationResult(key, formatContext.Context.Selector);
+				string key = TranslationPrefix + value.ToString().ToLowerInvariant();
+				ITranslationProvider translations = formatContext.Context.Translations;
+				TranslationResult results = translations.GetTranslationResult(
+					key,
+					formatContext.Context.Selector);
 
-				return result.Result;
+				if (results == null)
+				{
+					throw new InvalidOperationException("Cannot translation " + value + ".");
+				}
+
+				return results.Result;
 			}
 
 			// Format it.
@@ -112,10 +116,10 @@ namespace MfGames.Culture.Calendars.Formats
 
 			// Check to see if we have a character lookup. If we do, we need
 			// to translate it into a numeric value.
-			if (TranslationLookup != null)
+			if (TranslationPrefix != null)
 			{
 				// Look up the translation.
-				string key = value.ToLowerInvariant();
+				string key = TranslationPrefix + value.ToLowerInvariant();
 				TranslationResult translation = formatContext
 					.Context
 					.Translations
