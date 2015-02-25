@@ -34,7 +34,7 @@ namespace MfGames.Culture.Codes
 		{
 			LanguageTag allLanguage = LanguageTag.Canonical;
 
-			All = new LanguageTagSelector(allLanguage);
+			Canonical = new LanguageTagSelector(allLanguage);
 		}
 
 		public LanguageTagSelector()
@@ -90,7 +90,7 @@ namespace MfGames.Culture.Codes
 
 		#region Public Properties
 
-		public static LanguageTagSelector All { get; private set; }
+		public static LanguageTagSelector Canonical { get; private set; }
 
 		#endregion
 

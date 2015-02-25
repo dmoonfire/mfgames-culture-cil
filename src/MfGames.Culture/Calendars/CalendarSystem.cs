@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Fractions;
 
 using MfGames.Culture.Calendars.Cycles;
+using MfGames.Culture.Codes;
 using MfGames.Culture.Translations;
 
 namespace MfGames.Culture.Calendars
@@ -21,6 +22,12 @@ namespace MfGames.Culture.Calendars
 	/// </summary>
 	public class CalendarSystem : ICalendarSystem
 	{
+		#region Fields
+
+		private ITranslationProvider translations;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		/// <summary>
@@ -28,9 +35,10 @@ namespace MfGames.Culture.Calendars
 		public CalendarSystem()
 		{
 			Cycles = new CalendarElementCollection<Cycle>();
+			translations = new MemoryTranslationProvider();
 		}
 
-		public CalendarSystem(ITranslationProvider codes)
+		public CalendarSystem(CodeManager codes)
 			: this()
 		{
 			if (codes == null)
@@ -46,8 +54,24 @@ namespace MfGames.Culture.Calendars
 		#region Public Properties
 
 		public string CannonicalName { get; set; }
+		public CodeManager Codes { get; set; }
 		public CalendarElementCollection<Cycle> Cycles { get; private set; }
-		public ITranslationProvider Codes { get; set; }
+
+		public ITranslationProvider Translations
+		{
+			get { return translations; }
+			set
+			{
+				if (value == null)
+				{
+					throw new ArgumentNullException(
+						"value",
+						"Cannot assign a null Translations.");
+				}
+
+				translations = value;
+			}
+		}
 
 		#endregion
 

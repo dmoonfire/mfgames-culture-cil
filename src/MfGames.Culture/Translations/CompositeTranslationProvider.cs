@@ -31,19 +31,9 @@ namespace MfGames.Culture.Translations
 
 		#region Public Methods and Operators
 
-		public string GetTranslation(
-			string key,
-			LanguageTagSelector selector)
+		public void Add(ITranslationProvider translationProvider)
 		{
-			// Get the translation result.
-			TranslationResult result = GetTranslationResult(key, selector);
-
-			if (result == null)
-			{
-				return null;
-			}
-
-			return result.Result;
+			Providers.Add(translationProvider);
 		}
 
 		public TranslationResult GetTranslationResult(

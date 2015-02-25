@@ -45,7 +45,7 @@ namespace MfGames.Culture.Codes
 			};
 
 			// Add in the default values.
-			instance.Languages.AddDefaults();
+			instance.Languages.AddDefaults(instance.Translations);
 			instance.Countries.AddDefaults(instance.Languages);
 			instance.Scripts.AddDefaults(instance.Languages);
 		}

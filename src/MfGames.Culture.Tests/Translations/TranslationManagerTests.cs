@@ -7,7 +7,6 @@
 
 using MfGames.Culture.Codes;
 using MfGames.Culture.Translations;
-using MfGames.HierarchicalPaths;
 
 using NUnit.Framework;
 
@@ -28,9 +27,9 @@ namespace MfGames.Culture.Tests.Translations
 		public void FallbackTranslation()
 		{
 			var manager = new CompositeTranslationProvider();
-			var selector = new LanguageTagSelector("*");
-			var path = new HierarchicalPath("/");
-			string results = manager.GetTranslation(selector, path, "fallback");
+			LanguageTagSelector selector = LanguageTagSelector.Canonical;
+			var key = "Some Random Key";
+			string results = manager.GetTranslation(key, selector, "fallback");
 
 			Assert.AreEqual("fallback", results, "Results are unexpected.");
 		}
@@ -38,14 +37,13 @@ namespace MfGames.Culture.Tests.Translations
 		[Test]
 		public void FoundTranslation()
 		{
-			var path = new HierarchicalPath("/");
-
+			var key = "Lost in Translation";
 			var memoryProvider = new MemoryTranslationProvider();
-			memoryProvider.Add(path, english, "English A");
 
-			var manager = new CompositeTranslationProvider { memoryProvider };
+			memoryProvider.Add(key, english, "English A");
+
 			var selector = new LanguageTagSelector("eng;q=1.0");
-			string results = manager.GetTranslation(selector, path, "fallback");
+			string results = memoryProvider.GetTranslation(key, selector);
 
 			Assert.AreEqual("English A", results, "Results are unexpected.");
 		}
@@ -53,14 +51,14 @@ namespace MfGames.Culture.Tests.Translations
 		[Test]
 		public void LostTranslationWithOneProvided()
 		{
-			var path = new HierarchicalPath("/");
+			var key = "Lost in Translation";
 
 			var memoryProvider = new MemoryTranslationProvider();
-			memoryProvider.Add(path, english, "English A");
 
-			var manager = new CompositeTranslationProvider { memoryProvider };
+			memoryProvider.Add(key, english, "English A");
+
 			var selector = new LanguageTagSelector("fra;q=1.0");
-			string results = manager.GetTranslation(selector, path, "fallback");
+			string results = memoryProvider.GetTranslation(key, selector, "fallback");
 
 			Assert.AreEqual("fallback", results, "Results are unexpected.");
 		}

@@ -84,6 +84,7 @@
     <Compile Include="Codes\LanguageCodeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translations\CompositeTranslationProvider.cs" />
+    <Compile Include="Translations\TranslationProviderExtensions.cs" />
     <Compile Include="Translations\TranslationResult.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -90,7 +90,7 @@ namespace MfGames.Culture.Codes
 			Add(languageCode);
 		}
 
-		public void AddDefaults(CodeManager codeManager)
+		public void AddDefaults(ITranslationManager translations)
 		{
 			// We have to pre-create English and French since they are used
 			// for the translations in the file. However, we need the language
@@ -105,8 +105,6 @@ namespace MfGames.Culture.Codes
 
 			// Add in the initial translations for English and French for
 			// Englisha nd French.
-			ITranslationManager translations = codeManager.Translations;
-
 			AddLanguageNameTranslation(
 				translations,
 				english,
@@ -206,13 +204,7 @@ namespace MfGames.Culture.Codes
 
 			code = GetIsoAlpha2(language);
 
-			if (code != null)
-			{
-				return code;
-			}
-
-			// We can't find it.
-			return null;
+			return code;
 		}
 
 		public IEnumerator<LanguageCode> GetEnumerator()
@@ -247,13 +239,6 @@ namespace MfGames.Culture.Codes
 			return alpha3 == "*"
 				? LanguageCode.Canonical
 				: codes.FirstOrDefault(c => c.IsoAlpha3T == alpha3);
-		}
-
-		public TranslationResult GetTranslationResult(
-			string key,
-			LanguageTagSelector selector)
-		{
-			return translations.GetTranslationResult(key, selector);
 		}
 
 		#endregion

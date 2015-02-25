@@ -19,7 +19,7 @@ namespace MfGames.Culture
 		{
 			Calendar = new CompositeCalendarSystem();
 			Formats = new CalendarFormatCollection(Calendar);
-			Selector = LanguageTagSelector.All;
+			Selector = LanguageTagSelector.Canonical;
 		}
 
 		#endregion

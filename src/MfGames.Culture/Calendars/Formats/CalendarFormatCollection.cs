@@ -60,7 +60,7 @@ namespace MfGames.Culture.Calendars.Formats
 
 		public string Format(string formatName, CalendarPoint point)
 		{
-			return Format(formatName, LanguageTagSelector.All, point);
+			return Format(formatName, LanguageTagSelector.Canonical, point);
 		}
 
 		public string Format(

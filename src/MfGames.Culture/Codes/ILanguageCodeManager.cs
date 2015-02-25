@@ -11,8 +11,7 @@ using MfGames.Culture.Translations;
 
 namespace MfGames.Culture.Codes
 {
-	public interface ILanguageCodeManager : IEnumerable<LanguageCode>,
-		ITranslationProvider
+	public interface ILanguageCodeManager : IEnumerable<LanguageCode>
 	{
 		#region Public Properties
 
@@ -26,7 +25,7 @@ namespace MfGames.Culture.Codes
 
 		void Add(string isoAlpha3T);
 
-		void AddDefaults(CodeManager codeManager);
+		void AddDefaults(ITranslationManager translations);
 
 		LanguageCode Get(string language);
 
