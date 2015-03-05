@@ -1,0 +1,150 @@
+<calendar
+	xmlns="urn:mfgames.com:mfgames-culture:0"
+	xml:id="gregorian"
+	version="0">
+	<cycles>
+		<!--
+			The Gregorian calendar is based on the year, which is continually
+			increasing.
+		-->
+		<cycle xml:id="Year">
+			<julian-offset>-1721059.5</julian-offset>
+			<lengths>
+				<length>
+					<count>400</count>
+					<julian>146097</julian>
+				</length>
+				<length>
+					<!-- <count/> is implied to be 1 -->
+					<julian ref="Year" mod="400">366</julian>
+					<julian ref="Year" mod="100">365</julian>
+					<julian ref="Year" mod="4">366</julian>
+					<julian>365</julian>
+				</length>
+			</lengths>
+
+			<cycles>
+				<cycle xml:id="Decade">
+					<calculate ref="Year" div="10"/>
+
+					<cycles>
+						<cycle xml:id="Century Decade">
+							<calculate ref="Decade" mod="10"/>
+						</cycle>
+					</cycles>
+				</cycle>
+				<cycle xml:id="Century">
+					<calculate ref="Year" div="100"/>
+
+					<cycles>
+						<cycle xml:id="Millennium Century">
+							<calculate ref="Century" mod="10"/>
+						</cycle>
+					</cycles>
+				</cycle>
+				<cycle xml:id="Millennium">
+					<calculate ref="Year" div="1000"/>
+				</cycle>
+				<cycle xml:id="Decade Year">
+					<calculate ref="Year" mod="10"/>
+				</cycle>
+				<cycle xml:id="Year Day">
+					<lengths>
+						<length>
+							<julian>1</julian>
+						</length>
+					</lengths>
+				</cycle>
+				<cycle xml:id="Year Month">
+					<list>
+						<!-- January -->
+						<lengths>
+							<length>
+								<julian>31</julian>
+							</length>
+						</lengths>
+						<!-- February -->
+						<lengths>
+							<length>
+								<julian ref="Year" mod="400">29</julian>
+								<julian ref="Year" mod="100">28</julian>
+								<julian ref="Year" mod="4">29</julian>
+								<julian>28</julian>
+							</length>
+						</lengths>
+						<!-- March -->
+						<lengths>
+							<length>
+								<julian>31</julian>
+							</length>
+						</lengths>
+						<!-- April -->
+						<lengths>
+							<length>
+								<julian>30</julian>
+							</length>
+						</lengths>
+						<!-- May -->
+						<lengths>
+							<length>
+								<julian>31</julian>
+							</length>
+						</lengths>
+						<!-- June -->
+						<lengths>
+							<length>
+								<julian>30</julian>
+							</length>
+						</lengths>
+						<!-- July -->
+						<lengths>
+							<length>
+								<julian>30</julian>
+							</length>
+						</lengths>
+						<!-- August -->
+						<lengths>
+							<length>
+								<julian>31</julian>
+							</length>
+						</lengths>
+						<!-- September -->
+						<lengths>
+							<length>
+								<julian>30</julian>
+							</length>
+						</lengths>
+						<!-- October -->
+						<lengths>
+							<length>
+								<julian>31</julian>
+							</length>
+						</lengths>
+						<!-- November -->
+						<lengths>
+							<length>
+								<julian>30</julian>
+							</length>
+						</lengths>
+						<!-- December -->
+						<lengths>
+							<length>
+								<julian>31</julian>
+							</length>
+						</lengths>
+					</list>
+
+					<cycles>					
+						<cycle xml:id="Month Day">
+							<lengths>
+								<length>
+									<julian>1</julian>
+								</length>
+							</lengths>
+						</cycle>
+					</cycles>
+				</cycle>
+			</cycles>
+		</cycle>
+	</cycles>
+</calendar>
