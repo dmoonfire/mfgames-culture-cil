@@ -1,4 +1,4 @@
-// <copyright file="ModCycleCalcualtion.cs" company="Moonfire Games">
+// <copyright file="ModCycleCalculation.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -11,11 +11,11 @@ namespace MfGames.Culture.Calendars.Calculations
 	/// A cycle calculation that takes a given value and does a modulus
 	/// against it.
 	/// </summary>
-	public class ModCycleCalcualtion : CycleCalculation
+	public class ModCycleCalculation : CycleCalculation
 	{
 		#region Constructors and Destructors
 
-		public ModCycleCalcualtion(string elementRef, int constant)
+		public ModCycleCalculation(string elementRef, int constant)
 			: base(elementRef, constant)
 		{
 		}

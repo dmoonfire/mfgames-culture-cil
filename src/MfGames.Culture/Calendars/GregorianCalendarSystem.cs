@@ -54,13 +54,13 @@ namespace MfGames.Culture.Calendars
 				new DivCycleCalculation("Year", 1000));
 			var decadeYear = new CalculatedCycle(
 				"Decade Year",
-				new ModCycleCalcualtion("Year", 10));
+				new ModCycleCalculation("Year", 10));
 			var centuryDecade = new CalculatedCycle(
 				"Century Decade",
-				new ModCycleCalcualtion("Decade", 10));
+				new ModCycleCalculation("Decade", 10));
 			var millenniumCentury = new CalculatedCycle(
 				"Millennium Century",
-				new ModCycleCalcualtion("Century", 10));
+				new ModCycleCalculation("Century", 10));
 
 			decade.Cycles.Add(decadeYear);
 			century.Cycles.Add(centuryDecade);

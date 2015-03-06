@@ -33,6 +33,7 @@ namespace MfGames.Culture.Calendars
 		#region Public Properties
 
 		public CalendarElementCollection<Cycle> Cycles { get; private set; }
+		public string Id { get; set; }
 
 		#endregion
 

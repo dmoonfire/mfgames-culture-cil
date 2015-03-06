@@ -45,7 +45,7 @@
     <Compile Include="Calendars\Calculations\DivCycleCalculation.cs" />
     <Compile Include="Calendars\Calculations\ICycleCalculation.cs" />
     <Compile Include="Calendars\Cycles\LengthCycle.cs" />
-    <Compile Include="Calendars\Calculations\ModCycleCalcualtion.cs" />
+    <Compile Include="Calendars\Calculations\ModCycleCalculation.cs" />
     <Compile Include="Calendars\DuodecimalCalendarSystem.cs" />
     <Compile Include="Calendars\Formats\CalendarFormat.cs" />
     <Compile Include="Calendars\Formats\CalendarFormatCollection.cs" />
