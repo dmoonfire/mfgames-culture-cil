@@ -21,6 +21,9 @@ namespace MfGames.Culture.Calendars
 
 		public GregorianCalendarSystem()
 		{
+			// Our ID is simple.
+			Id = "gregorian";
+
 			// Everything is hung off the year. We use a number of lengths for
 			// this. The first is to "fast forward" every 400 years until we
 			// get closer to the point. The second is to figure out the precise

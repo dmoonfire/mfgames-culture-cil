@@ -33,8 +33,6 @@ namespace MfGames.Culture.Calendars
 
 		#region Public Properties
 
-		public CalendarSystem Calendar { get; set; }
-
 		/// <summary>
 		/// Gets the unique identifier for this element. This cannot be reused
 		/// for any other element with in the same calendar.

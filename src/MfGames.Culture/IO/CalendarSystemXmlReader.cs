@@ -6,6 +6,7 @@
 // </license>
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -16,6 +17,7 @@ using Fractions;
 using MfGames.Culture.Calendars;
 using MfGames.Culture.Calendars.Calculations;
 using MfGames.Culture.Calendars.Cycles;
+using MfGames.Culture.Calendars.Lengths;
 
 namespace MfGames.Culture.IO
 {
@@ -68,6 +70,153 @@ namespace MfGames.Culture.IO
 			return calculatedCycle;
 		}
 
+		private LogicCycleLength ParseLength(XmlReader xml)
+		{
+			// Create a new cycle.
+			var count = 1;
+			var lengths = new List<ILengthLogic>();
+
+			// Loop through the XML reader until we get to the proper element.
+			while (xml.Read())
+			{
+				// If we aren't the right namespace, just move on.
+				if (xml.NamespaceURI != CultureXml.Namespace0)
+				{
+					continue;
+				}
+
+				// If we got the end element, break out.
+				if (xml.NodeType == XmlNodeType.EndElement && xml.LocalName == "length")
+				{
+					break;
+				}
+
+				// If we aren't a start element.
+				if (xml.NodeType != XmlNodeType.Element)
+				{
+					continue;
+				}
+
+				// Figure out what to do with the element.
+				switch (xml.LocalName)
+				{
+					case "count":
+						count = xml.ReadElementContentAsInt();
+						break;
+
+					case "julian":
+						string cycleRef = xml.GetAttribute("ref");
+						int mod = Convert.ToInt32(xml.GetAttribute("mod"));
+						Fraction value = ReadFraction(xml);
+
+						if (cycleRef == null)
+						{
+							lengths.Add(new ConstantLengthLogic(value));
+						}
+						else
+						{
+							lengths.Add(new IfModLengthLogic(cycleRef, mod, value));
+						}
+						break;
+				}
+			}
+
+			// Return the resulting length.
+			return new LogicCycleLength(count, lengths.ToArray());
+		}
+
+		private List<CycleLength> ParseLengths(XmlReader xml)
+		{
+			// Keep a list of all the lengths.
+			var lengths = new List<CycleLength>();
+
+			// Loop through the XML reader until we get to the proper element.
+			while (xml.Read())
+			{
+				// If we aren't the right namespace, just move on.
+				if (xml.NamespaceURI != CultureXml.Namespace0)
+				{
+					continue;
+				}
+
+				// If we got the end element, break out.
+				if (xml.NodeType == XmlNodeType.EndElement && xml.LocalName == "lengths")
+				{
+					break;
+				}
+
+				// If we aren't a start element.
+				if (xml.NodeType != XmlNodeType.Element)
+				{
+					continue;
+				}
+
+				// Figure out what to do with the element.
+				switch (xml.LocalName)
+				{
+					case "length":
+						CycleLength length = ParseLength(xml);
+						lengths.Add(length);
+						break;
+				}
+			}
+
+			// Return the resulting lengths.
+			return lengths;
+		}
+
+		private Cycle ParseListCycle(XmlReader xml, string id)
+		{
+			// Keep a list of all the lengths.
+			var list = new List<ILengthLogic[]>();
+			var logics = new List<ILengthLogic>();
+
+			// Loop through the XML reader until we get to the proper element.
+			while (xml.Read())
+			{
+				// If we aren't the right namespace, just move on.
+				if (xml.NamespaceURI != CultureXml.Namespace0)
+				{
+					continue;
+				}
+
+				// If we got the end element, break out.
+				if (xml.NodeType == XmlNodeType.EndElement)
+				{
+					switch (xml.LocalName)
+					{
+						case "list":
+							var cycle = new LengthCycle(id);
+							cycle.Lengths.Add(new ArrayCycleLength(list.ToArray()));
+							return cycle;
+
+						case "lengths":
+							list.Add(logics.ToArray());
+							logics.Clear();
+							break;
+					}
+				}
+
+				// If we aren't a start element.
+				if (xml.NodeType != XmlNodeType.Element)
+				{
+					continue;
+				}
+
+				// Figure out what to do with the element.
+				switch (xml.LocalName)
+				{
+					case "length":
+						LogicCycleLength length = ParseLength(xml);
+						logics.AddRange(length.LengthLogics);
+						break;
+				}
+			}
+
+			// If we get this far, we have a problem.
+			throw new InvalidOperationException("Cannot parse list cycle (" + id + ").");
+		}
+
 		/// <summary>
 		/// Reads a given XML reader and creates a calendar out of it.
 		/// </summary>
@@ -81,13 +230,25 @@ namespace MfGames.Culture.IO
 			// Loop through the XML reader until we get to the proper element.
 			while (xml.Read())
 			{
-				// If we aren't at the calendar begin, just move on.
-				if (xml.NodeType != XmlNodeType.Element ||
-					xml.NamespaceURI != CultureXml.Namespace0)
+				// If we aren't the right namespace, just move on.
+				if (xml.NamespaceURI != CultureXml.Namespace0)
 				{
 					continue;
 				}
 
+				// If we got the end element, break out.
+				if (xml.NodeType == XmlNodeType.EndElement && xml.LocalName == "calendar")
+				{
+					break;
+				}
+
+				// If we aren't a start element.
+				if (xml.NodeType != XmlNodeType.Element)
+				{
+					continue;
+				}
+
+				// Figure out what to do with the element.
 				switch (xml.LocalName)
 				{
 					case "calendar":
@@ -115,28 +276,53 @@ namespace MfGames.Culture.IO
 			// Loop through the XML reader until we get to the proper element.
 			while (xml.Read())
 			{
-				// If we aren't at the calendar begin, just move on.
-				if (xml.NodeType != XmlNodeType.Element ||
-					xml.NamespaceURI != CultureXml.Namespace0)
+				// If we aren't the right namespace, just move on.
+				if (xml.NamespaceURI != CultureXml.Namespace0)
 				{
 					continue;
 				}
 
+				// If we got the end element, break out.
+				if (xml.NodeType == XmlNodeType.EndElement && xml.LocalName == "cycle")
+				{
+					break;
+				}
+
+				// If we aren't a start element.
+				if (xml.NodeType != XmlNodeType.Element)
+				{
+					continue;
+				}
+
+				// Figure out what to do with the element.
 				switch (xml.LocalName)
 				{
-					case "calculated":
+					case "calculate":
 						cycle = ParseCalculatedCycle(xml, id);
 						break;
 
 					case "lengths":
-						cycle = new LengthCycle(id);
+						List<CycleLength> lengths = ParseLengths(xml);
+						var lengthCycle = new LengthCycle(id);
+
+						foreach (CycleLength length in lengths)
+						{
+							lengthCycle.Lengths.Add(length);
+						}
+
+						cycle = lengthCycle;
+						break;
+
+					case "list":
+						cycle = ParseListCycle(xml, id);
 						break;
 
 					case "julian-offset":
 						if (cycle == null)
 						{
 							throw new InvalidOperationException(
-								"Cannot parse cycle without a calculated or lengths element.");
+								"Cannot parse cycle (" + id
+									+ ") without a calculated or lengths element.");
 						}
 
 						cycle.JulianDateOffset = ReadFraction(xml);
@@ -146,7 +332,8 @@ namespace MfGames.Culture.IO
 						if (cycle == null)
 						{
 							throw new InvalidOperationException(
-								"Cannot parse cycle without a calculated or lengths element.");
+								"Cannot parse cycle (" + id
+									+ ") without a calculated or lengths element.");
 						}
 
 						Cycle childCycle = ReadCycle(xml);

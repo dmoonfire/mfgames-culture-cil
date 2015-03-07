@@ -1,4 +1,4 @@
-// <copyright file="GregorianTests.cs" company="Moonfire Games">
+// <copyright file="XmlGregorianTests.cs" company="Moonfire Games">
 //   Copyright (c) Moonfire Games. Some Rights Reserved.
 // </copyright>
 // <license href="http://mfgames.com/mfgames-culture-cil/license">
@@ -7,24 +7,25 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 
 using Fractions;
 
 using MfGames.Culture.Calendars;
-using MfGames.Culture.Calendars.Cycles;
 using MfGames.Culture.Calendars.Lengths;
 using MfGames.Culture.Extensions.System;
+using MfGames.Culture.IO;
 
 using NUnit.Framework;
 
 namespace MfGames.Culture.Tests.Calendars
 {
 	[TestFixture]
-	public class GregorianTests
+	public class XmlGregorianTests
 	{
 		#region Fields
 
-		private CalendarSystem calendar;
+		private ICalendarSystem calendar;
 
 		private CycleLength yearLength1;
 
@@ -937,78 +938,18 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual(0, point.MonthDay, "MonthDay");
 		}
 
-		[Test]
-		public void VerifyYearLength0()
-		{
-			// Common setup.
-			Setup();
-
-			// Calculate the index of the year.
-			var values = new CalendarElementValueCollection();
-
-			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, new Fraction(0m));
-
-			// Verify the results.
-			Assert.AreEqual(0, values["Year"]);
-		}
-
-		[Test]
-		public void VerifyYearLength365()
-		{
-			// Common setup.
-			Setup();
-
-			// Calculate the index of the year.
-			var values = new CalendarElementValueCollection();
-
-			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, new Fraction(365m));
-
-			// Verify the results.
-			Assert.AreEqual(0, values["Year"]);
-		}
-
-		[Test]
-		public void VerifyYearLength366()
-		{
-			// Common setup.
-			Setup();
-
-			// Calculate the index of the year.
-			var values = new CalendarElementValueCollection();
-
-			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, new Fraction(366m));
-
-			// Verify the results.
-			Assert.AreEqual(1, values["Year"]);
-		}
-
-		[Test]
-		public void VerifyYearLength367()
-		{
-			// Common setup.
-			Setup();
-
-			// Calculate the index of the year.
-			var values = new CalendarElementValueCollection();
-
-			values["Year"] = 0;
-			yearLength1.CalculateIndex("Year", values, new Fraction(367m));
-
-			// Verify the results.
-			Assert.AreEqual(1, values["Year"]);
-		}
-
 		#endregion
 
 		#region Methods
 
 		private void Setup()
 		{
-			calendar = new GregorianCalendarSystem();
-			yearLength1 = ((LengthCycle)calendar.Cycles["Year"]).Lengths[1];
+			// Read the calendar into memory.
+			const string Path = "..\\..\\data\\calendars\\gregorian.xml";
+			var reader = new CalendarSystemXmlReader();
+
+			using (FileStream stream = File.OpenRead(Path))
+				calendar = reader.Read(stream);
 		}
 
 		private decimal ToJulianDate(DateTime dateTime)

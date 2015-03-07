@@ -41,7 +41,6 @@ namespace MfGames.Culture.Calendars
 
 		public void Add(Cycle cycle)
 		{
-			cycle.Calendar = this;
 			Cycles.Add(cycle);
 		}
 
