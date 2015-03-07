@@ -5,6 +5,8 @@
 //   MIT License (MIT)
 // </license>
 
+using System;
+
 using Fractions;
 
 using MfGames.Culture.Calendars.Calculations;
@@ -66,8 +68,8 @@ namespace MfGames.Culture.Calendars
 				new ModCycleCalculation("Century", 10));
 
 			decade.Cycles.Add(decadeYear);
-			century.Cycles.Add(centuryDecade);
-			millennium.Cycles.Add(millenniumCentury);
+			decade.Cycles.Add(centuryDecade);
+			century.Cycles.Add(millenniumCentury);
 
 			year.Cycles.Add(decade);
 			year.Cycles.Add(century);
@@ -116,6 +118,17 @@ namespace MfGames.Culture.Calendars
 			// Create the calendar and add the open cycle which will add
 			// everything else.
 			Add(year);
+
+			// Validate the results.
+			var validator = new CalendarSystemValidator();
+
+			if (!validator.IsValid(this))
+			{
+				throw new InvalidOperationException(
+					"The Gregorian calendar is not valid."
+						+ Environment.NewLine
+						+ validator);
+			}
 		}
 
 		#endregion

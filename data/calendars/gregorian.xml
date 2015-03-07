@@ -32,25 +32,22 @@
 						<cycle xml:id="Decade Year">
 							<calculate ref="Year" mod="10"/>
 						</cycle>
+						<cycle xml:id="Century Decade">
+							<calculate ref="Decade" mod="10"/>
+						</cycle>
 					</cycles>
 				</cycle>
 				<cycle xml:id="Century">
 					<calculate ref="Year" div="100"/>
 
 					<cycles>
-						<cycle xml:id="Century Decade">
-							<calculate ref="Decade" mod="10"/>
+						<cycle xml:id="Millennium Century">
+							<calculate ref="Century" mod="10"/>
 						</cycle>
 					</cycles>
 				</cycle>
 				<cycle xml:id="Millennium">
 					<calculate ref="Year" div="1000"/>
-
-					<cycles>
-						<cycle xml:id="Millennium Century">
-							<calculate ref="Century" mod="10"/>
-						</cycle>
-					</cycles>
 				</cycle>
 				<cycle xml:id="Year Day">
 					<lengths>
