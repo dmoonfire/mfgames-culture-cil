@@ -1,0 +1,87 @@
+<culture
+	xmlns="urn:mfgames.com:mfgames-culture:0"
+	xml:id="en-US"
+	version="0">
+	<!--
+		Languages that this culture typically accepts. The canonical language
+		"*" is always assumed to be at 0.1. The decision to add Spanish in this
+		culture is to reflect that many signs have Spanish translations (at least
+		from the developer's point of view) but not all signs are dual-language.
+		For places like Quebec, the "second" language would probably be 0.9 to
+		allow the system to choose one over the other in a determinate manner.
+	-->
+	<languages>en-US;q=1, en;q=0.8; es;q=0.2</languages>
+
+	<!--
+		This is a list of calendars that this culture uses. Typically, there
+		will be for the days into weeks, months, or years. Another one can be
+		used to handle intra-day elements such as hours, minutes, and seconds.
+		There will be places that have multiple calendars, for example a secular
+		and a religious one, or for calendars that only apply for a certain range
+		of dates.
+	-->
+	<calendars>
+		<calendar ref="Gregorian" />
+		<calendar ref="Duodecimal" />
+	</calendars>
+
+	<calendar-formats>
+		<!--
+			Insert fields are identified by "$(" and ")" (inspired by Visual
+			Studio. The first part of a field (before the colon) is the name of
+			the cycle in one of the calendars. The format after the colon
+			determines how it is formatted. "Dx" means "x digits, zero padded".
+			The "+1" means convert the 0-based index to a 1-based index.
+		-->
+		<calendar-format xml:id="MM/DD/YYYY">
+			$(Year Month:D2+1)/$(Month Day:D2+1)/$(Year:D4)
+		</calendar-format>
+		<calendar-format xml:id="MM/DD/YY">
+			$(Year Month:D2+1)/$(Month Day:D2+1)/$(Year:D2)
+		</calendar-format>
+
+		<!--
+			The "Gx" format means one or more characters up to X numbers wide.
+			This handles the 3/4/14 and 3/14/14 dates.
+		-->
+		<calendar-format xml:id="M/D/YYYY">
+			$(Year Month:G1+1)/$(Month Day:G1+1)/$(Decade:D4)
+		</calendar-format>
+		<calendar-format xml:id="M/D/YY">
+			$(Year Month:G2+1)/$(Month Day:G2)/$(Decade:D2)
+		</calendar-format>
+
+		<!--
+			While the US officially doesn't use ISO dates, it is a universal
+			format for dates across the world. So we include it if we don't want
+			to have any confusion.
+		-->
+		<calendar-format xml:id="ISO YYYY-MM-DD">
+			$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)
+		</calendar-format>
+
+		<!--
+			Text-based formats use the "Sx" format where "x" is the number of
+			characters in the format. Using the "Sx" also requires a lookup code
+			which translates the zero-based number to or from a character
+			representation.
+		-->
+		<calendar-format xml:id="MMM D, YYYY">
+			$(Year Month:S3/Short) $(Month Day:G0+1), $(Year:D4)
+		</calendar-format>
+		<calendar-format xml:id="MMMM D, YYYY">
+			$(Year Month:S3/Long) $(Month Day:G0+1), $(Year:D4)
+		</calendar-format>
+	</calendar-formats>
+
+	<calendar-lookups>
+		<calendar-lookup
+			xml:id="Short"
+			calendar-ref="Gregorian"
+			lookup-ref="Short" />
+		<calendar-lookup
+			xml:id="Long"
+			calendar-ref="Gregorian"
+			lookup-ref="Long" />
+	</calendar-lookups>
+</culture>

@@ -9,6 +9,13 @@
 		-->
 		<cycle xml:id="Year">
 			<lengths>
+				<!--
+					The smallest number of years that has a consistent length is
+					400 years which is 146,097. This handles all of the leap
+					year logic and defines the point it repeats. While we don't
+					have to have this entry, it significantly speeds up
+					calculations.
+				-->
 				<length>
 					<count>400</count>
 					<julian>146097</julian>
@@ -148,4 +155,45 @@
 			</cycles>
 		</cycle>
 	</cycles>
+
+	<!--
+		While the calendar doesn't use these values directly, they are used with
+		cultures. They are kept in the same file because typically the canonical
+		name of a month or period of time won't change from culture to culture,
+		or they will but we still need a baseline.
+		
+		This also defines the well-known formatting of the calendar.
+	-->
+	<lookups>
+		<lookup xml:id="Short">
+			<!-- The ID is assumed to be zero-based starting with the first. -->
+			<name>Jan</name>
+			<name>Feb</name>
+			<name>Mar</name>
+			<name>Apr</name>
+			<name>May</name>
+			<name>Jun</name>
+			<name>Jul</name>
+			<name>Aug</name>
+			<name>Sep</name>
+			<name>Oct</name>
+			<name>Nov</name>
+			<name>Dec</name>
+		</lookup>
+
+		<lookup xml:id="Long">
+			<name>January</name>
+			<name>February</name>
+			<name>March</name>
+			<name>April</name>
+			<name>May</name>
+			<name>June</name>
+			<name>July</name>
+			<name>August</name>
+			<name>September</name>
+			<name>October</name>
+			<name>November</name>
+			<name>December</name>
+		</lookup>
+	</lookups>
 </calendar>

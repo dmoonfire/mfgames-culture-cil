@@ -1,0 +1,34 @@
+<calendar-lookups
+	xmlns="urn:mfgames.com:mfgames-culture:0"
+	xml:id="gregorian.fr"
+	version="0">
+	<calendar-lookup xml:id="Short">
+		<lookup>Jan</lookup>
+		<lookup>Feb</lookup>
+		<lookup>Mar</lookup>
+		<lookup>Apr</lookup>
+		<lookup>May</lookup>
+		<lookup>Jun</lookup>
+		<lookup>Jul</lookup>
+		<lookup>Aug</lookup>
+		<lookup>Sep</lookup>
+		<lookup>Oct</lookup>
+		<lookup>Nov</lookup>
+		<lookup>Dec</lookup>
+	</calendar-lookup>
+
+	<calendar-lookup xml:id="Long">
+		<lookup>January</lookup>
+		<lookup>February</lookup>
+		<lookup>March</lookup>
+		<lookup>April</lookup>
+		<lookup>May</lookup>
+		<lookup>June</lookup>
+		<lookup>July</lookup>
+		<lookup>August</lookup>
+		<lookup>September</lookup>
+		<lookup>October</lookup>
+		<lookup>November</lookup>
+		<lookup>December</lookup>
+	</calendar-lookup>
+</calendar-lookups>
