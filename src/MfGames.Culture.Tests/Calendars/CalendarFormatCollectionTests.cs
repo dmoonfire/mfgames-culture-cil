@@ -24,13 +24,33 @@ namespace MfGames.Culture.Tests.Calendars
 	{
 		#region Fields
 
-		private GregorianCalendarSystem calendar;
+		private readonly GregorianCalendarSystem calendar;
 
-		private LanguageTagSelector englishSelector;
+		private readonly LanguageTagSelector englishSelector;
 
-		private CalendarFormatCollection formats;
+		private readonly CalendarFormatCollection formats;
 
-		private MemoryTranslationManager translations;
+		private readonly MemoryTranslationManager translations;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public CalendarFormatCollectionTests()
+		{
+			// Set up some common points.
+			englishSelector = new LanguageTagSelector("eng;q=1.0, *;q=0.1");
+
+			calendar = new GregorianCalendarSystem();
+			translations = new MemoryTranslationManager();
+			formats = new CalendarFormatCollection(calendar, translations);
+
+			calendar.AddTranslations(translations);
+
+			formats.Add("yyyy-MM-dd", "$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)");
+			formats.Add("MM/dd/yyyy", "$(Year Month:D2+1)/$(Month Day:D2+1)/$(Year:D4)");
+			formats.Add("dd/MM/yyyy", "$(Month Day:D2+1)/$(Year Month:D2+1)/$(Year:D4)");
+		}
 
 		#endregion
 
@@ -131,23 +151,6 @@ namespace MfGames.Culture.Tests.Calendars
 				() => formats.Parse(
 					englishSelector,
 					"11/23/1987"));
-		}
-
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			// Set up some common points.
-			englishSelector = new LanguageTagSelector("eng;q=1.0, *;q=0.1");
-
-			calendar = new GregorianCalendarSystem();
-			translations = new MemoryTranslationManager();
-			formats = new CalendarFormatCollection(calendar, translations);
-
-			calendar.AddTranslations(translations);
-
-			formats.Add("yyyy-MM-dd", "$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1)");
-			formats.Add("MM/dd/yyyy", "$(Year Month:D2+1)/$(Month Day:D2+1)/$(Year:D4)");
-			formats.Add("dd/MM/yyyy", "$(Month Day:D2+1)/$(Year Month:D2+1)/$(Year:D4)");
 		}
 
 		#endregion

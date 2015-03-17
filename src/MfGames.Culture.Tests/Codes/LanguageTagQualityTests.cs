@@ -18,7 +18,18 @@ namespace MfGames.Culture.Tests.Codes
 	{
 		#region Fields
 
-		private LanguageTag english;
+		private readonly LanguageTag english;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public LanguageTagQualityTests()
+		{
+			LanguageCode eng = CodeManager.Instance.Languages.GetIsoAlpha3("eng");
+
+			english = new LanguageTag(eng);
+		}
 
 		#endregion
 
@@ -53,14 +64,6 @@ namespace MfGames.Culture.Tests.Codes
 
 			Assert.AreEqual(english, quality.LanguageTag, "LanguageTag is unexpected.");
 			Assert.AreEqual(1.0f, quality.Quality, "Quality is unexpected.");
-		}
-
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			LanguageCode eng = CodeManager.Instance.Languages.GetIsoAlpha3("eng");
-
-			english = new LanguageTag(eng);
 		}
 
 		#endregion

@@ -17,7 +17,19 @@ namespace MfGames.Culture.Tests.Translations
 	{
 		#region Fields
 
-		private LanguageTag english;
+		private readonly LanguageTag english;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public TranslationManagerTests()
+		{
+			LanguageCode englishLanguage =
+				CodeManager.Instance.Languages.GetIsoAlpha3("eng");
+
+			english = new LanguageTag(englishLanguage);
+		}
 
 		#endregion
 
@@ -61,15 +73,6 @@ namespace MfGames.Culture.Tests.Translations
 			string results = memoryProvider.GetTranslation(key, selector, "fallback");
 
 			Assert.AreEqual("fallback", results, "Results are unexpected.");
-		}
-
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			LanguageCode englishLanguage =
-				CodeManager.Instance.Languages.GetIsoAlpha3("eng");
-
-			english = new LanguageTag(englishLanguage);
 		}
 
 		#endregion

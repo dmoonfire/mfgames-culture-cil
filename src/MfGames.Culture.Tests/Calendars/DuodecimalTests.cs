@@ -19,17 +19,20 @@ namespace MfGames.Culture.Tests.Calendars
 	{
 		#region Fields
 
-		private CalendarSystem calendar;
+		private readonly CalendarSystem calendar;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public DuodecimalTests()
+		{
+			calendar = new DuodecimalCalendarSystem();
+		}
 
 		#endregion
 
 		#region Public Methods and Operators
-
-		[TestFixtureSetUp]
-		public void TestFixtureSetup()
-		{
-			calendar = new DuodecimalCalendarSystem();
-		}
 
 		[Test]
 		public void VerifyHour1()

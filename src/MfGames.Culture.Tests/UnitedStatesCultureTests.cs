@@ -25,7 +25,35 @@ namespace MfGames.Culture.Tests
 	{
 		#region Fields
 
-		private CultureSystem culture;
+		private readonly CultureSystem culture;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public UnitedStatesCultureTests()
+		{
+			// Create the culture we are populating.
+			culture = new CultureSystem
+			{
+				Selector = new LanguageTagSelector("en-US;q=1.0, en;q=0.8, *;q=0.1")
+			};
+
+			// Grab our two base calendars and add them the culture.
+			var gregorian = new GregorianCalendarSystem();
+			var duodecimal = new DuodecimalCalendarSystem();
+
+			culture.Calendar.Add(gregorian);
+			culture.Calendar.Add(duodecimal);
+
+			// Add in the known formats.
+			culture.Formats.Add(
+				"yyyy-MM-dd",
+				"$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
+			culture.Formats.Add(
+				"dd/MM/yyyy",
+				"$(Month Day:D2+1)/$(Year Month:D2+1)/$(Year:D4)");
+		}
 
 		#endregion
 
@@ -49,31 +77,6 @@ namespace MfGames.Culture.Tests
 			Fraction julian = new DateTime(1987, 11, 23).ToJulianDateFraction();
 
 			Assert.AreEqual(julian, point.JulianDate);
-		}
-
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			// Create the culture we are populating.
-			culture = new CultureSystem
-			{
-				Selector = new LanguageTagSelector("en-US;q=1.0, en;q=0.8, *;q=0.1")
-			};
-
-			// Grab our two base calendars and add them the culture.
-			var gregorian = new GregorianCalendarSystem();
-			var duodecimal = new DuodecimalCalendarSystem();
-
-			culture.Calendar.Add(gregorian);
-			culture.Calendar.Add(duodecimal);
-
-			// Add in the known formats.
-			culture.Formats.Add(
-				"yyyy-MM-dd",
-				"$(Year:D4)-$(Year Month:D2+1)-$(Month Day:D2+1");
-			culture.Formats.Add(
-				"dd/MM/yyyy",
-				"$(Month Day:D2+1)/$(Year Month:D2+1)/$(Year:D4)");
 		}
 
 		#endregion

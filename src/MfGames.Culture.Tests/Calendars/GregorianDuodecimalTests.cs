@@ -22,7 +22,21 @@ namespace MfGames.Culture.Tests.Calendars
 	{
 		#region Fields
 
-		private CompositeCalendarSystem calendar;
+		private readonly CompositeCalendarSystem calendar;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public GregorianDuodecimalTests()
+		{
+			var gregorian = new GregorianCalendarSystem();
+			var duodecimal = new DuodecimalCalendarSystem();
+
+			calendar = new CompositeCalendarSystem();
+			calendar.Add(gregorian);
+			calendar.Add(duodecimal);
+		}
 
 		#endregion
 
@@ -303,17 +317,6 @@ namespace MfGames.Culture.Tests.Calendars
 			Fraction julian = date.ToJulianDateFraction();
 
 			Assert.AreEqual(julian, julianDate);
-		}
-
-		[TestFixtureSetUp]
-		public void TestFixtureSetup()
-		{
-			var gregorian = new GregorianCalendarSystem();
-			var duodecimal = new DuodecimalCalendarSystem();
-
-			calendar = new CompositeCalendarSystem();
-			calendar.Add(gregorian);
-			calendar.Add(duodecimal);
 		}
 
 		[Test]

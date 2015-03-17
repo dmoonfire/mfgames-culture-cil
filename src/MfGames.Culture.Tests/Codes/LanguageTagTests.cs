@@ -16,13 +16,26 @@ namespace MfGames.Culture.Tests.Codes
 	{
 		#region Fields
 
-		private ICountryCodeManager countries;
+		private readonly ICountryCodeManager countries;
 
-		private LanguageCode english;
+		private readonly LanguageCode english;
 
-		private ILanguageCodeManager languages;
+		private readonly ILanguageCodeManager languages;
 
-		private CountryCode unitedStates;
+		private readonly CountryCode unitedStates;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public LanguageTagTests()
+		{
+			languages = CodeManager.Instance.Languages;
+			english = languages.Get("eng");
+
+			countries = CodeManager.Instance.Countries;
+			unitedStates = countries.Get("US");
+		}
 
 		#endregion
 
@@ -46,16 +59,6 @@ namespace MfGames.Culture.Tests.Codes
 			Assert.AreEqual(english, tag.Language, "Language is unexpected.");
 			Assert.AreEqual(null, tag.Country, "Country is unexpected.");
 			Assert.AreEqual("en", tag.ToString(), "ToString is unexpected.");
-		}
-
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			languages = CodeManager.Instance.Languages;
-			english = languages.Get("eng");
-
-			countries = CodeManager.Instance.Countries;
-			unitedStates = countries.Get("US");
 		}
 
 		#endregion

@@ -41,6 +41,8 @@ namespace MfGames.Culture.Tests.Calendars
 		[Test]
 		public void Alpha3Parse19870304()
 		{
+			Setup();
+
 			CalendarPoint results = alpha3.Parse(
 				calendar,
 				translations,
@@ -55,6 +57,8 @@ namespace MfGames.Culture.Tests.Calendars
 		[Test]
 		public void Alpha3Parse19871123()
 		{
+			Setup();
+
 			CalendarPoint results = alpha3.Parse(
 				calendar,
 				translations,
@@ -128,8 +132,7 @@ namespace MfGames.Culture.Tests.Calendars
 			Assert.AreEqual("1987-11-23", results);
 		}
 
-		[TestFixtureSetUp]
-		public void SetUp()
+		private void Setup()
 		{
 			calendar = new GregorianCalendarSystem();
 			translations = new MemoryTranslationManager();
