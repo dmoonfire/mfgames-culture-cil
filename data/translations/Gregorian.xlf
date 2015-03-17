@@ -1,0 +1,127 @@
+<xliff	xmlns="urn:oasis:names:tc:xliff:document:2.0"
+		version="2.0"
+		srcLang="en-US">
+	<file id="Gregorian">
+		<unit id="Short0">
+			<segment>
+				<source>Jan</source>
+			</segment>
+		</unit>
+		<unit id="Short1">
+			<segment>
+				<source>Feb</source>
+			</segment>
+		</unit>
+		<unit id="Short2">
+			<segment>
+				<source>Mar</source>
+			</segment>
+		</unit>
+		<unit id="Short3">
+			<segment>
+				<source>Apr</source>
+			</segment>
+		</unit>
+		<unit id="Short4">
+			<segment>
+				<source>May</source>
+			</segment>
+		</unit>
+		<unit id="Short5">
+			<segment>
+				<source>Jun</source>
+			</segment>
+		</unit>
+		<unit id="Short6">
+			<segment>
+				<source>Jul</source>
+			</segment>
+		</unit>
+		<unit id="Short7">
+			<segment>
+				<source>Aug</source>
+			</segment>
+		</unit>
+		<unit id="Short8">
+			<segment>
+				<source>Sep</source>
+			</segment>
+		</unit>
+		<unit id="Short9">
+			<segment>
+				<source>Oct</source>
+			</segment>
+		</unit>
+		<unit id="Short10">
+			<segment>
+				<source>Nov</source>
+			</segment>
+		</unit>
+		<unit id="Short11">
+			<segment>
+				<source>Dec</source>
+			</segment>
+		</unit>
+
+		<unit id="Long0">
+			<segment>
+				<source>January</source>
+			</segment>
+		</unit>
+		<unit id="Long1">
+			<segment>
+				<source>February</source>
+			</segment>
+		</unit>
+		<unit id="Long2">
+			<segment>
+				<source>March</source>
+			</segment>
+		</unit>
+		<unit id="Long3">
+			<segment>
+				<source>April</source>
+			</segment>
+		</unit>
+		<unit id="Long4">
+			<segment>
+				<source>May</source>
+			</segment>
+		</unit>
+		<unit id="Long5">
+			<segment>
+				<source>June</source>
+			</segment>
+		</unit>
+		<unit id="Long6">
+			<segment>
+				<source>July</source>
+			</segment>
+		</unit>
+		<unit id="Long7">
+			<segment>
+				<source>August</source>
+			</segment>
+		</unit>
+		<unit id="Long8">
+			<segment>
+				<source>September</source>
+			</segment>
+		</unit>
+		<unit id="Long9">
+			<segment>
+				<source>October</source>
+			</segment>
+		</unit>
+		<unit id="Long10">
+			<segment>
+				<source>November</source>
+			</segment>
+		</unit>
+		<unit id="Long11">
+			<segment>
+				<source>December</source>
+			</segment>
+		</unit>
+	</file>
+</xliff>

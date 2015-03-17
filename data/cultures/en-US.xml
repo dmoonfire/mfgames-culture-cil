@@ -4,13 +4,18 @@
 	version="0">
 	<!--
 		Languages that this culture typically accepts. The canonical language
-		"*" is always assumed to be at 0.1. The decision to add Spanish in this
-		culture is to reflect that many signs have Spanish translations (at least
-		from the developer's point of view) but not all signs are dual-language.
-		For places like Quebec, the "second" language would probably be 0.9 to
-		allow the system to choose one over the other in a determinate manner.
+		"*" is always assumed to be at 0.1.
 	-->
-	<languages>en-US;q=1, en;q=0.8; es;q=0.2</languages>
+	<languages>en-US;q=1, en;q=0.8</languages>
+
+	<!--
+		We need to import various translations we use for the culture-based
+		formats. These are 
+	-->
+	<translations>
+		<translation prefix="Gregorian" ref="Gregorian" />
+		<translation prefix="Duodecimal" ref="Duodecimal" />
+	</translations>
 
 	<!--
 		This is a list of calendars that this culture uses. Typically, there
@@ -24,7 +29,10 @@
 		<calendar ref="Gregorian" />
 		<calendar ref="Duodecimal" />
 	</calendars>
-
+	
+	<!--
+		Define the culture's calendar formats.
+	-->
 	<calendar-formats>
 		<!--
 			Insert fields are identified by "$(" and ")" (inspired by Visual
@@ -67,21 +75,10 @@
 			representation.
 		-->
 		<calendar-format xml:id="MMM D, YYYY">
-			$(Year Month:S3/Short) $(Month Day:G0+1), $(Year:D4)
+			$(Year Month:S3/GregorianShort) $(Month Day:G0+1), $(Year:D4)
 		</calendar-format>
 		<calendar-format xml:id="MMMM D, YYYY">
-			$(Year Month:S3/Long) $(Month Day:G0+1), $(Year:D4)
+			$(Year Month:S3/GregorianLong) $(Month Day:G0+1), $(Year:D4)
 		</calendar-format>
 	</calendar-formats>
-
-	<calendar-lookups>
-		<calendar-lookup
-			xml:id="Short"
-			calendar-ref="Gregorian"
-			lookup-ref="Short" />
-		<calendar-lookup
-			xml:id="Long"
-			calendar-ref="Gregorian"
-			lookup-ref="Long" />
-	</calendar-lookups>
 </culture>
